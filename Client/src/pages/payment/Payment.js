@@ -1,6 +1,7 @@
 // import React
 import {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {getTransactions} from "../../actions/TransActions";
 
 // Import Components
 import Navbar from "../../components/Navbar/Navbar";
@@ -18,8 +19,16 @@ import {API} from "../../config/api";
 toast.configure();
 
 export default function Payment() {
-  const currentState = useSelector((state) => state.auth);
-  const stateAuth = currentState.user;
+  const currentState = useSelector((state) => state);
+  const stateAuth = currentState.auth.user;
+
+  const {getTransResult, getTransLoading, getTransError} =
+    currentState.transactions;
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getTransactions());
+  }, [dispatch]);
 
   const [isShow, setIsShow] = useState(false);
   const [transaction, setTransaction] = useState(null);
@@ -41,7 +50,7 @@ export default function Payment() {
   };
 
   const handlePay = async () => {
-    if (!transaction.attachment) {
+    if (!getTransResult.attachment) {
       toast.success(`Update is Success`, {
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 2000,
@@ -57,12 +66,12 @@ export default function Payment() {
     const formData = new FormData();
     formData.set(
       "attachment",
-      transaction.attachment[0],
-      transaction.attachment[0].name
+      getTransResult.attachment[0],
+      getTransResult.attachment[0].name
     );
 
     const response = await API.put(
-      `/transactions/pay/${transaction.id}`,
+      `/transactions/pay/${getTransResult.id}`,
       formData,
       config
     );
@@ -76,52 +85,63 @@ export default function Payment() {
 
   return (
     <>
-      <div
-        style={{
-          height: "700px",
-        }}
-      >
-        <div className="background-nav">
-          <Navbar />
-        </div>
-        <main>
-          {!transaction ? (
-            <div className="container">
-              <div className="not-found d-flex justify-content-center align-items-center">
-                <div className="text-center">
-                  <img
-                    src={"NotFoundIcon"}
-                    alt="Not Found"
-                    width="250"
-                    height="250"
-                  />
-                  <h1 className="fw-bold h5">No Transaction Yet</h1>
-                </div>
+      {getTransResult ? (
+        <>
+          <>
+            <div
+              style={{
+                height: "700px",
+              }}
+            >
+              <div className="background-nav">
+                <Navbar />
               </div>
-            </div>
-          ) : (
-            <>
-              <PaymentCard data={transaction} setData={setTransaction} />
-              {transaction?.status === "Waiting Payment" && (
-                <div className="container">
-                  <div className="d-flex justify-content-end">
-                    <button
-                      className={`btn btn-primary mt-2 fw-bold text-white ${
-                        transaction?.status === "Waiting Approve" && "d-none"
-                      }`}
-                      style={{width: 213, height: 50}}
-                      onClick={handlePay}
-                    >
-                      PAY
-                    </button>
+              <main>
+                {!transaction ? (
+                  <div className="container">
+                    <div className="not-found d-flex justify-content-center align-items-center">
+                      <div className="text-center">
+                        <img
+                          src={"NotFoundIcon"}
+                          alt="Not Found"
+                          width="250"
+                          height="250"
+                        />
+                        <h1 className="fw-bold h5">No Transaction Yet</h1>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              )}
-              <ModalPopUp isShow={isShow} handleClose={handleClose} />
-            </>
-          )}
-        </main>
-      </div>
+                ) : (
+                  <>
+                    <PaymentCard data={transaction} setData={setTransaction} />
+                    {transaction?.status === "Waiting Payment" && (
+                      <div className="container">
+                        <div className="d-flex justify-content-end">
+                          <button
+                            className={`btn btn-primary mt-2 fw-bold text-white ${
+                              transaction?.status === "Waiting Approve" &&
+                              "d-none"
+                            }`}
+                            style={{width: 213, height: 50}}
+                            onClick={handlePay}
+                          >
+                            PAY
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                    <ModalPopUp isShow={isShow} handleClose={handleClose} />
+                  </>
+                )}
+              </main>
+            </div>
+          </>
+        </>
+      ) : getTransLoading ? (
+        <></>
+      ) : (
+        <p>{getTransError ? getTransError : "Empty Data"}</p>
+      )}
       <Footer />
     </>
   );

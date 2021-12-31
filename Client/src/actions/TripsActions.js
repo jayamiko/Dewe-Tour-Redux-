@@ -1,13 +1,12 @@
 import axios from "axios";
 
-export const GET_USERS = "GET_USERS";
+export const GET_TRIPS = "GET_TRIPS";
 
-export const getUsers = () => {
-  console.log("2. Masuk Action");
+export const getTrips = () => {
   return (dispatch) => {
     // loading
     dispatch({
-      type: GET_USERS,
+      type: GET_TRIPS,
       payload: {
         loading: true,
         data: false,
@@ -18,13 +17,14 @@ export const getUsers = () => {
     // get API
     axios({
       method: "GET",
-      url: "http://localhost:5000/api/v1/users",
+      url: "http://localhost:5000/api/v1/trips",
       timeout: 120000,
     })
       .then((response) => {
         // Berhasil get API
+        console.log("3. Berhasil Get Data", response);
         dispatch({
-          type: GET_USERS,
+          type: GET_TRIPS,
           payload: {
             loading: false,
             data: response.data.data,
@@ -36,7 +36,7 @@ export const getUsers = () => {
         console.log(error);
         // Gagal get API
         dispatch({
-          type: GET_USERS,
+          type: GET_TRIPS,
           payload: {
             loading: {
               loading: false,

@@ -9,7 +9,6 @@ const initialState = {
 const usersReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USERS:
-      console.log("4. Masuk reducer: ",action);
       return {
         ...state,
         getUsersResult: action.payload.data,
