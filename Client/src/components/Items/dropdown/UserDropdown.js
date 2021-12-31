@@ -25,7 +25,7 @@ toast.configure();
 function UserDropdown() {
   let history = useHistory();
   const [profile, setProfile] = useState(null);
-  const currentState = useSelector((state) => state);
+  const currentState = useSelector((state) => state.auth);
 
   const logoutSession = () => {
     store.dispatch({

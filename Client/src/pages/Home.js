@@ -2,6 +2,7 @@
 import React from "react";
 import {useState, useEffect} from "react";
 import {useSelector} from "react-redux";
+import {connect} from "react-redux";
 
 // Import Style
 import {Container} from "react-bootstrap";
@@ -16,13 +17,12 @@ import Footer from "../components/Footer/Footer";
 // Import API
 import {API} from "../config/api";
 
-function Home() {
+const Home = ({auth: {isLogin, isLoading, user}}) => {
   const [trips, setTrips] = useState(null);
   const [searchData, setSearchData] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const currentState = useSelector((state) => state);
+  const currentState = useSelector((state) => state.auth);
   const isAdmin = currentState.user.status === "admin";
-  console.log(currentState);
 
   const getTrips = async () => {
     try {
@@ -79,5 +79,10 @@ function Home() {
       )}
     </>
   );
-}
-export default Home;
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Home);

@@ -18,7 +18,7 @@ import {API} from "../../config/api";
 toast.configure();
 
 export default function Payment() {
-  const currentState = useSelector((state) => state);
+  const currentState = useSelector((state) => state.auth);
   const stateAuth = currentState.user;
 
   const [isShow, setIsShow] = useState(false);

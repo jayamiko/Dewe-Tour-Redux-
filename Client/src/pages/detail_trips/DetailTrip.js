@@ -29,9 +29,10 @@ function DetailTrip() {
   const {id} = useParams();
   const history = useHistory();
 
-  const currentState = useSelector((state) => state);
+  const currentState = useSelector((state) => state.auth);
   const stateAuth = currentState.user;
-  const isLoginSession = useSelector((state) => state.isLogin);
+  const isLoginSession = useSelector((state) => currentState.isLogin);
+  console.log(isLoginSession);
 
   const [detailTrip, setDetailTrip] = useState(null);
 

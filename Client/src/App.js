@@ -37,8 +37,7 @@ function App() {
     checkUser();
   }, []);
 
-  const currentState = useSelector((state) => state);
-
+  const currentState = useSelector((state) => state.auth);
   return currentState.isLoading ? (
     <div className="loading-section">
       <div className="loading">
@@ -49,6 +48,7 @@ function App() {
   ) : (
     <BrowserRouter>
       <Switch>
+        {/* User Only */}
         <Route exact path="/" component={Home} />
         <Route exact path="/detail/:id" component={DetailTrip} />
         <Route exact path="/payment" component={Payment} />

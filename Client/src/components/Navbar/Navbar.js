@@ -14,13 +14,13 @@ import Icon from "../../img/Icon1.png";
 import {Navbar, Nav} from "react-bootstrap";
 
 function NavbarComp() {
-  const currentState = useSelector((state) => state);
+  const currentState = useSelector((state) => state.auth);
   const isAdmin = currentState.user.status === "admin";
-  const isLoginSession = useSelector((state) => state.isLogin);
+  const isLoginSession = useSelector((state) => state.isLogin === true);
   return (
     <>
-      {isLoginSession || isAdmin ? (
-        currentState.user.status === "admin" ? (
+      {currentState.isLogin ? (
+        isAdmin ? (
           <AdminDropdown />
         ) : (
           <UserDropdown />
