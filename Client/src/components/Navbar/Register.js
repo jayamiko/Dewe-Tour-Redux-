@@ -1,5 +1,10 @@
 // Import React
-import {useState} from "react";
+import {useState, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {addUsers, getUsers} from "../../actions/UsersActions";
+import {handleRegister} from "../../actions/auth";
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
 
 // Import Style
 import {toast} from "react-toastify";
@@ -7,14 +12,13 @@ import "react-toastify/dist/ReactToastify.css";
 import Palm from "../../img/palm1.png";
 import {Button, Modal, Form} from "react-bootstrap";
 
-// Import API
-import {API} from "../../config/api";
-
 toast.configure();
 
-export default function Register() {
-  const [modal, setModal] = useState(false);
-  const [registerModal, setRegisterModal] = useState(false);
+const Register = ({handleRegister, auth: {error, loading}}) => {
+  const [modal, setModal] = useState(false); //Modal Login
+  const [registerModal, setRegisterModal] = useState(false); //Modal Register
+
+  // Form Register
   const [formRegister, setFormRegister] = useState({
     name: "",
     email: "",
@@ -23,6 +27,8 @@ export default function Register() {
     address: "",
   });
 
+  const addUsersResult = useSelector((state) => state.users);
+  const dispatch = useDispatch();
   const openModalLogin = () => {
     setModal(true);
     setRegisterModal(false);
@@ -33,44 +39,46 @@ export default function Register() {
   };
   const closeModalRegister = () => setRegisterModal(false);
 
-  const {name, email, password, phone, address} = formRegister;
-
   const registerHandleChange = (e) => {
-    setFormRegister({
-      ...formRegister,
-      [e.target.name]: e.target.value,
-    });
+    setFormRegister({...formRegister, [e.target.name]: e.target.value});
   };
 
-  const registerSession = async (e) => {
-    try {
-      e.preventDefault();
+  const {email, password, name, phone, address} = formRegister;
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      const body = JSON.stringify(formRegister);
-      const response = await API.post("/register", body, config);
-
-      if (response?.status === 200) {
-        toast.success(`Register Success`, {
-          position: toast.POSITION.BOTTOM_RIGHT,
-          autoClose: 2000,
-        });
-        setRegisterModal(false);
-        setModal(false);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(`Data Already Exist`, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 2000,
-      });
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleRegister(email, password, name, phone, address);
   };
+
+  // const registerSession = async (e) => {
+  //   try {
+  //     e.preventDefault();
+
+  //     const config = {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     };
+
+  //     const body = JSON.stringify(formRegister);
+  //     const response = await API.post("/register", body, config);
+
+  //     if (response?.status === 200) {
+  //       toast.success(`Register Success`, {
+  //         position: toast.POSITION.BOTTOM_RIGHT,
+  //         autoClose: 2000,
+  //       });
+  //       setRegisterModal(false);
+  //       setModal(false);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error(`Data Already Exist`, {
+  //       position: toast.POSITION.BOTTOM_RIGHT,
+  //       autoClose: 2000,
+  //     });
+  //   }
+  // };
 
   return (
     <>
@@ -85,13 +93,15 @@ export default function Register() {
             aria-label="Close"
             onClick={closeModalRegister}
             required
-          ></button>
-          <Form onSubmit={registerSession}>
+          >
+            x
+          </button>
+          <Form onSubmit={(e) => handleSubmit(e)}>
             <Form.Group className="mb-4" controlId="formBasicName">
               <Form.Label className="fw-bold">FullName</Form.Label>
               <Form.Control
                 name="name"
-                onChange={registerHandleChange}
+                onChange={(e) => registerHandleChange(e)}
                 type="text"
                 required
               />
@@ -99,7 +109,7 @@ export default function Register() {
             <Form.Group className="mb-4" controlId="formBasicEmail">
               <Form.Label className="fw-bold">Email address</Form.Label>
               <Form.Control
-                onChange={registerHandleChange}
+                onChange={(e) => registerHandleChange(e)}
                 type="email"
                 name="email"
                 required
@@ -108,7 +118,7 @@ export default function Register() {
             <Form.Group className="mb-4" controlId="formBasicPassword">
               <Form.Label className="fw-bold">Password</Form.Label>
               <Form.Control
-                onChange={registerHandleChange}
+                onChange={(e) => registerHandleChange(e)}
                 type="password"
                 name="password"
                 required
@@ -117,7 +127,7 @@ export default function Register() {
             <Form.Group className="mb-4" controlId="formBasicPhone">
               <Form.Label className="fw-bold">Phone</Form.Label>
               <Form.Control
-                onChange={registerHandleChange}
+                onChange={(e) => registerHandleChange(e)}
                 name="phone"
                 type="text"
                 required
@@ -126,7 +136,7 @@ export default function Register() {
             <Form.Group className="mb-4" controlId="formBasicPhone">
               <Form.Label className="fw-bold">Address</Form.Label>
               <Form.Control
-                onChange={registerHandleChange}
+                onChange={(e) => registerHandleChange(e)}
                 name="address"
                 type="text"
                 required
@@ -162,4 +172,15 @@ export default function Register() {
       </span>
     </>
   );
-}
+};
+
+Register.propTypes = {
+  handleRegister: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {handleRegister})(Register);

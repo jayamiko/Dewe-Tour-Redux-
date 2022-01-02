@@ -12,7 +12,7 @@ import Icon from "../../../img/Icon1.png";
 import {Navbar, Nav} from "react-bootstrap";
 
 // Import API
-import checkUser from "../../../actions/auth";
+import {checkUser} from "../../../actions/auth";
 import {setAuthToken} from "../../../config/api";
 
 toast.configure();

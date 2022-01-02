@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 // Import API
 import {API, setAuthToken} from "../../../config/api";
-import checkUser from "../../../actions/auth";
+import {checkUser} from "../../../actions/auth";
 
 toast.configure();
 

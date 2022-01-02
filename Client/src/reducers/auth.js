@@ -1,4 +1,8 @@
+import {REGISTER_SUCCESS, REGISTER_FAIL} from "../actions/auth";
+
 const initialValue = {
+  token: localStorage.getItem("token"),
+  isAuthenticated: null,
   isLoading: true,
   isLogin: false,
   user: {},
@@ -9,6 +13,7 @@ const authReducer = (state = initialValue, action) => {
 
   switch (type) {
     case "AUTH_SUCCESS":
+    case REGISTER_SUCCESS:
     case "LOGIN":
       localStorage.setItem("token", payload.token);
 
@@ -17,6 +22,7 @@ const authReducer = (state = initialValue, action) => {
         isLogin: true,
         user: payload,
       };
+    case REGISTER_FAIL:
     case "AUTH_ERROR":
     case "LOGOUT":
       localStorage.removeItem("token");

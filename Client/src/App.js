@@ -18,7 +18,7 @@ import ChatAdmin from "./pages/Chat/Admin/ChatAdmin";
 import "./App.css";
 
 // Import API
-import checkUser from "./actions/auth";
+import {checkUser} from "./actions/auth";
 import {setAuthToken} from "./config/api";
 
 // init token on axios every time the app is refreshed
