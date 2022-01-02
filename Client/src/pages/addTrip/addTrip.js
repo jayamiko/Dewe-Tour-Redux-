@@ -6,8 +6,15 @@ import Navbar from "../../components/Navbar/Navbar";
 import "./addTrip.css";
 import Attach from "../../img/attach.png";
 import {API} from "../../config/api";
+import {connect} from "react-redux";
+import {addTrip} from "../../actions/TripsActions";
+import PropTypes from "prop-types";
 
-const AddTrip = () => {
+const AddTripPage = ({addTrip}) => {
+  const history = useHistory();
+  const [preview, setPreview] = useState([]);
+  const [countries, setCountries] = useState([]);
+
   const [input, setInput] = useState({
     title: "",
     idCountry: "",
@@ -23,25 +30,35 @@ const AddTrip = () => {
     image: [],
   });
 
-  const history = useHistory();
-  const [preview, setPreview] = useState([]);
-  const [countries, setCountries] = useState([]);
+  const handleChange = (event) => {
+    const updateForm = {...input};
+    updateForm[event.target.name] =
+      event.target.type === "file" ? event.target.files : event.target.value;
+    setInput(updateForm);
 
-  const handleChange = (e) => {
-    setInput({
-      ...input,
-      [e.target.name]:
-        e.target.type === "file" ? e.target.files : e.target.value,
-    });
-
-    if (e.target.name === "image") {
-      const target = e.target.files;
+    if (event.target.name === "image") {
+      const target = event.target.files;
       const formArr = Array.from(target).map((file) =>
         URL.createObjectURL(file)
       );
       setPreview((item) => item.concat(formArr));
     }
   };
+
+  const {
+    title,
+    idCountry,
+    accomodation,
+    transportation,
+    eat,
+    day,
+    night,
+    dateTrip,
+    price,
+    quota,
+    description,
+    image,
+  } = input;
 
   const getCountries = async () => {
     try {
@@ -56,35 +73,15 @@ const AddTrip = () => {
     getCountries();
   }, []);
 
-  const handleSubmit = async (e) => {
-    try {
-      const config = {
-        headers: {
-          "Content-type": "multipart/form-data",
-        },
-      };
-      const data = new FormData();
-      for (let i = 0; i < input.image.length; i++) {
-        data.append("image", input.image[i]);
-      }
-      data.set("title", input.title);
-      data.set("idCountry", input.country);
-      data.set("accomodation", input.accomodation);
-      data.set("transportation", input.transportation);
-      data.set("eat", input.eat);
-      data.set("day", input.day);
-      data.set("night", input.night);
-      data.set("dateTrip", input.dateTrip);
-      data.set("price", input.price);
-      data.set("quota", input.quota);
-      data.set("maxQuota", input.quota);
-      data.set("description", input.description);
+  const redirect = () => {
+    history.push(`/`);
+  };
 
-      const response = await API.post("/trip", data, config);
-      history.push("/");
-    } catch (error) {
-      console.log(error);
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(input);
+
+    addTrip(input, redirect);
   };
 
   return (
@@ -295,4 +292,12 @@ const AddTrip = () => {
   );
 };
 
-export default AddTrip;
+AddTripPage.propTypes = {
+  addTrip: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  trips: state.trips,
+});
+
+export default connect(mapStateToProps, {addTrip})(AddTripPage);

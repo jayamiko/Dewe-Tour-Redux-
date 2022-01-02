@@ -1,9 +1,18 @@
-import {GET_TRIPS} from "../actions/TripsActions";
+import {
+  GET_TRIPS,
+  ADD_TRIP_SUCCESS,
+  ADD_TRIP_FAIL,
+} from "../actions/TripsActions";
 
 const initialState = {
   getTripsResult: false,
   getTripsLoading: false,
   getTripsError: false,
+
+  loading: true,
+  musicAll: [],
+  artisAll: [],
+  error: "",
 };
 
 const tripsReducer = (state = initialState, action) => {
@@ -15,6 +24,12 @@ const tripsReducer = (state = initialState, action) => {
         getTripsLoading: action.payload.loading,
         getTripsError: action.payload.errorMessage,
       };
+    case ADD_TRIP_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case ADD_TRIP_FAIL:
     default:
       return state;
   }

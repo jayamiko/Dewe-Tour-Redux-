@@ -1,7 +1,6 @@
 // Import React
 import {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addUsers, getUsers} from "../../actions/UsersActions";
 import {handleRegister} from "../../actions/auth";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
@@ -27,8 +26,6 @@ const Register = ({handleRegister, auth: {error, loading}}) => {
     address: "",
   });
 
-  const addUsersResult = useSelector((state) => state.users);
-  const dispatch = useDispatch();
   const openModalLogin = () => {
     setModal(true);
     setRegisterModal(false);
@@ -49,36 +46,6 @@ const Register = ({handleRegister, auth: {error, loading}}) => {
     e.preventDefault();
     handleRegister(email, password, name, phone, address);
   };
-
-  // const registerSession = async (e) => {
-  //   try {
-  //     e.preventDefault();
-
-  //     const config = {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     };
-
-  //     const body = JSON.stringify(formRegister);
-  //     const response = await API.post("/register", body, config);
-
-  //     if (response?.status === 200) {
-  //       toast.success(`Register Success`, {
-  //         position: toast.POSITION.BOTTOM_RIGHT,
-  //         autoClose: 2000,
-  //       });
-  //       setRegisterModal(false);
-  //       setModal(false);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error(`Data Already Exist`, {
-  //       position: toast.POSITION.BOTTOM_RIGHT,
-  //       autoClose: 2000,
-  //     });
-  //   }
-  // };
 
   return (
     <>
