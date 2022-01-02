@@ -1,4 +1,6 @@
 import axios from "axios";
+import {checkUser} from "./auth";
+import {API} from "../config/api";
 
 export const GET_USERS = "GET_USERS";
 export const ADD_USERS = "ADD_USERS"; //Register
@@ -94,4 +96,25 @@ export const addUsers = () => {
         });
       });
   };
+};
+
+//Change Profile Pict
+export const changeProfile = (photo, idUser) => async (dispatch) => {
+  try {
+    const formData = new FormData();
+
+    formData.append("photo", photo);
+
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+
+    const res = await API.put(`/user/${idUser}`, formData, config);
+    console.log(res);
+    dispatch(checkUser());
+  } catch (err) {
+    console.log(err);
+  }
 };

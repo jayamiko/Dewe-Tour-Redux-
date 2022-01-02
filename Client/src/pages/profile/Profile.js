@@ -114,7 +114,7 @@ function Profile() {
                       </div>
                     </div>
                   </div>
-                  <InputFileAvatar userId={stateAuth.id} avatar={user.photo} />
+                  <InputFileAvatar />
                 </Container>
 
                 <h1
