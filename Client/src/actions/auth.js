@@ -1,8 +1,10 @@
-import {API, setAuthToken} from "../config/api";
+import {API} from "../config/api";
 import store from "../store";
 
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAIL = "AUTH_ERROR";
 
 export const checkUser = async () => {
   try {
@@ -59,6 +61,33 @@ export const handleRegister =
     } catch (error) {
       dispatch({
         type: REGISTER_FAIL,
+      });
+    }
+  };
+
+export const handleLogin =
+  (email, password, modalLogin) => async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const body = JSON.stringify({email, password});
+
+    try {
+      const res = await API.post("/login", body, config);
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data.data,
+      });
+
+      //ambil data user
+      dispatch(checkUser());
+      modalLogin(); //close modal login
+    } catch (err) {
+      dispatch({
+        type: LOGIN_FAIL,
       });
     }
   };

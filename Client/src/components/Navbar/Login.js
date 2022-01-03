@@ -1,8 +1,10 @@
 // Import React
 import {useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
-import store from "../../store";
 import {useSelector} from "react-redux";
+import {handleLogin} from "../../actions/auth";
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
 
 // Import Style
 import {Button, Modal, Form} from "react-bootstrap";
@@ -16,7 +18,7 @@ import {checkUser} from "../../actions/auth";
 
 toast.configure();
 
-export default function Login() {
+const Login = ({handleLogin, auth: {error, loading}}) => {
   const history = useHistory();
 
   const isLoginSession = useSelector((state) => state.isLogin);
@@ -54,41 +56,9 @@ export default function Login() {
     });
   };
 
-  const loginSession = async (event) => {
-    try {
-      event.preventDefault();
-
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-
-      const body = JSON.stringify(formLogin);
-
-      const response = await API.post("/login", body, config);
-
-      if (response?.status === 200) {
-        toast.success("Login Success", {
-          position: toast.POSITION.BOTTOM_RIGHT,
-          autoClose: 2000,
-        });
-        store.dispatch({
-          type: "LOGIN",
-          payload: response.data.data,
-        });
-
-        setAuthToken(response.data.data.token);
-      }
-
-      checkUser();
-    } catch (error) {
-      console.log(error);
-      toast.error("Login Failed", {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 2000,
-      });
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLogin(email, password);
   };
 
   useEffect(() => {
@@ -103,6 +73,11 @@ export default function Login() {
 
   return (
     <>
+      {error === null || loading ? (
+        ""
+      ) : (
+        <p style={{textTransform: "capitalize", margin: "0 0"}}>{error}</p>
+      )}
       <button onClick={openModalLogin} className="btn-login" href>
         Login
       </button>
@@ -117,13 +92,14 @@ export default function Login() {
             aria-label="Close"
             onClick={closeModalLogin}
           ></button>
-          <Form>
+          <Form onSubmit={(e) => handleSubmit(e)}>
             <Form.Group className="mb-4">
               <Form.Label className="fw-bold">Email address</Form.Label>
               <Form.Control
                 name="email"
-                onChange={LoginHandleChange}
+                onChange={(e) => LoginHandleChange(e)}
                 type="email"
+                value={email}
                 id="email"
                 required
               />
@@ -133,7 +109,7 @@ export default function Login() {
               <Form.Label className="fw-bold">Password</Form.Label>
               <Form.Control
                 name="password"
-                onChange={LoginHandleChange}
+                onChange={(e) => LoginHandleChange(e)}
                 type="password"
                 required
                 id="password"
@@ -141,7 +117,6 @@ export default function Login() {
             </Form.Group>
             <div class="d-flex flex-column gap-2 ">
               <Button
-                onClick={loginSession}
                 className="text-white fw-bold"
                 variant="warning"
                 type="submit"
@@ -161,4 +136,15 @@ export default function Login() {
       </Modal>
     </>
   );
-}
+};
+
+Login.propTypes = {
+  handleLogin: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {handleLogin})(Login);
