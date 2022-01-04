@@ -1,50 +1,61 @@
-import axios from "axios";
+import {API} from "../config/api";
 
-export const GET_TRANSACTIONS = "GET_TRANSACTIONS";
+export const GET_TRANSACTIONS_SUCCESS = "GET_TRANSACTIONS";
+export const GET_TRANSACTIONS_ERROR = "GET_TRANSACTIONS";
+export const PAYMENT_UPDATE_SUCCES = "PAYMENT_UPDATE_SUCCES";
+export const PAYMENT_UPDATE_FAIL = "PAYMENT_UPDATE_FAIL";
 
-export const getTransactions = () => {
-  return (dispatch) => {
-    // loading
+export const getTransactions = () => async (dispatch) => {
+  try {
+    const response = await API.get("/transactions");
+
     dispatch({
-      type: GET_TRANSACTIONS,
-      payload: {
-        loading: true,
-        data: false,
-        errorMessage: false,
+      type: GET_TRANSACTIONS_SUCCESS,
+      payload: response.data.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_TRANSACTIONS_ERROR,
+    });
+  }
+};
+
+export const updatePayment =
+  (status, data, idTransactions, userId) => async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
       },
+    };
+    console.log(data);
+
+    if (status === "Cancel") {
+      let sumQuota = data.counterQty + data.trip.quota;
+      const returnQuota = JSON.stringify({quota: sumQuota});
+
+      await API.put(`/trip/${data.trip.id}`, returnQuota, config);
+    }
+
+    const body = JSON.stringify({
+      status,
+      userId,
     });
 
-    // get API
-    axios({
-      method: "GET",
-      url: "http://localhost:5000/api/v1/transactions",
-      timeout: 120000,
-    })
-      .then((response) => {
-        // Berhasil get API
-        console.log("3. Berhasil Get Data", response);
-        dispatch({
-          type: GET_TRANSACTIONS,
-          payload: {
-            loading: false,
-            data: response.data.data,
-            errorMessage: false,
-          },
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        // Gagal get API
-        dispatch({
-          type: GET_TRANSACTIONS,
-          payload: {
-            loading: {
-              loading: false,
-              data: false,
-              errorMessage: error.message,
-            },
-          },
-        });
+    try {
+      const response = await API.put(
+        `/transactions/confirm/${idTransactions}`,
+        body,
+        config
+      );
+      console.log(response.data.data);
+      dispatch({
+        type: PAYMENT_UPDATE_SUCCES,
+        payload: response.data.data.user,
       });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: PAYMENT_UPDATE_FAIL,
+      });
+    }
   };
-};

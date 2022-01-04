@@ -1,32 +1,27 @@
-import {API} from "../config/api";
-import store from "../store";
+import {API, setAuthToken} from "../config/api";
+// import store from "../store";
 
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_FAIL = "AUTH_ERROR";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+export const USER_LOADED = "USER_LOADED";
+export const AUTH_ERROR = "AUTH_ERROR";
 
-export const checkUser = async () => {
+export const checkUser = () => async (dispatch) => {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
+
   try {
-    const response = await API.get("/check-auth");
-
-    if (response.status !== 200) {
-      return store.dispatch({
-        type: "AUTH_ERROR",
-      });
-    }
-
-    let payload = response.data.data.user;
-
-    payload.token = localStorage.token;
-
-    store.dispatch({
-      type: "AUTH_SUCCESS",
-      payload,
+    const res = await API.get("/check-auth");
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data.data.user,
     });
-  } catch (error) {
-    store.dispatch({
-      type: "STOP_LOADING",
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
     });
   }
 };
@@ -76,10 +71,10 @@ export const handleLogin =
     const body = JSON.stringify({email, password});
 
     try {
-      const res = await API.post("/login", body, config);
+      const response = await API.post("/login", body, config);
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: res.data.data,
+        payload: response.data.data,
       });
 
       //ambil data user

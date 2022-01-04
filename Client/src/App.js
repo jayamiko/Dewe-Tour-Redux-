@@ -2,6 +2,7 @@
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {useEffect} from "react";
 import {useSelector} from "react-redux";
+import store from "./store";
 
 // Import Pages
 import DetailTrip from "./pages/detail_trips/DetailTrip";
@@ -28,13 +29,7 @@ if (localStorage.token) {
 
 function App() {
   useEffect(() => {
-    if (localStorage.token) {
-      setAuthToken(localStorage.token);
-    }
-  });
-
-  useEffect(() => {
-    checkUser();
+    store.dispatch(checkUser());
   }, []);
 
   const currentState = useSelector((state) => state.auth);

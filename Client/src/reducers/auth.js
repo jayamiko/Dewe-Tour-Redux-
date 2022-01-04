@@ -1,10 +1,3 @@
-import {
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-} from "../actions/auth";
-
 const initialValue = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
@@ -17,6 +10,13 @@ const authReducer = (state = initialValue, action) => {
   const {type, payload} = action;
 
   switch (type) {
+    case "USER_LOADED":
+      return {
+        ...state,
+        isAuthenticated: true,
+        isLoading: false,
+        user: payload,
+      };
     case "AUTH_SUCCESS":
     case "REGISTER_SUCCESS":
     case "LOGIN_SUCCESS":

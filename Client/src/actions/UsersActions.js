@@ -111,8 +111,7 @@ export const changeProfile = (photo, idUser) => async (dispatch) => {
       },
     };
 
-    const res = await API.put(`/user/${idUser}`, formData, config);
-    console.log(res);
+    const response = await API.put(`/user/${idUser}`, formData, config);
     dispatch(checkUser());
   } catch (err) {
     console.log(err);

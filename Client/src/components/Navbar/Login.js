@@ -13,7 +13,7 @@ import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // Import API
-import {API, setAuthToken} from "../../config/api";
+import {setAuthToken} from "../../config/api";
 import {checkUser} from "../../actions/auth";
 
 toast.configure();
