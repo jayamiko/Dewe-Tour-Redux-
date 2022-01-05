@@ -1,7 +1,7 @@
 // Import Components
-// import formatWeek from "../../Items/Format/formatWeek";
-// import formatNumber from "../../Items/Format/format";
-// import formatDate from "../../Items/Format/formatDate";
+import formatWeek from "../../Items/Format/formatWeek";
+import formatNumber from "../../Items/Format/format";
+import formatDate from "../../Items/Format/formatDate";
 import {Modal} from "react-bootstrap";
 
 // Import Styles
@@ -67,8 +67,10 @@ const Invoice = (props) => {
                       Booking
                     </h1>
                     <p className="text-end">
-                      <span className="fw-bold">{transaction.createdAt}</span>,{" "}
-                      {transaction.createdAt}
+                      <span className="fw-bold">
+                        {formatDate(transaction.createdAt)}
+                      </span>
+                      , {formatDate(transaction.createdAt)}
                     </p>
                   </div>
                 </div>

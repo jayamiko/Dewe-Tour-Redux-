@@ -1,56 +1,24 @@
-import {useState} from "react";
-import axios from "axios";
 import {API} from "../config/api";
 
 export const GET_TRIPS = "GET_TRIPS";
+export const GET_TRIPS_FAIL = "GET_TRIPS_FAIL";
 export const ADD_TRIP_SUCCESS = "ADD_TRIP_SUCCESS";
 export const ADD_TRIP_FAIL = "ADD_TRIP_FAIL";
 
-export const getTrips = () => {
-  return (dispatch) => {
-    // loading
+//Get Trips
+export const getTrips = () => async (dispatch) => {
+  try {
+    const response = await API.get("/trips");
+
     dispatch({
       type: GET_TRIPS,
-      payload: {
-        loading: true,
-        data: false,
-        errorMessage: false,
-      },
+      payload: response.data.data,
     });
-
-    // get API
-    axios({
-      method: "GET",
-      url: "http://localhost:5000/api/v1/trips",
-      timeout: 120000,
-    })
-      .then((response) => {
-        // Berhasil get API
-        console.log("3. Berhasil Get Data", response);
-        dispatch({
-          type: GET_TRIPS,
-          payload: {
-            loading: false,
-            data: response.data.data,
-            errorMessage: false,
-          },
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        // Gagal get API
-        dispatch({
-          type: GET_TRIPS,
-          payload: {
-            loading: {
-              loading: false,
-              data: false,
-              errorMessage: error.message,
-            },
-          },
-        });
-      });
-  };
+  } catch (e) {
+    dispatch({
+      type: GET_TRIPS_FAIL,
+    });
+  }
 };
 
 //Add Music

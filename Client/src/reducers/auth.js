@@ -25,6 +25,7 @@ const authReducer = (state = initialValue, action) => {
       return {
         isLoading: false,
         isLogin: true,
+        isAuthenticated: true,
         user: payload,
       };
     case "REGISTER_FAIL":
@@ -34,6 +35,7 @@ const authReducer = (state = initialValue, action) => {
       return {
         isLoading: false,
         isLogin: false,
+        isAuthenticated: false,
         user: {},
       };
     case "STOP_LOADING":

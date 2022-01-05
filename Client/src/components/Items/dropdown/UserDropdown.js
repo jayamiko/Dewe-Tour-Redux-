@@ -24,9 +24,6 @@ toast.configure();
 
 function UserDropdown() {
   let history = useHistory();
-  const [profile, setProfile] = useState(null);
-  const currentState = useSelector((state) => state.auth);
-
   const logoutSession = () => {
     store.dispatch({
       type: "LOGOUT",
@@ -53,19 +50,6 @@ function UserDropdown() {
 
   useEffect(() => {
     checkUser();
-  }, []);
-
-  const getMyProfile = async () => {
-    try {
-      const response = await API.get(`/user/${currentState.user.id}`);
-      setProfile(response.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getMyProfile();
   }, []);
 
   return (

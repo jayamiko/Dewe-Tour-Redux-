@@ -8,6 +8,7 @@ export default function GroupTour({data, isAdmin, searchData}) {
       minimumFractionDigits: 0,
     }).format(number);
   };
+
   return (
     <section className="group-tour mb-5">
       <div className="container">
