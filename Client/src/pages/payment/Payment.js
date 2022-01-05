@@ -1,6 +1,7 @@
 // import React
 import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {connect, useSelector} from "react-redux";
+import PropTypes from "prop-types";
 import {getTransactions} from "../../actions/TransActions";
 
 // Import Components
@@ -18,17 +19,14 @@ import {API} from "../../config/api";
 
 toast.configure();
 
-export default function Payment() {
-  const currentState = useSelector((state) => state);
-  const stateAuth = currentState.auth.user;
-
-  const {getTransResult, getTransLoading, getTransError} =
-    currentState.transactions;
-
-  const dispatch = useDispatch();
+const Payment = ({
+  auth: {user},
+  getTransactions,
+  transactions: {transactions, loading},
+}) => {
   useEffect(() => {
-    dispatch(getTransactions());
-  }, [dispatch]);
+    getTransactions();
+  }, [getTransactions]);
 
   const [isShow, setIsShow] = useState(false);
   const [transaction, setTransaction] = useState(null);
@@ -37,11 +35,15 @@ export default function Payment() {
     setIsShow(false);
   };
 
+  const currentState = useSelector((state) => state.auth);
+  const UserPayment = currentState.user?.id;
+  console.log(currentState.user?.id);
+
   const getLastTransaction = async () => {
     try {
       const response = await API.get("/transactions");
       const filteredTransactions = response.data.data.filter(
-        (item) => item.user.id === stateAuth.id
+        (item) => item.user.id === UserPayment
       );
       setTransaction(filteredTransactions[filteredTransactions.length - 1]);
     } catch (error) {
@@ -50,7 +52,7 @@ export default function Payment() {
   };
 
   const handlePay = async () => {
-    if (!getTransResult.attachment) {
+    if (!transactions.attachment) {
       toast.success(`Update is Success`, {
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 2000,
@@ -66,12 +68,12 @@ export default function Payment() {
     const formData = new FormData();
     formData.set(
       "attachment",
-      getTransResult.attachment[0],
-      getTransResult.attachment[0].name
+      transactions.attachment[0],
+      transactions.attachment[0].name
     );
 
     const response = await API.put(
-      `/transactions/pay/${getTransResult.id}`,
+      `/transactions/pay/${transactions.id}`,
       formData,
       config
     );
@@ -85,7 +87,7 @@ export default function Payment() {
 
   return (
     <>
-      {getTransResult ? (
+      {transactions ? (
         <>
           <>
             <div
@@ -137,12 +139,23 @@ export default function Payment() {
             </div>
           </>
         </>
-      ) : getTransLoading ? (
-        <></>
       ) : (
-        <p>{getTransError ? getTransError : "Empty Data"}</p>
+        <p>Empty Data</p>
       )}
       <Footer />
     </>
   );
-}
+};
+
+Payment.propTypes = {
+  getTransactions: PropTypes.func.isRequired,
+  transactions: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  transactions: state.transactions,
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {getTransactions})(Payment);

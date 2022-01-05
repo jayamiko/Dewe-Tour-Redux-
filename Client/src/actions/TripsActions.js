@@ -2,6 +2,8 @@ import {API} from "../config/api";
 
 export const GET_TRIPS = "GET_TRIPS";
 export const GET_TRIPS_FAIL = "GET_TRIPS_FAIL";
+export const GET_TRIP = "GET_TRIP";
+export const TRIP_ERROR = "TRIP_ERROR";
 export const ADD_TRIP_SUCCESS = "ADD_TRIP_SUCCESS";
 export const ADD_TRIP_FAIL = "ADD_TRIP_FAIL";
 
@@ -17,6 +19,25 @@ export const getTrips = () => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: GET_TRIPS_FAIL,
+    });
+  }
+};
+
+// Get Trip Detail
+export const getTripDetail = (id) => async (dispatch) => {
+  try {
+    let response = await API.get(`/trip/${id}`);
+    dispatch({
+      type: GET_TRIP,
+      payload: response.data.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: TRIP_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
     });
   }
 };

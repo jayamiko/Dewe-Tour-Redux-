@@ -14,8 +14,6 @@ toast.configure();
 
 const Invoice = (props) => {
   const {isShow, setIsShow, handleClose, transactions, updatePayment} = props;
-  console.log("transaction:", transactions);
-  console.log("update:", updatePayment);
 
   const handleClickImage = () => {
     transactions.attachment && window.open(transactions.attachment, "_blank");

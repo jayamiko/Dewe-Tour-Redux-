@@ -1,9 +1,12 @@
 // Import React
 import {useEffect, useState} from "react";
-import {useHistory, useParams} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {useSelector} from "react-redux";
-
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {getTripDetail} from "../../actions/TripsActions";
 import moment from "moment";
+
 // Import Components
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
@@ -25,30 +28,15 @@ import {API} from "../../config/api";
 
 toast.configure();
 
-function DetailTrip() {
-  const {id} = useParams();
-  const history = useHistory();
+const DetailTrip = ({trips: {tripDetail}, getTripDetail, match}) => {
+  useEffect(() => {
+    getTripDetail(match.params.id);
+  }, [getTripDetail]);
 
+  const history = useHistory();
   const currentState = useSelector((state) => state.auth);
   const stateAuth = currentState.user;
-  const isLoginSession = useSelector((state) => currentState.isLogin);
-  console.log(isLoginSession);
-
-  const [detailTrip, setDetailTrip] = useState(null);
-
-  const getDetailTrip = async (id) => {
-    try {
-      const response = await API.get("/trip/" + id);
-      setDetailTrip(response.data.data);
-      console.log(response.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getDetailTrip(id);
-  }, []);
+  const isLoginSession = useSelector((state) => currentState.isAuthenticated);
 
   const rupiah = (number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -64,14 +52,17 @@ function DetailTrip() {
 
   const [transaction, setTransaction] = useState({
     counterQty: 1,
-    total: detailTrip?.price,
-    tripId: detailTrip?.id,
+    total: tripDetail?.price,
+    tripId: tripDetail?.id,
     userId: stateAuth.id,
   });
 
-  let totalPrice = transaction?.counterQty * detailTrip?.price;
+  console.log("TripDetail:", tripDetail);
+  console.log("transaction:", transaction);
+
+  let totalPrice = transaction?.counterQty * tripDetail?.price;
   const [quotaRemaining, setQuotaRemaining] = useState({
-    quota: detailTrip?.quota - transaction?.counterQty,
+    quota: tripDetail?.quota - transaction?.counterQty,
   });
 
   const [dataTransaction, setDataTransaction] = useState([]);
@@ -105,15 +96,15 @@ function DetailTrip() {
   };
 
   const handleAdd = () => {
-    if (transaction?.counterQty < detailTrip?.quota) {
+    if (transaction?.counterQty < tripDetail?.quota) {
       const add = transaction?.counterQty + 1;
-      const updateQuota = detailTrip?.quota - add;
+      const updateQuota = tripDetail?.quota - add;
       setQuotaRemaining({quota: updateQuota});
       setTransaction(() => ({
-        tripId: detailTrip?.id,
+        tripId: tripDetail?.id,
         userId: stateAuth.id,
         counterQty: add,
-        total: totalPrice + detailTrip?.price,
+        total: totalPrice + tripDetail?.price,
       }));
     }
   };
@@ -121,13 +112,13 @@ function DetailTrip() {
   const handleSubtract = () => {
     if (transaction?.counterQty > 0) {
       const subtract = transaction?.counterQty - 1;
-      const updateQuota = detailTrip?.quota - subtract;
+      const updateQuota = tripDetail?.quota - subtract;
       setQuotaRemaining({quota: updateQuota});
       setTransaction(() => ({
-        tripId: detailTrip?.id,
+        tripId: tripDetail?.id,
         userId: stateAuth.id,
         counterQty: subtract,
-        total: totalPrice + detailTrip?.price,
+        total: totalPrice + tripDetail?.price,
       }));
     }
   };
@@ -135,7 +126,7 @@ function DetailTrip() {
   const handleSubmit = async () => {
     try {
       if (isLoginSession) {
-        const detailTripData = await API.get(`/trip/${detailTrip?.id}`);
+        const detailTripData = await API.get(`/trip/${tripDetail?.id}`);
         const quotaTrip = detailTripData.data.data.quota;
 
         let resultQuota = quotaTrip - transaction?.counterQty;
@@ -175,7 +166,7 @@ function DetailTrip() {
         );
 
         const bodyQuota = JSON.stringify(quotaRemaining);
-        await API.put(`/trip/${detailTrip?.id}`, bodyQuota, config);
+        await API.put(`/trip/${tripDetail?.id}`, bodyQuota, config);
         response.data.status === "success" &&
           toast.success(`Order successful, now complete your transaction`, {
             position: toast.POSITION.BOTTOM_RIGHT,
@@ -204,14 +195,14 @@ function DetailTrip() {
           }}
         >
           <h1>
-            {detailTrip?.day}D/{detailTrip?.night}N {detailTrip?.title}
+            {tripDetail?.day}D/{tripDetail?.night}N {tripDetail?.title}
           </h1>
-          <small>{detailTrip?.country.name}</small>
+          <small>{tripDetail?.country.name}</small>
         </div>
 
         {/* IMAGE TOUR */}
         <img
-          src={detailTrip?.image[0].url}
+          src={tripDetail?.image[0].url}
           alt="/"
           style={{
             width: "1018px",
@@ -227,7 +218,7 @@ function DetailTrip() {
           }}
         >
           <img
-            src={detailTrip?.image[1].url}
+            src={tripDetail?.image[1].url}
             alt="/"
             style={{
               marginRight: "15px",
@@ -238,7 +229,7 @@ function DetailTrip() {
             }}
           />
           <img
-            src={detailTrip?.image[2].url}
+            src={tripDetail?.image[2].url}
             alt="/"
             style={{
               marginRight: "15px",
@@ -249,7 +240,7 @@ function DetailTrip() {
             }}
           />
           <img
-            src={detailTrip?.image[3].url}
+            src={tripDetail?.image[3].url}
             alt="/"
             style={{
               width: "329.73px",
@@ -285,7 +276,7 @@ function DetailTrip() {
               }}
             >
               <img src={Hotel} alt="" />
-              <p style={{paddingLeft: "10px"}}>{detailTrip?.accomodation}</p>
+              <p style={{paddingLeft: "10px"}}>{tripDetail?.accomodation}</p>
             </div>
           </div>
           <div>
@@ -296,7 +287,7 @@ function DetailTrip() {
               }}
             >
               <img src={Plane} alt="" />
-              <p style={{paddingLeft: "10px"}}>{detailTrip?.transportation}</p>
+              <p style={{paddingLeft: "10px"}}>{tripDetail?.transportation}</p>
             </div>
           </div>
           <div>
@@ -307,7 +298,7 @@ function DetailTrip() {
               }}
             >
               <img src={Meal} alt="" />
-              <p style={{paddingLeft: "10px"}}>{detailTrip?.eat}</p>
+              <p style={{paddingLeft: "10px"}}>{tripDetail?.eat}</p>
             </div>
           </div>
           <div>
@@ -319,7 +310,7 @@ function DetailTrip() {
             >
               <img src={Time} alt="" />
               <p style={{paddingLeft: "10px"}}>
-                {detailTrip?.day} Day {detailTrip?.night}Night
+                {tripDetail?.day} Day {tripDetail?.night}Night
               </p>
             </div>
           </div>
@@ -332,7 +323,7 @@ function DetailTrip() {
             >
               <img src={Calender} alt="" />
               <p style={{paddingLeft: "10px"}}>
-                {moment(detailTrip?.dateTrip).format("l")}
+                {moment(tripDetail?.dateTrip).format("l")}
               </p>
             </div>
           </div>
@@ -352,7 +343,7 @@ function DetailTrip() {
         >
           Description
         </h3>
-        <p className="description">{detailTrip?.description}</p>
+        <p className="description">{tripDetail?.description}</p>
 
         <section className="detail-calculate mb-5">
           <div style={{marginTop: "15px"}}>
@@ -360,7 +351,7 @@ function DetailTrip() {
               <div style={{color: "orange", fontFamily: "Avenir"}}>
                 Rp.
                 <span style={{marginLeft: "10px"}}>
-                  {rupiah(detailTrip?.price)}
+                  {rupiah(tripDetail?.price)}
                 </span>
                 /<span style={{color: "black"}}>Person</span>
               </div>
@@ -448,6 +439,17 @@ function DetailTrip() {
       <Footer />
     </>
   );
-}
+};
 
-export default DetailTrip;
+DetailTrip.propTypes = {
+  trips: PropTypes.object.isRequired,
+  transactions: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  trips: state.trips,
+});
+
+export default connect(mapStateToProps, {
+  getTripDetail,
+})(DetailTrip);
