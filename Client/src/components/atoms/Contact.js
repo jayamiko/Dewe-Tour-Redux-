@@ -5,6 +5,7 @@ import Avatar from "@mui/material/Avatar";
 import StyledBadge from "../../utils/StyledBadge";
 
 const Contact = ({datacontact, clickcontact, contact, useronline}) => {
+  console.log(contact);
   return (
     <div className="wrapper-contact">
       {datacontact.map((item) => {
@@ -23,10 +24,10 @@ const Contact = ({datacontact, clickcontact, contact, useronline}) => {
               anchorOrigin={{vertical: "bottom", horizontal: "right"}}
               variant={status}
             >
-              <Avatar alt={item?.fullName} src={item?.avatar} />
+              <Avatar alt={item?.name} src={item?.photo} />
             </StyledBadge>
-            <div className="ml-m">
-              <p className="contact-name">{item.fullName}</p>
+            <div className="ml-m" style={{marginLeft: "10px"}}>
+              <p className="contact-name">{item.name}</p>
               <p className="text-contact-chat">{item.message}</p>
             </div>
           </div>

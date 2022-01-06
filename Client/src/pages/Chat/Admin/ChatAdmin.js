@@ -162,6 +162,8 @@ const ChatAdmin = () => {
     }
   };
 
+  console.log(contact);
+
   // MUI component
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -172,25 +174,6 @@ const ChatAdmin = () => {
     >
       <div className="hero"></div>
       {/* normal screen */}
-      <div className="wrapper-chat">
-        <div className="sidebar">
-          <p className="title__sidebar">Contact</p>
-          <Contact
-            datacontact={contacts}
-            clickcontact={onClickContact}
-            contact={contact}
-            useronline={userOnline}
-          />
-        </div>
-        <div className="content-message" id="contentMessage">
-          <Message
-            contact={contact}
-            user={currentState.user}
-            messages={messages}
-            sendmessage={onSendMessage}
-          />
-        </div>
-      </div>
 
       {/* mobile screen */}
       <div className="wrapper-chat-mobile">

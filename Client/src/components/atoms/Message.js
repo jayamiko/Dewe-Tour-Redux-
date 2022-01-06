@@ -19,10 +19,10 @@ const Message = ({contact, user, messages, sendmessage}) => {
                   }`}
                 >
                   {item.idSender !== user.id && (
-                    <>
-                      <Avatar alt={contact?.fullName} src={contact?.avatar} />
+                    <div style={{marginLeft: "20px"}}>
+                      <Avatar alt={contact?.name} src={contact?.photo} />
                       <Gap width={10} />
-                    </>
+                    </div>
                   )}
                   <div
                     className={

@@ -15,6 +15,7 @@ import Header from "../components/Header/Header";
 import Navbar from "../components/Navbar/Navbar";
 import GroupTour from "../components/Main/Main";
 import Footer from "../components/Footer/Footer";
+import BoxChat from "../components/Items/card/Chat/boxChat";
 
 function Home({
   getTrips,
@@ -68,6 +69,7 @@ function Home({
               )}
             </>
           )}
+          <BoxChat />
           <Footer />
         </div>
       )}

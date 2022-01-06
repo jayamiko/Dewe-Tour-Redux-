@@ -3,11 +3,13 @@
   .chat-from-me {
     position: relative;
     color: var(--color-primary);
-    background-color: var(--color-theme);
+    background-color: skyblue;
+    border-radius: 10px !important;
+    margin-right: 20px !important;
     &:before {
       content: "";
       position: absolute;
-      background-color: var(--color-theme);
+      background-color: orange;
       width: 15px;
       height: 15px;
       bottom: 0;
@@ -19,12 +21,13 @@
   .chat-from-other {
     position: relative;
     color: rgb(77, 77, 77);
-    background-color: var(--color-theme-two);
-
+    background-color: rgb(132, 223, 132);
+    border-radius: 10px !important;
+    margin-left: 20px !important;
     &:before {
       content: "";
       position: absolute;
-      background-color: var(--color-theme-two);
+      background-color: gold;
       width: 15px;
       height: 15px;
       bottom: 0;
@@ -44,11 +47,13 @@
   position: sticky;
   bottom: 0;
   margin-top: 20px;
-
+  padding: 20px 18px;
   .input-message {
+    border-radius: 10px !important;
     color: rgb(77, 77, 77);
     padding: 10px 18px;
     width: 100%;
     box-shadow: 0 0 40px #c3c5c9;
+    border: solid black 1px;
   }
 }
