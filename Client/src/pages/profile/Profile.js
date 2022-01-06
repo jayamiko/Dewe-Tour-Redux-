@@ -3,6 +3,7 @@ import React from "react";
 import {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
+import {checkUser} from "../../actions/auth";
 
 // Import Components
 import Navbar from "../../components/Navbar/Navbar";
@@ -10,9 +11,13 @@ import Footer from "../../components/Footer/Footer";
 import HistoryPayment from "../../components/Items/card/HistoryPayment";
 import InputFileAvatar from "./updateAvatar";
 import Box from "../../components/Items/card/Box";
+import Gap from "../../components/atoms/Gap";
 
 // Import Style
 import "./Profile.css";
+import {Button} from "@mui/material";
+import {toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {Container} from "react-bootstrap";
 import Avatar from "../../img/avatar.png";
 import Envelope from "../../img/envelope.png";
@@ -22,12 +27,32 @@ import Nodata from "../../img/folder.png";
 
 // Import API
 import {API} from "../../config/api";
+import {useParams} from "react-router-dom";
 
-function Profile({auth: {user}}) {
-  const {id, name, email, phone, address} = user;
-
+toast.configure();
+const ProfilePage = () => {
+  const {id} = useParams();
   const [trans, setTrans] = useState([]);
   const [filterData, setFilterData] = useState([]);
+
+  const [loading, setLoading] = useState(false);
+  const [profile, setProfile] = useState({});
+  const [isEditable, setIsEditable] = useState(false);
+
+  const [variant, setVariant] = useState("disabled");
+  const [preview, setPreview] = useState(profile?.photo);
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    status: "user",
+  });
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const getData = async () => {
     try {
@@ -53,57 +78,202 @@ function Profile({auth: {user}}) {
     setFilterData(trans);
   }, []);
 
+  const getUser = async () => {
+    try {
+      const response = await API.get(`/user`);
+      const data = response.data.data;
+      setProfile(response?.data.data);
+
+      setForm({
+        ...form,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        address: data.address,
+        status: data.status,
+      });
+    } catch (error) {
+      toast.error("Unknow error");
+    }
+  };
+
+  function handleEdit() {
+    isEditable ? setIsEditable(false) : setIsEditable(true);
+    variant === "contained" ? setVariant("disabled") : setVariant("contained");
+  }
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]:
+        e.target.type === "file" ? e.target.files : e.target.value,
+    });
+
+    if (e.target.type === "file") {
+      let url = URL.createObjectURL(e.target.files[0]);
+      setPreview(url);
+    }
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const formData = new FormData();
+      formData.set("name", form.name);
+      formData.set("email", form.email);
+      formData.set("phone", form.phone);
+      formData.set("address", form.address);
+      formData.set("status", form.status);
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const body = form;
+      const response = await API.put("/user/specific", body, config);
+      toast.success("Update Data Berhasil");
+      setProfile(response.data.data);
+      setForm(response.data.data);
+
+      handleEdit();
+      getUser();
+      checkUser();
+    } catch (error) {
+      handleEdit();
+      toast.error("Unknow error");
+    }
+  };
+
   const filterDataByStatus = (e) => {
     const status = e.target.id;
 
     const data = trans.filter(
-      (item) => item.user.id === id && item.status === status
+      (item) => item?.user.id === profile?.id && item.status === status
     );
+
     setFilterData(data);
   };
 
+  console.log(trans?.id);
   return (
     <div>
       <div className="background-nav">
         <Navbar />
       </div>
       <div className="profile-container ">
+        <Button variant="contained" className="btn-edit" onClick={handleEdit}>
+          Edit
+        </Button>
         <div>
-          <Container className="d-flex px-5 py-4  data-container rounded justify-content-between">
-            <div className="profile-content px-4">
-              <h1 className="mb-4">Personal Info</h1>
-              <div className="d-flex align-items-center gap-3 mb-4 ">
-                <img className="img-1" src={Avatar} alt=""></img>
+          {isEditable ? (
+            <>
+              <Container className="d-flex px-5 py-4  data-container rounded justify-content-between">
+                <Gap height={53} />
                 <div>
-                  <p className="fw-bold">{name}</p>
-                  <small>Full Name</small>
+                  <h1 className="mb-4">Personal Info</h1>
+                  <div className="d-flex align-items-center gap-3 mb-4 ">
+                    <img className="img-1" src={Avatar} alt=""></img>
+                    <div className="column-edit">
+                      <input
+                        variant="basic"
+                        name="name"
+                        className="input-edit"
+                        value={form?.name}
+                        onChange={handleChange}
+                      />
+                      <Gap height={4} />
+                      <small>Full Name</small>
+                    </div>
+                  </div>
+                  <Gap height={28} />
+                  <div className="d-flex align-items-center gap-3 mb-4 ">
+                    <img src={Envelope} alt=""></img>
+                    <div className="column-edit">
+                      <input
+                        variant="basic"
+                        name="email"
+                        className="input-edit"
+                        value={form?.email}
+                        onChange={handleChange}
+                      />
+                      <Gap height={4} />
+                      <small>Email</small>
+                    </div>
+                  </div>
+                  <Gap height={28} />
+                  <div className="d-flex align-items-center gap-3 mb-4 ">
+                    <img src={Call} alt=""></img>
+                    <div className="column-edit">
+                      <input
+                        variant="basic"
+                        name="phone"
+                        className="input-edit"
+                        value={form?.phone}
+                        onChange={handleChange}
+                      />
+                      <Gap height={4} />
+                      <small>Mobile Phone</small>
+                    </div>
+                  </div>
+                  <Gap height={28} />
+                  <div className="d-flex align-items-center gap-3 mb-4 ">
+                    <img src={Map} alt=""></img>
+                    <div className="column-edit">
+                      <input
+                        variant="basic"
+                        name="address"
+                        className="input-edit"
+                        value={form?.address}
+                        onChange={handleChange}
+                      />
+                      <Gap height={4} />
+                      <small>Address</small>
+                    </div>
+                  </div>
+                  <Button variant={variant} onClick={handleSubmit}>
+                    Update
+                  </Button>
+                </div>
+              </Container>
+            </>
+          ) : (
+            <Container className="d-flex px-5 py-4  data-container rounded justify-content-between">
+              <div className="profile-content px-4">
+                <h1 className="mb-4">Personal Info</h1>
+                <div className="d-flex align-items-center gap-3 mb-4 ">
+                  <img className="img-1" src={Avatar} alt=""></img>
+                  <div>
+                    <p className="fw-bold">{profile?.name}</p>
+                    <small>Full Name</small>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center gap-3 mb-4 ">
+                  <img src={Envelope} alt=""></img>
+                  <div>
+                    <p className="fw-bold">{profile?.email}</p>
+                    <small>Email</small>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center gap-3 mb-4 ">
+                  <img src={Call} alt=""></img>
+                  <div>
+                    <p className="fw-bold">{profile?.phone}</p>
+                    <small>Mobile Phone</small>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center gap-3 mb-4 ">
+                  <img src={Map} alt=""></img>
+                  <div>
+                    <p className="fw-bold">{profile?.address}</p>
+                    <small>Address</small>
+                  </div>
                 </div>
               </div>
-              <div className="d-flex align-items-center gap-3 mb-4 ">
-                <img src={Envelope} alt=""></img>
-                <div>
-                  <p className="fw-bold">{email}</p>
-                  <small>Email</small>
-                </div>
-              </div>
-              <div className="d-flex align-items-center gap-3 mb-4 ">
-                <img src={Call} alt=""></img>
-                <div>
-                  <p className="fw-bold">{phone}</p>
-                  <small>Mobile Phone</small>
-                </div>
-              </div>
-              <div className="d-flex align-items-center gap-3 mb-4 ">
-                <img src={Map} alt=""></img>
-                <div>
-                  <p className="fw-bold">{address}</p>
-                  <small>Address</small>
-                </div>
-              </div>
-            </div>
-            <InputFileAvatar />
-          </Container>
-
+              <InputFileAvatar />
+            </Container>
+          )}
           <h1
             style={{
               fontFamily: "Avenir",
@@ -221,9 +391,10 @@ function Profile({auth: {user}}) {
       <Footer />
     </div>
   );
-}
+};
 
-Profile.propTypes = {
+ProfilePage.propTypes = {
+  checkUser: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
 
@@ -231,4 +402,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, {checkUser})(ProfilePage);

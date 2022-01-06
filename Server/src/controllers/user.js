@@ -39,37 +39,45 @@ exports.getUsers = async (req, res) => {
 };
 
 exports.getUser = async (req, res) => {
-  const {id} = req.params;
-
   try {
-    let data = await user.findOne({
+    const idUser = req.user.id;
+    const id = idUser;
+
+    const data = await user.findOne({
       where: {
         id,
       },
-      attributes: {
-        exclude: ["createdAt", "updatedAt", "password"],
-      },
     });
 
-    data = JSON.parse(JSON.stringify(data));
-    const photo = data.photo
-      ? "http://localhost:5000/uploads/" + data.photo
-      : null;
+    if (!data) {
+      return res.status(404).send({
+        status: "failed",
+        message: "User not found",
+      });
+    }
 
-    const newData = {
-      ...data,
-      photo: photo,
-    };
+    if (req.user.status === "admin") {
+      return res.send({
+        status: "success",
+        data,
+      });
+      // check if token id equals or not with id params
+    } else if (req.user.id !== parseInt(id)) {
+      // req.user from auth
+      return res.status(400).send({
+        status: "failed",
+        message: "Access Denied!",
+      });
+    }
 
     res.send({
       status: "success",
-      data: newData,
+      data,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       status: "failed",
-      message: "Server error",
+      message: "Server Error",
     });
   }
 };
@@ -92,54 +100,51 @@ exports.addUsers = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-  const {id} = req.params;
-
-  const data = {
-    photo: req.files.photo[0].filename,
-  };
-
   try {
-    const userData = await user.findOne({
-      where: {
-        id,
-      },
-      attributes: {
-        exclude: ["createdAt", "updatedAt"],
-      },
-    });
-
-    await user.update(data, {
-      where: {
-        id,
-      },
-    });
-
-    let updatedData = await user.findOne({
-      where: {
-        id,
-      },
-      attributes: {
-        exclude: ["createdAt", "updatedAt"],
-      },
-    });
-
-    updatedData = JSON.parse(JSON.stringify(updatedData));
-    const newUpdatedData = {
-      ...updatedData,
-      photo: "http://localhost:5000/uploads/" + updatedData.photo,
-    };
+    const {id} = req.params;
+    await user.update(
+      {...req.body},
+      {
+        where: {
+          id,
+        },
+      }
+    );
 
     res.send({
       status: "success",
-      data: {
-        user: newUpdatedData,
-      },
+      message: `Update user id:${id} finished`,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    res.send({
       status: "failed",
       message: "Server error",
+    });
+  }
+};
+
+exports.updateUserById = async (req, res) => {
+  try {
+    const {id} = req.user;
+
+    await user.update(
+      {...req.body},
+      {
+        where: {
+          id,
+        },
+      }
+    );
+
+    res.send({
+      status: "success",
+      message: "Update user finished",
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: "failed",
+      message: "Internal server error",
     });
   }
 };

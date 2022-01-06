@@ -7,6 +7,7 @@ import store from "../../../store";
 import "./DropdownComp.css";
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import IconChat from "../../../img/chat-icon.png";
 import Logout from "../../../img/logout.png";
 import Icon from "../../../img/Icon1.png";
 import {Navbar, Nav} from "react-bootstrap";
@@ -57,6 +58,17 @@ function AdminDropdown() {
           />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto" className="nav-item-admin">
+              <Nav.Link href="#messageadmin" className="nav-link">
+                <Link to="/admin/message" style={{textDecoration: "none"}}>
+                  <div
+                    className="d-flex align-items-center gap-2"
+                    style={{color: "white"}}
+                  >
+                    <img src={IconChat} width={45} alt=""></img>
+                    Chat
+                  </div>
+                </Link>
+              </Nav.Link>
               <Nav.Link href="#transaction" className="nav-link">
                 <Link to="/list-transaction" style={{textDecoration: "none"}}>
                   <div

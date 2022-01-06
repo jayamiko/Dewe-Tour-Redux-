@@ -25,7 +25,7 @@ let socket;
 const Chat = () => {
   const title = "Complain";
   document.title = "DeweTour | " + title;
-  const currentState = useSelector((state) => state);
+  const currentState = useSelector((state) => state.auth);
 
   const [userOnline, setUserOnline] = useState([]);
   const [contact, setContact] = useState(null);
@@ -51,9 +51,6 @@ const Chat = () => {
       setContacts([dataContact]);
     });
   };
-
-  console.log(contact);
-  console.log(contacts);
 
   const loadConnectedUser = () => {
     // emit event to load data user when connected

@@ -1,12 +1,14 @@
 import {
   PAYMENT_UPDATE_FAIL,
-  PAYMENT_UPDATE_SUCCES,
+  PAYMENT_UPDATE_SUCCESS,
   GET_TRANSACTIONS_SUCCESS,
   GET_TRANSACTIONS_ERROR,
   ADD_PAYMENT_TRIP,
   PAYMENT_TRIP_ERROR,
   GET_TRANSACTION_DETAIL,
   TRANSACTION_DETAIL_ERROR,
+  PAYMENT_ERROR,
+  PAYMENT_SUCCESS,
 } from "../actions/TransActions";
 
 const initialState = {
@@ -31,12 +33,17 @@ export default function transReducer(state = initialState, actions) {
         transDetail: payload,
         isLoading: false,
       };
+    case PAYMENT_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+      };
     case ADD_PAYMENT_TRIP:
       return {
         ...state,
         isLoading: false,
       };
-    case PAYMENT_UPDATE_SUCCES:
+    case PAYMENT_UPDATE_SUCCESS:
       return {
         ...state,
         transactions: state.transactions.map((data) =>
@@ -49,7 +56,7 @@ export default function transReducer(state = initialState, actions) {
         ),
         isLoading: false,
       };
-    // case PAYMENT_ERROR:
+    case PAYMENT_ERROR:
     case PAYMENT_UPDATE_FAIL:
     case PAYMENT_TRIP_ERROR:
     case TRANSACTION_DETAIL_ERROR:

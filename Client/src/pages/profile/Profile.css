@@ -26,6 +26,10 @@ small {
   color: #a8a8a8;
 }
 
+.input-edit {
+  margin-left: 20px;
+}
+
 .data-container {
   margin-top: 200px;
   background-color: #ffffff;
@@ -46,6 +50,20 @@ small {
 .profileSize {
   width: 120px;
   height: 80px;
+}
+
+.btn-edit {
+  margin-left: 220px !important;
+  position: relative;
+  top: 180px;
+}
+
+.column-edit {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  width: 700px;
+  font-weight: bold;
 }
 
 .history-trip {

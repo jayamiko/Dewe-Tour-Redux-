@@ -23,12 +23,12 @@
   height: 50px;
 }
 
-.polygon {
+/* .polygon {
   position: absolute;
   top: 100px;
   z-index: 999999;
   display: none;
-}
+} */
 
 .po-hover {
   cursor: pointer;
@@ -40,10 +40,10 @@
 }
 @media only screen and (min-width: 990px) {
   .nav-item {
-    margin-left: 800px;
+    margin-left: 650px;
   }
   .nav-item-admin {
-    margin-left: 870px;
+    margin-left: 720px;
   }
 }
 @media only screen and (max-width: 990px) {

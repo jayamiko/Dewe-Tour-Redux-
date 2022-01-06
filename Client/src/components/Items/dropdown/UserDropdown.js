@@ -11,6 +11,7 @@ import "./DropdownComp.css";
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Icon from "../../../img/Icon1.png";
+import IconChat from "../../../img/chat-icon.png";
 import User from "../../../img/user 2.png";
 import Payment from "../../../img/Vector.png";
 import Logout from "../../../img/logout.png";
@@ -66,6 +67,17 @@ function UserDropdown() {
         />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto" className="nav-item">
+            <Nav.Link href="#chat" className="nav-link">
+              <Link to="/message" style={{textDecoration: "none"}}>
+                <div
+                  className="d-flex align-items-center gap-2"
+                  style={{color: "white"}}
+                >
+                  <img src={IconChat} width={45} alt=""></img>
+                  Chat
+                </div>
+              </Link>
+            </Nav.Link>
             <Nav.Link href="#profile" className="nav-link">
               <Link to="/profile" style={{textDecoration: "none"}}>
                 <div

@@ -23,7 +23,7 @@ const ChatAdmin = () => {
   const title = "Admin Message";
   document.title = "DeweTour | " + title;
 
-  const currentState = useSelector((state) => state);
+  const currentState = useSelector((state) => state.auth);
 
   const [userOnline, setUserOnline] = useState([]);
   const [contact, setContact] = useState(null);

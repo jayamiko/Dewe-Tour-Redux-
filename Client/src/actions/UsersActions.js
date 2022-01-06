@@ -1,6 +1,8 @@
 import {checkUser} from "./auth";
 import {API} from "../config/api";
 
+export const PUT_USER_EDIT = "PUT_USER_EDIT";
+
 //Change Profile Pict
 export const changeProfile = (photo, idUser) => async (dispatch) => {
   try {
