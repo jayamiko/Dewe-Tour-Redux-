@@ -5,11 +5,13 @@ import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {getTripDetail} from "../../actions/TripsActions";
+import {getTransactionDetail} from "../../actions/TransActions";
 import moment from "moment";
 
 // Import Components
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
+import Spinner from "../../components/atoms/Spinner";
 import ModalLogin from "../../components/Items/modal/ModalLogin";
 import ModalRegister from "../../components/Items/modal/ModalRegister.js";
 
@@ -28,15 +30,35 @@ import {API} from "../../config/api";
 
 toast.configure();
 
-const DetailTrip = ({trips: {tripDetail}, getTripDetail, match}) => {
+const DetailTrip = ({
+  trips: {tripDetail},
+  transactions: {transDetail},
+  getTripDetail,
+  getTransactionDetail,
+  match,
+}) => {
   useEffect(() => {
     getTripDetail(match.params.id);
   }, [getTripDetail]);
+  useEffect(() => {
+    getTransactionDetail(match.params.id);
+  }, [getTransactionDetail]);
 
   const history = useHistory();
   const currentState = useSelector((state) => state.auth);
   const stateAuth = currentState.user;
   const isLoginSession = useSelector((state) => currentState.isAuthenticated);
+
+  // Loading
+  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingSkeleton(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const rupiah = (number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -50,16 +72,21 @@ const DetailTrip = ({trips: {tripDetail}, getTripDetail, match}) => {
     confirm: false,
   });
 
-  const [transaction, setTransaction] = useState({
+  const TransactionDetail = {
     counterQty: 1,
-    total: tripDetail?.price,
-    tripId: tripDetail?.id,
+    total: transDetail?.total,
+    tripId: transDetail?.id,
     userId: stateAuth.id,
+  };
+
+  const [transaction, setTransaction] = useState({
+    counterQty: TransactionDetail.counterQty,
+    total: TransactionDetail.total,
+    tripId: TransactionDetail.tripId,
+    userId: TransactionDetail.userId,
   });
 
-  console.log("TripDetail:", tripDetail);
-  console.log("transaction:", transaction);
-
+  console.log("transaction:", TransactionDetail);
   let totalPrice = transaction?.counterQty * tripDetail?.price;
   const [quotaRemaining, setQuotaRemaining] = useState({
     quota: tripDetail?.quota - transaction?.counterQty,
@@ -124,6 +151,7 @@ const DetailTrip = ({trips: {tripDetail}, getTripDetail, match}) => {
   };
 
   const handleSubmit = async () => {
+    setLoadingSkeleton(true);
     try {
       if (isLoginSession) {
         const detailTripData = await API.get(`/trip/${tripDetail?.id}`);
@@ -172,8 +200,13 @@ const DetailTrip = ({trips: {tripDetail}, getTripDetail, match}) => {
             position: toast.POSITION.BOTTOM_RIGHT,
             autoClose: 2000,
           });
-
         history.push("/payment");
+
+        // Loading
+        const timer = setTimeout(() => {
+          setLoadingSkeleton(false);
+        }, 2000);
+        return () => clearTimeout(timer);
       } else {
         handleShowLogin();
       }
@@ -182,7 +215,13 @@ const DetailTrip = ({trips: {tripDetail}, getTripDetail, match}) => {
     }
   };
 
-  return (
+  console.log(transaction);
+
+  return loadingSkeleton ? (
+    <>
+      <Spinner customText={"Loading.."} />
+    </>
+  ) : (
     <>
       <div className="background-nav">
         <Navbar />
@@ -369,7 +408,7 @@ const DetailTrip = ({trips: {tripDetail}, getTripDetail, match}) => {
                   -
                 </button>
                 <div className="d-inline-block text-center" style={{width: 75}}>
-                  {transaction.counterQty}
+                  {transaction?.counterQty}
                 </div>
                 <button
                   style={{
@@ -448,8 +487,10 @@ DetailTrip.propTypes = {
 
 const mapStateToProps = (state) => ({
   trips: state.trips,
+  transactions: state.transactions,
 });
 
 export default connect(mapStateToProps, {
   getTripDetail,
+  getTransactionDetail,
 })(DetailTrip);

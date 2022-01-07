@@ -53,9 +53,12 @@ small {
 }
 
 .btn-edit {
-  margin-left: 220px !important;
+  margin-left: 300px !important;
   position: relative;
   top: 180px;
+  background-color: orange !important;
+  padding: 10px 60px !important;
+  font-weight: bold !important;
 }
 
 .column-edit {

@@ -1,7 +1,7 @@
 // Import React
 import React from "react";
 import {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {getTrips} from "../actions/TripsActions";
@@ -15,12 +15,12 @@ import Header from "../components/Header/Header";
 import Navbar from "../components/Navbar/Navbar";
 import GroupTour from "../components/Main/Main";
 import Footer from "../components/Footer/Footer";
-import BoxChat from "../components/Items/card/Chat/boxChat";
+import Spinner from "../components/atoms/Spinner";
 
 function Home({
   getTrips,
   trips: {tripsAll},
-  auth: {isAuthenticated, user, loading},
+  auth: {isAuthenticated, user, isLoading},
 }) {
   const [searchData, setSearchData] = useState("");
   const [isSearching, setIsSearching] = useState(false);
@@ -28,11 +28,25 @@ function Home({
   const currentState = useSelector((state) => state);
   const isAdmin = currentState.auth.user.status === "admin";
 
+  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingSkeleton(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     getTrips();
   }, [getTrips]);
 
-  return (
+  return loadingSkeleton || isLoading ? (
+    <div>
+      <Spinner customText={"Loading.."} />
+    </div>
+  ) : (
     <>
       {isAuthenticated && isAdmin ? (
         <>
@@ -69,7 +83,6 @@ function Home({
               )}
             </>
           )}
-          <BoxChat />
           <Footer />
         </div>
       )}

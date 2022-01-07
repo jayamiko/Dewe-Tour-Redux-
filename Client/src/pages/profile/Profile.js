@@ -12,6 +12,7 @@ import HistoryPayment from "../../components/Items/card/HistoryPayment";
 import InputFileAvatar from "./updateAvatar";
 import Box from "../../components/Items/card/Box";
 import Gap from "../../components/atoms/Gap";
+import Spinner from "../../components/atoms/Spinner";
 
 // Import Style
 import "./Profile.css";
@@ -35,12 +36,21 @@ const ProfilePage = () => {
   const [trans, setTrans] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
-  const [loading, setLoading] = useState(false);
   const [profile, setProfile] = useState({});
   const [isEditable, setIsEditable] = useState(false);
 
   const [variant, setVariant] = useState("disabled");
   const [preview, setPreview] = useState(profile?.photo);
+
+  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingSkeleton(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const [form, setForm] = useState({
     name: "",
@@ -116,7 +126,7 @@ const ProfilePage = () => {
   };
 
   const handleSubmit = async () => {
-    setLoading(true);
+    setLoadingSkeleton(true);
     try {
       const formData = new FormData();
       formData.set("name", form.name);
@@ -133,13 +143,22 @@ const ProfilePage = () => {
 
       const body = form;
       const response = await API.put("/user/specific", body, config);
-      toast.success("Update Data Berhasil");
+      toast.success("Update Profile is Successful", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+      });
       setProfile(response.data.data);
       setForm(response.data.data);
+
+      // Loading
+      const timer = setTimeout(() => {
+        setLoadingSkeleton(false);
+      }, 2000);
 
       handleEdit();
       getUser();
       checkUser();
+      return () => clearTimeout(timer);
     } catch (error) {
       handleEdit();
       toast.error("Unknow error");
@@ -156,8 +175,11 @@ const ProfilePage = () => {
     setFilterData(data);
   };
 
-  console.log(trans?.id);
-  return (
+  return loadingSkeleton ? (
+    <div>
+      <Spinner customText={"Loading.."} />
+    </div>
+  ) : (
     <div>
       <div className="background-nav">
         <Navbar />

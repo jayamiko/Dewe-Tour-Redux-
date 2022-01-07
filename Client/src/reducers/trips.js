@@ -10,7 +10,7 @@ import {
 const initialState = {
   isLoading: true,
   tripsAll: [],
-  tripDetail: null,
+  tripDetail: [],
   error: "",
 };
 

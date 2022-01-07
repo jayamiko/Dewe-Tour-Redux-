@@ -17,6 +17,7 @@ import ChatAdmin from "./pages/Chat/Admin/ChatAdmin";
 
 // Import Style
 import "./App.css";
+import Spinner from "./components/atoms/Spinner";
 
 // Import API
 import {checkUser} from "./actions/auth";
@@ -34,12 +35,9 @@ function App() {
 
   const currentState = useSelector((state) => state.auth);
   return currentState.isLoading ? (
-    <div className="loading-section">
-      <div className="loading">
-        <p>loading</p>
-        <span></span>
-      </div>
-    </div>
+    <>
+      <Spinner customText={"Loading..."} />
+    </>
   ) : (
     <BrowserRouter>
       <Switch>

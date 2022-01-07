@@ -8,6 +8,7 @@ import {getTransactions} from "../../actions/TransActions";
 import Navbar from "../../components/Navbar/Navbar";
 import PaymentCard from "../../components/Items/card/PaymentCard";
 import Footer from "../../components/Footer/Footer";
+import Spinner from "../../components/atoms/Spinner";
 import ModalPopUp from "../../components/Items/modal/popUp";
 
 // Import Style
@@ -22,7 +23,7 @@ toast.configure();
 const Payment = ({
   auth: {user},
   getTransactions,
-  transactions: {transactions, loading},
+  transactions: {transactions, isLoading},
 }) => {
   useEffect(() => {
     getTransactions();
@@ -30,7 +31,15 @@ const Payment = ({
 
   const [isShow, setIsShow] = useState(false);
   const [transaction, setTransaction] = useState(null);
+  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingSkeleton(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
   const handleClose = () => {
     setIsShow(false);
   };
@@ -85,7 +94,11 @@ const Payment = ({
     getLastTransaction();
   }, []);
 
-  return (
+  return loadingSkeleton || isLoading ? (
+    <>
+      <Spinner customText={"Loading.."} />
+    </>
+  ) : (
     <>
       {transactions ? (
         <>
