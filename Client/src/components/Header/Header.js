@@ -1,5 +1,6 @@
 // Import React
 import React from "react";
+import {Container} from "react-bootstrap";
 
 // Import Style
 import "./Header.css";
@@ -9,7 +10,7 @@ import Navbar from "../Navbar/Navbar";
 import Card from "../Items/card/Card";
 
 function Header(props) {
-  const { trips, searchData, setSearchData, setIsSearching } = props;
+  const {trips, searchData, setSearchData, setIsSearching} = props;
 
   const handleSearch = (e) => {
     setSearchData(e.target.value);
@@ -25,36 +26,25 @@ function Header(props) {
   };
 
   return (
-    <div
-      className="header-image"
-      style={{
-        marginBottom: "250px",
-      }}
-    >
+    <div className="header-image">
       <Navbar />
-      <div className="container-lg">
-        <h1>Explore</h1>
-        <h2>your amazing city together</h2>
-      </div>
-      <label for="basic-addon2" className="form-label0 header-label ">
-        Find great places to holliday
-      </label>
-      <div className="container-fluid d-flex input-container">
-        <div class="input-group mb-3" onSubmit={handleSubmit}>
-          <input
-            class="form-control"
-            id="basic-addon2"
-            aria-label="search"
-            onChange={handleSearch}
-            value={searchData}
-            aria-describedby="basic-addon2"
-            type="search"
-            placeholder="Search"
-          />
-          <a className="input-group-text" id="basic-addon2" href="/">
-            Search
-          </a>
-        </div>
+      <h1>Explore</h1>
+      <h2>your amazing city together</h2>
+      <label>Find great places to holliday</label>
+      <div className="input-group mb-3" onSubmit={handleSubmit}>
+        <input
+          className="form-control"
+          id="basic-addon2"
+          aria-label="search"
+          onChange={handleSearch}
+          value={searchData}
+          aria-describedby="basic-addon2"
+          type="search"
+          placeholder="Search"
+        />
+        <a className="input-group-text" href="/">
+          Search
+        </a>
       </div>
       <div className="cards-container d-flex gap-5 justify-content-start">
         <Card

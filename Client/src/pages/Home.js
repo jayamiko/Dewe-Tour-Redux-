@@ -54,7 +54,7 @@ function Home({
           <GroupTour data={tripsAll} isAdmin={isAdmin} />
         </>
       ) : (
-        <div>
+        <>
           <Header
             trips={tripsAll}
             setIsSearching={setIsSearching}
@@ -84,7 +84,7 @@ function Home({
             </>
           )}
           <Footer />
-        </div>
+        </>
       )}
     </>
   );
