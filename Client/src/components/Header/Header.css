@@ -2,7 +2,7 @@
   background: url("../../img/18pfua2dz5k01.png");
   background-repeat: no-repeat;
   background-size: 100%;
-  height: 80vh !important;
+  height: 120vh !important;
   width: 100% !important;
 }
 /* Label */
@@ -31,25 +31,6 @@
   padding-left: 100px;
   padding-right: 100px;
 }
-
-/* Card */
-
-.input-container {
-  position: absolute;
-  width: 89%;
-  height: 50px;
-  left: 105px;
-  top: 400px;
-}
-
-.header-label {
-  padding-left: 120px;
-  position: relative;
-  color: #ffffff;
-  font-weight: normal;
-  font-size: 18px;
-}
-
 .input-group-text {
   background-color: #ffaf00;
   color: #ffffff;
@@ -58,20 +39,12 @@
   font-size: 600;
 }
 
-.cards-container {
-  position: absolute;
-  height: 300px;
-  left: 130px;
-  top: 491px;
-  width: 80%;
-}
-
 @media only screen and (max-width: 576px) {
   .header-image {
-    height: 350px !important;
+    height: 205vh !important;
   }
   .header-image h1 {
-    padding-left: 70px;
+    padding-left: 30px;
     position: relative;
     bottom: 54px;
     font-size: 28px !important;
@@ -79,18 +52,18 @@
   .header-image h2 {
     position: relative;
     bottom: 54px;
-    padding-left: 70px;
+    padding-left: 30px;
     font-size: 18px !important;
   }
   .header-image label {
     position: relative;
     bottom: 54px;
-    padding-left: 70px;
+    padding-left: 30px;
     font-size: 12px !important;
   }
   .input-group {
     margin-top: -30px;
-    padding-left: 70px;
-    padding-right: 70px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }

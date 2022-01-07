@@ -1,12 +1,25 @@
 .footer-container {
-    background-color: #ffaf00;
-    height: 54px;
-    width: 1507px;
-    line-height: 54px;
-    text-align: center;
-    color: #ffffff;
-    font-weight: 600;
-    position: relative;
-    top: 120px;
-  }
+  background-color: #ffaf00;
+  height: 54px;
+  width: 1507px;
+  line-height: 54px;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 600;
+  position: relative;
+  top: 120px;
+}
 
+.img-footer {
+  float: right;
+  margin-top: -80px;
+  max-width: 100%;
+}
+
+@media only screen and (max-width: 576px) {
+  .img-footer {
+    float: right;
+    margin-top: -50px;
+    max-width: 100%;
+  }
+}

@@ -62,9 +62,7 @@ function Home({
             setSearchData={setSearchData}
           />
           {isSearching ? (
-            <div className="mt-5">
-              <GroupTour data={tripsAll} searchData={searchData} />
-            </div>
+            <GroupTour data={tripsAll} searchData={searchData} />
           ) : (
             <>
               {tripsAll === null ? (
