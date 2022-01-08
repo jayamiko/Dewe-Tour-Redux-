@@ -1,15 +1,17 @@
 const {user} = require("../../models");
-
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const {OAuth2Client} = require("google-auth-library");
+const {response} = require("express");
+const client = new OAuth2Client(process.env.CLIENT_ID);
 
 exports.register = async (req, res) => {
   // create validation schema
 
   const schema = Joi.object({
     email: Joi.string().email().min(10).required(),
-    password: Joi.string().min(5).required(),
+    password: Joi.string().min(5),
     name: Joi.string().min(5).required(),
     phone: Joi.string().required(),
     address: Joi.string().min(4).required(),
@@ -53,7 +55,7 @@ exports.register = async (req, res) => {
 
     // generate token
     const token = jwt.sign(
-      {id: newUser.id, role: newUser.role},
+      {id: newUser.id, status: newUser.status},
       process.env.TOKEN_KEY
     );
 
@@ -62,7 +64,7 @@ exports.register = async (req, res) => {
       message: "Your account has succesfully created",
       data: {
         email: newUser.email,
-        fullname: newUser.fullname,
+        name: newUser.name,
         token,
       },
     });
@@ -146,7 +148,7 @@ exports.login = async (req, res) => {
 
     res.send({
       status: "success",
-      message: "Login succesful",
+      message: "Login successful",
       data: newDataUser,
     });
   } catch (error) {
@@ -204,6 +206,81 @@ exports.checkAuth = async (req, res) => {
     res.status(500).send({
       status: "failed",
       message: "server error",
+    });
+  }
+};
+
+exports.oauthGoogle = async (req, res) => {
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: req.body.token,
+      audience: process.env.CLIENT_ID,
+    });
+
+    const {name, email, picture} = ticket.getPayload();
+
+    const dataUser = await user.findOne({
+      where: {
+        email,
+      },
+    });
+
+    let data;
+    let token;
+
+    if (dataUser) {
+      data = await user.update(
+        {
+          name: name,
+          status: "user",
+        },
+        {
+          where: {
+            id: dataUser.id,
+          },
+        }
+      );
+
+      token = jwt.sign(
+        {id: dataUser.id, status: dataUser.status},
+        process.env.TOKEN_KEY
+      );
+
+      return res.send({
+        status: "success",
+        user: {
+          name: dataUser.name,
+          token,
+        },
+      });
+    }
+
+    // const hashedPassword = await bcrypt.compare(
+    //   req.body.password,
+    //   user.password
+    // );
+
+    data = await user.create({
+      name: name,
+      email,
+      // password,
+      phone: "-",
+      status: "user",
+      photo: picture,
+      token,
+    });
+
+    token = jwt.sign({id: data.id, status: data.status}, process.env.TOKEN_KEY);
+
+    res.send({
+      status: "success",
+      data: data,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: "failed",
+      message: "Internal server error",
     });
   }
 };

@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {handleRegister} from "../../actions/auth";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
+import GoogleLoginBtn from "../Button/GoogleLogin";
 
 // Import Style
 import {toast} from "react-toastify";
@@ -124,6 +125,7 @@ const Register = ({handleRegister, auth: {error, loading}}) => {
                   Here
                 </a>
               </small>
+              <GoogleLoginBtn />
             </div>
           </Form>
         </Modal.Body>

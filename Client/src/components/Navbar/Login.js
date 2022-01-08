@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 
 // Import Style
 import {Button, Modal, Form} from "react-bootstrap";
+import GoogleLoginBtn from "../../components/Button/GoogleLogin";
 import Palm from "../../img/palm1.png";
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,7 +19,7 @@ import {checkUser} from "../../actions/auth";
 
 toast.configure();
 
-const Login = ({handleLogin, auth: {error, loading}}) => {
+const Login = ({handleLogin, auth: {error, isLoading}}) => {
   const history = useHistory();
 
   const isLoginSession = useSelector((state) => state.isLogin);
@@ -73,7 +74,7 @@ const Login = ({handleLogin, auth: {error, loading}}) => {
 
   return (
     <>
-      {error === null || loading ? (
+      {error === null || isLoading ? (
         ""
       ) : (
         <p style={{textTransform: "capitalize", margin: "0 0"}}>{error}</p>
@@ -124,6 +125,7 @@ const Login = ({handleLogin, auth: {error, loading}}) => {
               >
                 Submit
               </Button>
+              <GoogleLoginBtn />
               <small className="text-center">
                 Don't have an account ? click{" "}
                 <a onClick={openModalRegister} href="">
