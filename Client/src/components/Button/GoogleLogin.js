@@ -28,7 +28,7 @@ const GoogleLoginBtn = () => {
           payload: responseAuth.data.data,
         });
 
-        const fullname = responseAuth.data.data.name;
+        const fullname = responseAuth?.data?.data?.name;
         toast.success("Login success, welcome ", fullname);
       }
     } catch (error) {

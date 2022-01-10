@@ -31,7 +31,8 @@ import {API} from "../../config/api";
 import {useParams} from "react-router-dom";
 
 toast.configure();
-const ProfilePage = () => {
+const ProfilePage = ({auth: {user}}) => {
+  const {name, email, phone, address, photo} = user;
   const {id} = useParams();
   const [trans, setTrans] = useState([]);
   const [filterData, setFilterData] = useState([]);
@@ -267,28 +268,28 @@ const ProfilePage = () => {
                 <div className="d-flex align-items-center gap-3 mb-4 ">
                   <img className="img-1" src={Avatar} alt=""></img>
                   <div>
-                    <p className="fw-bold">{profile?.name}</p>
+                    <p className="fw-bold">{name}</p>
                     <small>Full Name</small>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-3 mb-4 ">
                   <img src={Envelope} alt=""></img>
                   <div>
-                    <p className="fw-bold">{profile?.email}</p>
+                    <p className="fw-bold">{email}</p>
                     <small>Email</small>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-3 mb-4 ">
                   <img src={Call} alt=""></img>
                   <div>
-                    <p className="fw-bold">{profile?.phone}</p>
+                    <p className="fw-bold">{phone}</p>
                     <small>Mobile Phone</small>
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-3 mb-4 ">
                   <img src={Map} alt=""></img>
                   <div>
-                    <p className="fw-bold">{profile?.address}</p>
+                    <p className="fw-bold">{address}</p>
                     <small>Address</small>
                   </div>
                 </div>

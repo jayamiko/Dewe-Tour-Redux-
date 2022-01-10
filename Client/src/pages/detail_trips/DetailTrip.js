@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {getTripDetail} from "../../actions/TripsActions";
 import {getTransactionDetail} from "../../actions/TransActions";
 import moment from "moment";
+import {Container} from "react-bootstrap";
 
 // Import Components
 import Navbar from "../../components/Navbar/Navbar";
@@ -86,7 +87,6 @@ const DetailTrip = ({
     userId: TransactionDetail.userId,
   });
 
-  console.log("transaction:", TransactionDetail);
   let totalPrice = transaction?.counterQty * tripDetail?.price;
   const [quotaRemaining, setQuotaRemaining] = useState({
     quota: tripDetail?.quota - transaction?.counterQty,
@@ -215,268 +215,142 @@ const DetailTrip = ({
     }
   };
 
-  console.log(transaction);
-
   return loadingSkeleton ? (
     <>
       <Spinner customText={"Loading.."} />
     </>
   ) : (
-    <>
+    <div>
       <div className="background-nav">
         <Navbar />
       </div>
-      <div className="container-detail">
-        {/* TITLE */}
-        <div
-          style={{
-            width: "max-content",
-          }}
-        >
+      <Container className="container-detail">
+        <div>
+          {/* TITLE */}
           <h1>
             {tripDetail?.day}D/{tripDetail?.night}N {tripDetail?.title}
           </h1>
           <small>{tripDetail?.country.name}</small>
-        </div>
 
-        {/* IMAGE TOUR */}
-        <img
-          src={tripDetail?.image[0].url}
-          alt="/"
-          style={{
-            width: "1018px",
-            height: "361.16px",
-            borderRadius: "5px",
-          }}
-        />
-        <div
-          style={{
-            display: "flex",
-            width: "1018px",
-            justifyContent: "space-between",
-          }}
-        >
+          {/* IMAGE TOUR */}
           <img
-            src={tripDetail?.image[1].url}
-            alt="/"
-            style={{
-              marginRight: "15px",
-              width: "329.73px",
-              height: "167.64px",
-              borderRadius: "5px",
-              marginTop: "15px",
-            }}
+            src={tripDetail?.image[0].url}
+            alt="trip-reguler"
+            className="image-tour-reguler"
           />
-          <img
-            src={tripDetail?.image[2].url}
-            alt="/"
-            style={{
-              marginRight: "15px",
-              width: "329.73px",
-              height: "167.64px",
-              borderRadius: "5px",
-              marginTop: "15px",
-            }}
-          />
-          <img
-            src={tripDetail?.image[3].url}
-            alt="/"
-            style={{
-              width: "329.73px",
-              height: "167.64px",
-              borderRadius: "5px",
-              marginTop: "15px",
-            }}
-          />
-        </div>
+          <div className="image-tour-other">
+            <img
+              src={tripDetail?.image[1].url}
+              alt="other trip 1"
+              className="other-trip-item"
+            />
+            <img
+              src={tripDetail?.image[2].url}
+              alt="other trip 2"
+              className="other-trip-item"
+            />
+            <img
+              src={tripDetail?.image[3].url}
+              alt="other trip 3"
+              className="other-trip-item"
+            />
+          </div>
 
-        {/* INFO DESCRIPTION */}
-        <h3
-          style={{
-            fontFamily: "Avenir",
-            fontWeight: "900",
-            fontSize: "18px",
-            lineHeight: "25px",
-            display: "flex",
-            alignItems: "center",
-            color: "#000000",
-            marginTop: "25px",
-          }}
-        >
-          Information Trip
-        </h3>
+          {/* INFO DESCRIPTION */}
+          <h3 className="information-trip">Information Trip</h3>
 
-        <div className="info-trip">
-          <div>
-            <p className="title-info">Accomodation</p>
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
-              <img src={Hotel} alt="" />
-              <p style={{paddingLeft: "10px"}}>{tripDetail?.accomodation}</p>
-            </div>
-          </div>
-          <div>
-            <p className="title-info">Transportation</p>
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
-              <img src={Plane} alt="" />
-              <p style={{paddingLeft: "10px"}}>{tripDetail?.transportation}</p>
-            </div>
-          </div>
-          <div>
-            <p className="title-info">Eat</p>
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
-              <img src={Meal} alt="" />
-              <p style={{paddingLeft: "10px"}}>{tripDetail?.eat}</p>
-            </div>
-          </div>
-          <div>
-            <p className="title-info">Duration</p>
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
-              <img src={Time} alt="" />
-              <p style={{paddingLeft: "10px"}}>
-                {tripDetail?.day} Day {tripDetail?.night}Night
-              </p>
-            </div>
-          </div>
-          <div>
-            <p className="title-info">Date Trip</p>
-            <div
-              style={{
-                display: "flex",
-              }}
-            >
-              <img src={Calender} alt="" />
-              <p style={{paddingLeft: "10px"}}>
-                {moment(tripDetail?.dateTrip).format("l")}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <h3
-          style={{
-            fontFamily: "Avenir",
-            fontWeight: "900",
-            fontSize: "18px",
-            lineHeight: "25px",
-            display: "flex",
-            alignItems: "center",
-            color: "#000000",
-            marginTop: "25px",
-          }}
-        >
-          Description
-        </h3>
-        <p className="description">{tripDetail?.description}</p>
-
-        <section className="detail-calculate mb-5">
-          <div style={{marginTop: "15px"}}>
-            <div className="d-flex justify-content-between fw-bold fs-5">
-              <div style={{color: "orange", fontFamily: "Avenir"}}>
-                Rp.
-                <span style={{marginLeft: "10px"}}>
-                  {rupiah(tripDetail?.price)}
-                </span>
-                /<span style={{color: "black"}}>Person</span>
+          <div className="info-trip">
+            <div>
+              <p className="title-info">Accomodation</p>
+              <div className="title-info-item">
+                <img src={Hotel} alt="" />
+                <p style={{paddingLeft: "10px"}}>{tripDetail?.accomodation}</p>
               </div>
-              <div className="quantity">
-                <button
-                  style={{
-                    background: "orange",
-                    color: "white",
-                    borderRadius: "10px",
-                    width: "26.61px",
-                    height: "30px",
-                  }}
-                  onClick={handleSubtract}
-                >
-                  -
-                </button>
-                <div className="d-inline-block text-center" style={{width: 75}}>
-                  {transaction?.counterQty}
+            </div>
+            <div>
+              <p className="title-info">Transportation</p>
+              <div className="title-info-item">
+                <img src={Plane} alt="" />
+                <p style={{paddingLeft: "10px"}}>
+                  {tripDetail?.transportation}
+                </p>
+              </div>
+            </div>
+            <div>
+              <p className="title-info">Eat</p>
+              <div className="title-info-item">
+                <img src={Meal} alt="" />
+                <p style={{paddingLeft: "10px"}}>{tripDetail?.eat}</p>
+              </div>
+            </div>
+            <div>
+              <p className="title-info">Duration</p>
+              <div className="title-info-item">
+                <img src={Time} alt="" />
+                <p style={{paddingLeft: "10px"}}>
+                  {tripDetail?.day} Day {tripDetail?.night}Night
+                </p>
+              </div>
+            </div>
+            <div>
+              <p className="title-info">Date Trip</p>
+              <div className="title-info-item">
+                <img src={Calender} alt="" />
+                <p style={{paddingLeft: "10px"}}>
+                  {moment(tripDetail?.dateTrip).format("l")}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <h3 className="title-description">Description</h3>
+          <p className="description">{tripDetail?.description}</p>
+
+          <section>
+            <div>
+              <div className="price-area">
+                <span>Rp. {rupiah(tripDetail?.price)}/Person</span>
+                <div className="counter-area">
+                  <button onClick={handleSubtract}>-</button>
+                  <div className="d-inline-block text-center">
+                    <span className="counter">{transaction?.counterQty}</span>
+                  </div>
+                  <button onClick={handleAdd}>+</button>
                 </div>
-                <button
-                  style={{
-                    background: "orange",
-                    color: "white",
-                    borderRadius: "10px",
-                    width: "26.61px",
-                    height: "30px",
-                  }}
-                  onClick={handleAdd}
-                >
-                  +
-                </button>
               </div>
-            </div>
-            <hr />
-            <div className="d-flex justify-content-between fw-bold">
-              <div className="fs-5">Total :</div>
-              <div
-                style={{
-                  color: "orange",
-                  lineHeight: "33px",
-                  fontSize: "24px",
-                  fontWeight: "900",
-                  fontFamily: "Avenir",
-                }}
-              >
-                Rp. {rupiah(totalPrice)}
+
+              <hr />
+
+              <div className="total">
+                <div className="title-total">Total :</div>
+                <p>Rp. {rupiah(totalPrice)}</p>
               </div>
-            </div>
-            <hr />
-            <div className="d-flex justify-content-end">
+              <hr />
               <button
                 type="button"
-                style={{
-                  background: "orange",
-                  width: "213px",
-                  height: "50px",
-                  borderRadius: "5px",
-                  fontFamily: "Avenir",
-                  lineHeight: "25px",
-                  fontSize: "18px",
-                  fontWeight: "900",
-                  textAlign: "center",
-                  color: "white",
-                }}
+                className="btn-book-now"
                 onClick={handleSubmit}
               >
                 BOOK NOW
               </button>
             </div>
-          </div>
 
-          <ModalLogin
-            show={show.login}
-            handleClose={handleClose}
-            handleSwitch={handleSwitch}
-          />
+            <ModalLogin
+              show={show.login}
+              handleClose={handleClose}
+              handleSwitch={handleSwitch}
+            />
 
-          <ModalRegister
-            show={show.register}
-            handleClose={handleClose}
-            handleSwitch={handleSwitch}
-          />
-        </section>
-      </div>
+            <ModalRegister
+              show={show.register}
+              handleClose={handleClose}
+              handleSwitch={handleSwitch}
+            />
+          </section>
+        </div>
+      </Container>
       <Footer />
-    </>
+    </div>
   );
 };
 
