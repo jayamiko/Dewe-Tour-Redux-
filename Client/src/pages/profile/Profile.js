@@ -33,7 +33,6 @@ import {useParams} from "react-router-dom";
 toast.configure();
 const ProfilePage = ({auth: {user}}) => {
   const {name, email, phone, address, photo} = user;
-  const {id} = useParams();
   const [trans, setTrans] = useState([]);
   const [filterData, setFilterData] = useState([]);
 

@@ -31,12 +31,9 @@ const {
   updateTransaction,
   deleteTransaction,
 } = require("../controllers/transaction");
-const {
-  register,
-  login,
-  checkAuth,
-  oauthGoogle,
-} = require("../controllers/auth");
+const {register, login, checkAuth} = require("../controllers/auth");
+
+const {oauthGoogle} = require("../controllers/oauth");
 
 // Middleware
 const {auth, adminOnly} = require("../middlewares/auth");

@@ -1,4 +1,4 @@
-import {checkUser} from "./auth";
+import {checkUser} from "../config/auth";
 import {API} from "../config/api";
 
 export const PUT_USER_EDIT = "PUT_USER_EDIT";

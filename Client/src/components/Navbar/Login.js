@@ -128,7 +128,7 @@ const Login = ({handleLogin, auth: {error, isLoading}}) => {
               <GoogleLoginBtn />
               <small className="text-center">
                 Don't have an account ? click{" "}
-                <a onClick={openModalRegister} href="">
+                <a onClick={openModalRegister} href="#register">
                   Here
                 </a>
               </small>

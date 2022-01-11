@@ -2,7 +2,6 @@
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {useEffect} from "react";
 import {useSelector} from "react-redux";
-import store from "./store";
 
 // Import Pages
 import DetailTrip from "./pages/detail_trips/DetailTrip";
@@ -20,7 +19,7 @@ import "./App.css";
 import Spinner from "./components/atoms/Spinner";
 
 // Import API
-import {checkUser} from "./actions/auth";
+import {checkUser} from "./config/auth";
 import {setAuthToken} from "./config/api";
 
 // init token on axios every time the app is refreshed
@@ -30,7 +29,7 @@ if (localStorage.token) {
 
 function App() {
   useEffect(() => {
-    store.dispatch(checkUser());
+    checkUser();
   }, []);
 
   const currentState = useSelector((state) => state.auth);

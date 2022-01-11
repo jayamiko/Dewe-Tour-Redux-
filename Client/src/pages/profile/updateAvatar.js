@@ -13,12 +13,12 @@ toast.configure();
 
 function Avatar({auth: {user}, changeProfile}) {
   const {name, email, phone, address, photo} = user;
-
+  console.log(photo);
   return (
     <div className="input-file-avatar">
       <div className="preview-image" style={{width: 280, height: 345}}>
         <img
-          src={photo === null ? `${AvatarDefault}` : `${photo}`}
+          src={photo === null || undefined ? `${AvatarDefault}` : `${photo}`}
           alt="User"
           width="280"
           height="345"

@@ -72,9 +72,10 @@ export const handleLogin =
 
     try {
       const response = await API.post("/login", body, config);
+      console.log(response);
       dispatch({
         type: LOGIN_SUCCESS,
-        payload: response.data.data,
+        payload: response.data.user,
       });
 
       //ambil data user

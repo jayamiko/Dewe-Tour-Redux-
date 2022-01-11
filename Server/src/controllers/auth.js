@@ -1,104 +1,100 @@
 const {user} = require("../../models");
+
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const {OAuth2Client} = require("google-auth-library");
-const {response} = require("express");
-const client = new OAuth2Client(process.env.CLIENT_ID);
+const avatarDefault = require("../utils/avatar");
 
+// register session
 exports.register = async (req, res) => {
-  // create validation schema
-
   const schema = Joi.object({
-    email: Joi.string().email().min(10).required(),
-    password: Joi.string().min(5),
-    name: Joi.string().min(5).required(),
-    phone: Joi.string().required(),
-    address: Joi.string().min(4).required(),
+    name: Joi.string().min(6).required(),
+    email: Joi.string().email().min(8).required(),
+    password: Joi.string(),
+    phone: Joi.string().min(6).required(),
+    address: Joi.string().min(6).required(),
   });
 
   const {error} = schema.validate(req.body);
 
-  // check if error return response 400
   if (error) {
     return res.status(400).send({
-      status: "Failed",
-      error: {
-        message: error.details[0].message,
-      },
+      error: {message: error.details[0].message},
     });
   }
 
   try {
-    const userData = await user.findOne({
-      where: {
-        email: req.body.email,
-      },
-    });
+    const allUser = await user.findAll();
+    const nameExist = allUser.find((item) => req.body.name === item.name);
+    const emailExist = allUser.find((item) => req.body.email === item.email);
 
-    if (userData) {
+    if (nameExist) {
       return res.status(400).send({
-        status: "Failed",
+        status: "failed",
+        message: "Full Name already exist",
+      });
+    } else if (emailExist) {
+      return res.status(400).send({
+        status: "failed",
         message: "Email already exist",
       });
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
+    const {name, email, phone, address} = req.body;
+
+    const randomAvatar = Math.floor(Math.random() * avatarDefault.length);
+
+    const path_avatar = process.env.DEV_PATH_AVATAR;
     const newUser = await user.create({
-      ...req.body,
+      name,
+      email,
       password: hashedPassword,
-      photo: null,
+      phone,
+      address,
       status: "user",
+      photo: path_avatar + avatarDefault[randomAvatar],
     });
 
-    // generate token
     const token = jwt.sign(
       {id: newUser.id, status: newUser.status},
-      process.env.TOKEN_KEY
+      process.env.TOKEN_KEY,
+      {expiresIn: "1d"}
     );
 
-    res.send({
-      status: "Success",
-      message: "Your account has succesfully created",
-      data: {
-        email: newUser.email,
+    res.status(200).send({
+      status: "success",
+      user: {
         name: newUser.name,
         token,
       },
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       status: "failed",
-      message: "server error",
+      message: "Internal server error",
     });
   }
 };
 
+// login section
 exports.login = async (req, res) => {
-  // create validation schema
-
   const schema = Joi.object({
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
+    email: Joi.string().email().min(6).required(),
+    password: Joi.string(),
   });
 
   const {error} = schema.validate(req.body);
 
-  // check if error return response 400
   if (error) {
     return res.status(400).send({
-      status: "Failed",
-      error: {
-        message: error.details[0].message,
-      },
+      error: {message: error.details[0].message},
     });
   }
 
   try {
-    let userData = await user.findOne({
+    const userExist = await user.findOne({
       where: {
         email: req.body.email,
       },
@@ -107,64 +103,51 @@ exports.login = async (req, res) => {
       },
     });
 
-    if (!userData) {
+    if (!userExist) {
       return res.status(400).send({
-        status: "Failed",
-        message: "User not found",
+        status: "failed",
+        message: "Email or password are incorrect",
       });
     }
 
-    const isValid = await bcrypt.compare(req.body.password, userData.password);
-
-    if (!isValid) {
-      return res.status(400).send({
-        status: "Failed",
-        message: "Password is incorrect",
-      });
-    }
-
-    // generate token
-    const token = jwt.sign(
-      {id: userData.id, status: userData.status},
-      process.env.TOKEN_KEY
+    const isPassValid = await bcrypt.compare(
+      req.body.password,
+      userExist.password
     );
+    if (!isPassValid) {
+      return res.status(400).send({
+        status: "failed",
+        message: "Email or password are incorrect",
+      });
+    }
 
-    userData = JSON.parse(JSON.stringify(userData));
-
-    const photo = userData.photo
-      ? "http://localhost:5000/uploads/" + userData.photo
-      : null;
-
-    const newDataUser = {
-      id: userData.id,
-      name: userData.name,
-      email: userData.email,
-      phone: userData.phone,
-      address: userData.address,
-      status: userData.status,
-      photo: photo,
-      token,
-    };
-
-    res.send({
+    // create jwt token, and add id, status user to token. expiresIn for expires date of token
+    const token = jwt.sign(
+      {id: userExist.id, status: userExist.status},
+      process.env.TOKEN_KEY,
+      {expiresIn: "1d"}
+    );
+    res.status(200).send({
       status: "success",
-      message: "Login successful",
-      data: newDataUser,
+      user: {
+        name: userExist.name,
+        token,
+      },
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       status: "failed",
-      message: "server error",
+      message: "Internal server error",
     });
   }
 };
 
+// check is authentication valid
 exports.checkAuth = async (req, res) => {
   try {
-    const id = req.user.id;
+    const {id} = req.user;
 
-    let userData = await user.findOne({
+    const dataUser = await user.findOne({
       where: {
         id,
       },
@@ -173,114 +156,31 @@ exports.checkAuth = async (req, res) => {
       },
     });
 
-    if (!userData) {
+    if (!dataUser) {
       return res.status(404).send({
         status: "failed",
       });
     }
 
-    userData = JSON.parse(JSON.stringify(userData));
-
-    const photo = userData.photo
-      ? "http://localhost:5000/uploads/" + userData.photo
-      : null;
-
-    const newUserData = {
-      id: userData.id,
-      name: userData.name,
-      email: userData.email,
-      phone: userData.phone,
-      address: userData.address,
-      status: userData.status,
-      photo: photo,
-    };
-
     res.send({
       status: "success",
       data: {
-        user: newUserData,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      status: "failed",
-      message: "server error",
-    });
-  }
-};
-
-exports.oauthGoogle = async (req, res) => {
-  try {
-    const ticket = await client.verifyIdToken({
-      idToken: req.body.token,
-      audience: process.env.CLIENT_ID,
-    });
-
-    const {name, email, picture} = ticket.getPayload();
-
-    const dataUser = await user.findOne({
-      where: {
-        email,
-      },
-    });
-
-    let data;
-    let token;
-
-    if (dataUser) {
-      data = await user.update(
-        {
-          name: name,
-          status: "user",
-        },
-        {
-          where: {
-            id: dataUser.id,
-          },
-        }
-      );
-
-      token = jwt.sign(
-        {id: dataUser.id, status: dataUser.status},
-        process.env.TOKEN_KEY
-      );
-
-      return res.send({
-        status: "success",
         user: {
+          id: dataUser.id,
           name: dataUser.name,
-          token,
+          email: dataUser.email,
+          phone: dataUser.phone,
+          address: dataUser.address,
+          status: dataUser.status,
+          photo: dataUser.photo,
         },
-      });
-    }
-
-    // const hashedPassword = await bcrypt.compare(
-    //   req.body.password,
-    //   user.password
-    // );
-
-    data = await user.create({
-      name: name,
-      email,
-      // password,
-      phone: "-",
-      status: "user",
-      photo: picture,
-      token,
-    });
-
-    token = jwt.sign({id: data.id, status: data.status}, process.env.TOKEN_KEY);
-
-    res.send({
-      status: "success",
-      data: data,
+      },
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       status: "failed",
-      message: "Internal server error",
+      message: "Server error",
     });
   }
 };

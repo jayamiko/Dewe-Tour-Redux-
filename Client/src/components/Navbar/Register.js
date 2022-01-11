@@ -1,6 +1,5 @@
 // Import React
-import {useState, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useState} from "react";
 import {handleRegister} from "../../actions/auth";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
@@ -14,7 +13,7 @@ import {Button, Modal, Form} from "react-bootstrap";
 
 toast.configure();
 
-const Register = ({handleRegister, auth: {error, loading}}) => {
+const Register = ({handleRegister, auth: {error, isLoading}}) => {
   const [modal, setModal] = useState(false); //Modal Login
   const [registerModal, setRegisterModal] = useState(false); //Modal Register
 
@@ -45,7 +44,7 @@ const Register = ({handleRegister, auth: {error, loading}}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleRegister(email, password, name, phone, address);
+    handleRegister(email, password, name, phone, address, closeModalRegister());
   };
 
   return (
@@ -61,9 +60,7 @@ const Register = ({handleRegister, auth: {error, loading}}) => {
             aria-label="Close"
             onClick={closeModalRegister}
             required
-          >
-            x
-          </button>
+          ></button>
           <Form onSubmit={(e) => handleSubmit(e)}>
             <Form.Group className="mb-4" controlId="formBasicName">
               <Form.Label className="fw-bold">FullName</Form.Label>
@@ -115,6 +112,7 @@ const Register = ({handleRegister, auth: {error, loading}}) => {
                 className="text-white fw-bold"
                 variant="warning"
                 type="submit"
+                onChange={(e) => registerHandleChange(e)}
                 required
               >
                 Submit
