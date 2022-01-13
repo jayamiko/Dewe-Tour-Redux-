@@ -42,7 +42,7 @@ const NavbarComp = ({auth: {isAuthenticated, user, loading}}) => {
               />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                  <Nav.Link href="#login">
+                  <Nav.Link href="#login" className="nav-link">
                     <Login />
                     <Register />
                   </Nav.Link>
