@@ -1,8 +1,7 @@
 // Import React
 import React from "react";
 import {Link} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import {useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import store from "../../../store";
 
@@ -10,7 +9,6 @@ import store from "../../../store";
 import "./DropdownComp.css";
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Icon from "../../../img/Icon1.png";
 import IconChat from "../../../img/chat-icon.png";
 import User from "../../../img/user 2.png";
 import Payment from "../../../img/Vector.png";
@@ -18,7 +16,7 @@ import Logout from "../../../img/logout.png";
 import {Navbar, Nav} from "react-bootstrap";
 
 // Import API
-import {API, setAuthToken} from "../../../config/api";
+import {setAuthToken} from "../../../config/api";
 import {checkUser} from "../../../config/auth";
 
 toast.configure();
@@ -55,57 +53,41 @@ function UserDropdown() {
 
   return (
     <>
-      <Navbar expand="lg" className="container-navbar-user">
-        <Navbar.Brand href="/">
-          <Link to="/">
-            <img src={Icon} alt="icon-dewetour" className="icon-dewetour" />
-          </Link>
-        </Navbar.Brand>
+      <Navbar expand="lg" style={{paddingRight: "50px"}}>
+        <div style={{paddingLeft: "50px"}}></div>
         <Navbar.Toggle
           aria-controls="basic-navbar-nav"
-          style={{background: "white"}}
+          style={{background: "white", marginTop: "20px"}}
         />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto" className="nav-item">
-            <Nav.Link href="#chat" className="nav-link">
+        <Navbar.Collapse id="basic-navbar-nav" className="nav-collapse">
+          <Nav className="me-auto">
+            <Nav.Link href="#chat">
               <Link to="/message" style={{textDecoration: "none"}}>
-                <div
-                  className="d-flex align-items-center gap-2"
-                  style={{color: "white"}}
-                >
+                <div className="nav-item-user1" style={{color: "white"}}>
                   <img src={IconChat} width={45} alt=""></img>
                   Chat
                 </div>
               </Link>
             </Nav.Link>
-            <Nav.Link href="#profile" className="nav-link">
+            <Nav.Link href="#profile">
               <Link to="/profile" style={{textDecoration: "none"}}>
-                <div
-                  className="d-flex align-items-center gap-2"
-                  style={{color: "white"}}
-                >
+                <div className="nav-item-user2" style={{color: "white"}}>
                   <img src={User} alt=""></img>
                   Profile
                 </div>
               </Link>
             </Nav.Link>
-            <Nav.Link href="#payment" className="nav-link">
+            <Nav.Link href="#payment">
               <Link to="/payment" style={{textDecoration: "none"}}>
-                <div
-                  className="d-flex align-items-center gap-2"
-                  style={{color: "white"}}
-                >
+                <div className="nav-item-user3" style={{color: "white"}}>
                   <img src={Payment} alt=""></img>
                   Payment
                 </div>
               </Link>
             </Nav.Link>
-            <Nav.Link href="#logout" className="nav-link">
+            <Nav.Link href="#logout">
               <Link onClick={logoutSession} style={{textDecoration: "none"}}>
-                <div
-                  className="d-flex align-items-center gap-2"
-                  style={{color: "white"}}
-                >
+                <div className="nav-item-user4" style={{color: "white"}}>
                   <img src={Logout} alt=""></img>
                   Logout
                 </div>

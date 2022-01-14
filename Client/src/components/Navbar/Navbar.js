@@ -15,7 +15,7 @@ import "./Navbar.css";
 import Icon from "../../img/Icon1.png";
 import {Navbar, Nav} from "react-bootstrap";
 
-const NavbarComp = ({auth: {isAuthenticated, user, loading}}) => {
+const NavbarComp = ({auth: {isAuthenticated, user, isLoading}}) => {
   const currentState = useSelector((state) => state.auth);
   const isAdmin = currentState.user.status === "admin";
   return (
@@ -30,15 +30,10 @@ const NavbarComp = ({auth: {isAuthenticated, user, loading}}) => {
         !isAuthenticated && (
           <>
             <Navbar expand="lg" style={{paddingRight: "50px"}}>
-              <div style={{paddingLeft: "50px"}}>
-                <Link to="/">
-                  <img src={Icon} alt="icon" className="icon-dewetour" />
-                </Link>
-              </div>
-
+              <div style={{paddingLeft: "50px"}}></div>
               <Navbar.Toggle
                 aria-controls="basic-navbar-nav"
-                style={{background: "white"}}
+                style={{background: "white", marginTop: "20px"}}
               />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">

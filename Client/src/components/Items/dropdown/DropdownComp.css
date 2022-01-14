@@ -5,11 +5,27 @@
   padding-left: 40px;
 }
 
-.nav-link {
-  padding-left: 30px !important;
-  color: white;
-  font-family: Avenir;
-  font-weight: 00;
+.nav-item-user2-admin {
+  position: relative;
+  bottom: 80px;
+}
+.nav-item-user3-admin {
+  position: relative;
+  bottom: 80px;
+  margin-right: 100px;
+}
+
+.navbar-admin {
+  background-image: url(../../../img//Header.png) !important;
+  width: 100% !important;
+  height: 65px;
+}
+
+.toggle-admin {
+  background-color: white;
+  margin-right: 20px;
+  position: relative;
+  bottom: 60px;
 }
 
 .desc {
@@ -23,13 +39,6 @@
   height: 50px;
 }
 
-/* .polygon {
-  position: absolute;
-  top: 100px;
-  z-index: 999999;
-  display: none;
-} */
-
 .po-hover {
   cursor: pointer;
 }
@@ -38,46 +47,56 @@
   width: 30px;
   height: 30px;
 }
-@media only screen and (min-width: 990px) {
-  .nav-item {
-    margin-left: 650px;
+
+/* Tablet Device */
+@media only screen and (max-width: 991px) {
+  .nav-item-user2 {
+    margin-top: 50px;
   }
-  .nav-item-admin {
-    margin-left: 720px;
+  .nav-item-user3 {
+    margin-top: 100px !important;
   }
-}
-@media only screen and (max-width: 990px) {
-  .nav-item {
-    margin-left: 0px;
+  .nav-item-user4 {
+    margin-top: 150px !important;
   }
-  .nav-item-admin {
-    margin-left: 0px;
-  }
-}
-/* Mobile Device */
-@media only screen and (max-width: 550px) {
-  .rounded-circle {
-    display: none !important;
-    bottom: 100px;
-    left: 40px;
-  }
-  .dropdown-content {
-    position: static !important;
-    background-color: navy;
-    display: none !important;
-  }
-  .polygon {
-    display: none !important;
-  }
-  .nav-item {
-    display: flex;
-    color: white !important;
-    background: rgba(33, 37, 41);
-    width: 100vw;
+  .nav-item-user2-admin {
     position: relative;
-    right: 40px;
+    bottom: 50px;
+    color: black !important;
+    margin-right: 20px;
   }
-  .nav-link {
-    padding-left: 20px !important;
+  .nav-item-user3-admin {
+    color: black !important;
+    margin-right: 20px;
+    position: relative;
+    top: 0px;
+  }
+  .nav-item {
+    margin-left: 0px;
+  }
+  .nav-item-admin {
+    margin-left: 0px;
+  }
+}
+
+/* Mobile Device */
+@media only screen and (max-width: 576px) {
+  .nav-item-user1 {
+    margin-top: 0px;
+    margin-right: 330px;
+  }
+  .nav-item-user2 {
+    margin-top: 5px;
+    margin-right: 220px;
+  }
+  .nav-item-user3 {
+    position: relative;
+    bottom: 95px;
+    margin-bottom: 100px !important;
+    margin-right: 100px;
+  }
+  .nav-item-user4 {
+    position: relative;
+    bottom: 147px;
   }
 }

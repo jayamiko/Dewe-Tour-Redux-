@@ -9,8 +9,10 @@ body {
   text-align: center;
 }
 
-.background-nav {
-  background-image: url(./img//Header.png);
+.icon-dw {
+  position: absolute;
+  padding-left: 50px;
+  margin-top: 20px;
 }
 
 .App-logo {

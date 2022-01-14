@@ -1,6 +1,7 @@
 // Import React
 import {Link, useHistory} from "react-router-dom";
 import {Container} from "react-bootstrap";
+import "./Main.css";
 
 export default function GroupTour({data, isAdmin, searchData}) {
   const history = useHistory();
@@ -14,10 +15,7 @@ export default function GroupTour({data, isAdmin, searchData}) {
     <Container>
       <div className="title text-center">
         {isAdmin ? (
-          <div
-            className="d-flex justify-content-between"
-            style={{paddingTop: 70}}
-          >
+          <div className="d-flex justify-content-between">
             <h2
               className="fs-1 fw-bold"
               style={{
@@ -27,20 +25,7 @@ export default function GroupTour({data, isAdmin, searchData}) {
               Income Trip
             </h2>
             <button
-              className="buttonAddTrip"
-              style={{
-                width: 150,
-                height: 40,
-                background: "#FFAF00",
-                fontSize: "18px",
-                color: "#FFFFFF",
-                fontWeight: "900",
-                fontFamily: "Avenir",
-                lineHeight: "25px",
-                textAlign: "center",
-                borderRadius: "5px",
-                border: "white",
-              }}
+              className="btn-add-trip"
               onClick={() => {
                 history.push("/add-trip");
               }}

@@ -9,6 +9,7 @@ import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IconChat from "../../../img/chat-icon.png";
 import Logout from "../../../img/logout.png";
+import Header from "../../../img/Header.png";
 import Icon from "../../../img/Icon1.png";
 import {Navbar, Nav} from "react-bootstrap";
 
@@ -45,56 +46,34 @@ function AdminDropdown() {
 
   return (
     <>
-      <div className="background-nav">
-        <Navbar expand="lg" className="container-navbar-user">
-          <Navbar.Brand href="/">
-            <Link to="/">
-              <img src={Icon} alt="icon-dewetour" className="icon-dewetour" />
-            </Link>
-          </Navbar.Brand>
-          <Navbar.Toggle
-            aria-controls="basic-navbar-nav"
-            style={{background: "white"}}
-          />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto" className="nav-item-admin">
-              <Nav.Link href="#messageadmin" className="nav-link">
-                <Link to="/admin/message" style={{textDecoration: "none"}}>
-                  <div
-                    className="d-flex align-items-center gap-2"
-                    style={{color: "white"}}
-                  >
-                    <img src={IconChat} width={45} alt=""></img>
-                    Chat
-                  </div>
-                </Link>
-              </Nav.Link>
-              <Nav.Link href="#transaction" className="nav-link">
-                <Link to="/list-transaction" style={{textDecoration: "none"}}>
-                  <div
-                    className="d-flex align-items-center gap-2"
-                    style={{color: "white"}}
-                  >
-                    <img src="/assets/journey1.png" alt=""></img>
-                    Transations
-                  </div>
-                </Link>
-              </Nav.Link>
-              <Nav.Link href="#logout" className="nav-link">
-                <Link onClick={logoutSession} style={{textDecoration: "none"}}>
-                  <div
-                    className="d-flex align-items-center gap-2"
-                    style={{color: "white"}}
-                  >
-                    <img src={Logout} alt=""></img>
-                    Logout
-                  </div>
-                </Link>
-              </Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-      </div>
+      <div className="navbar-admin"></div>
+      <Navbar expand="lg">
+        <div style={{paddingLeft: "50px"}}></div>
+        <Navbar.Toggle
+          aria-controls="basic-navbar-nav"
+          className="toggle-admin"
+        />
+        <Navbar.Collapse id="basic-navbar-nav" className="nav-collapse">
+          <Nav className="me-auto">
+            <Nav.Link href="#profile">
+              <Link to="/profile" style={{textDecoration: "none"}}>
+                <div className="nav-item-user2-admin" style={{color: "white"}}>
+                  <img src="/assets/journey1.png" alt=""></img>
+                  <span style={{marginLeft: "10px"}}>Transations</span>
+                </div>
+              </Link>
+            </Nav.Link>
+            <Nav.Link href="#logout">
+              <Link onClick={logoutSession} style={{textDecoration: "none"}}>
+                <div className="nav-item-user3-admin" style={{color: "white"}}>
+                  <img src={Logout} alt=""></img>
+                  <span style={{marginLeft: "10px"}}>Logout</span>
+                </div>
+              </Link>
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     </>
   );
 }
