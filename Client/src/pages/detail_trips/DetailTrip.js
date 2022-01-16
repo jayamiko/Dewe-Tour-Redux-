@@ -1,6 +1,6 @@
 // Import React
 import {useEffect, useState} from "react";
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
@@ -46,13 +46,21 @@ const DetailTrip = ({
   }, [getTransactionDetail]);
 
   const history = useHistory();
+  const {id} = useParams();
   const currentState = useSelector((state) => state.auth);
   const stateAuth = currentState.user;
   const isLoginSession = useSelector((state) => currentState.isAuthenticated);
-
   // Loading
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
-
+  const [count, setCount] = useState(1);
+  const [transaction, setTransaction] = useState({
+    counterQty: "",
+    total: "",
+    status: "Waiting payment",
+    attachment: "",
+    tripId: "",
+    userId: "",
+  });
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoadingSkeleton(false);
@@ -60,6 +68,10 @@ const DetailTrip = ({
 
     return () => clearTimeout(timer);
   }, []);
+
+  if (!Number(id)) {
+    history.push("/");
+  }
 
   const rupiah = (number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -73,31 +85,42 @@ const DetailTrip = ({
     confirm: false,
   });
 
-  const TransactionDetail = {
-    counterQty: 1,
-    total: transDetail?.total,
-    tripId: transDetail?.id,
-    userId: stateAuth.id,
-  };
-
-  const [transaction, setTransaction] = useState({
-    counterQty: TransactionDetail.counterQty,
-    total: TransactionDetail.total,
-    tripId: TransactionDetail.tripId,
-    userId: TransactionDetail.userId,
-  });
-
-  let totalPrice = transaction?.counterQty * tripDetail?.price;
   const [quotaRemaining, setQuotaRemaining] = useState({
     quota: tripDetail?.quota - transaction?.counterQty,
   });
+
+  const totalPrice = tripDetail?.price * count;
+  const totalPriceInString = totalPrice
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const priceInString = tripDetail.price
+    ?.toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  // for set data
+  useEffect(() => {
+    setTransaction({
+      ...transaction,
+      counterQty: count,
+      total: isNaN(totalPrice) ? tripDetail : totalPrice,
+      status: "Waiting payment",
+      attachment: "",
+      tripId: id,
+      userId: stateAuth.id,
+    });
+  }, [count]);
+
+  console.log("tripDetail", id);
+  console.log("count", count);
+  console.log("transaction", transaction);
+  console.log("TOTAL", transaction.total);
 
   const [dataTransaction, setDataTransaction] = useState([]);
 
   const getDataTransactionsByUserId = async () => {
     const response = await API.get("/transactions");
-    const filteredTransactions = response.data.data.filter(
-      (item) => item.user.id === stateAuth.id
+    const filteredTransactions = response?.data?.data.filter(
+      (item) => item?.user?.id === stateAuth.id
     );
     setDataTransaction(filteredTransactions[filteredTransactions.length - 1]);
   };
@@ -119,34 +142,6 @@ const DetailTrip = ({
       setShow({login: false, register: true});
     } else {
       setShow({login: true, register: false});
-    }
-  };
-
-  const handleAdd = () => {
-    if (transaction?.counterQty < tripDetail?.quota) {
-      const add = transaction?.counterQty + 1;
-      const updateQuota = tripDetail?.quota - add;
-      setQuotaRemaining({quota: updateQuota});
-      setTransaction(() => ({
-        tripId: tripDetail?.id,
-        userId: stateAuth.id,
-        counterQty: add,
-        total: totalPrice + tripDetail?.price,
-      }));
-    }
-  };
-
-  const handleSubtract = () => {
-    if (transaction?.counterQty > 0) {
-      const subtract = transaction?.counterQty - 1;
-      const updateQuota = tripDetail?.quota - subtract;
-      setQuotaRemaining({quota: updateQuota});
-      setTransaction(() => ({
-        tripId: tripDetail?.id,
-        userId: stateAuth.id,
-        counterQty: subtract,
-        total: totalPrice + tripDetail?.price,
-      }));
     }
   };
 
@@ -309,13 +304,23 @@ const DetailTrip = ({
           <section>
             <div>
               <div className="price-area">
-                <span>Rp. {rupiah(tripDetail?.price)}/Person</span>
+                <span>{`Rp. ${priceInString}`}/Person</span>
                 <div className="counter-area">
-                  <button onClick={handleSubtract}>-</button>
+                  <button
+                    onClick={() => (count === 1 ? "" : setCount(count - 1))}
+                  >
+                    -
+                  </button>
                   <div className="d-inline-block text-center">
                     <span className="counter">{transaction?.counterQty}</span>
                   </div>
-                  <button onClick={handleAdd}>+</button>
+                  <button
+                    onClick={() =>
+                      count === tripDetail?.quota ? "" : setCount(count + 1)
+                    }
+                  >
+                    +
+                  </button>
                 </div>
               </div>
 
@@ -323,7 +328,7 @@ const DetailTrip = ({
 
               <div className="total">
                 <div className="title-total">Total :</div>
-                <p>Rp. {rupiah(totalPrice)}</p>
+                <p>{`Rp. ${totalPriceInString}`}</p>
               </div>
               <hr />
               <button

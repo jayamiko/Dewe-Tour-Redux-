@@ -7,16 +7,16 @@
 
 .nav-item-user4 {
   margin-right: 100px;
-  margin-top: 50px !important;
+  margin-top: 0px !important;
 }
 .nav-item-user3 {
-  margin-top: 50px !important;
+  margin-top: 0px !important;
 }
 .nav-item-user2 {
-  margin-top: 50px !important;
+  margin-top: 0px !important;
 }
 .nav-item-user1 {
-  margin-top: 44px !important;
+  margin-top: -7px !important;
 }
 .nav-item-user4 span {
   padding-left: 10px;
@@ -128,6 +128,9 @@
 
 /* Mobile Device */
 @media only screen and (max-width: 576px) {
+  .me-auto {
+    position: absolute;
+  }
   .nav-item-user1 {
     margin-top: 0px;
     margin-right: 375px;

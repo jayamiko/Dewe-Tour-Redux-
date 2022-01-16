@@ -9,7 +9,7 @@
 .header-image h1 {
   color: #ffffff;
   padding-left: 100px;
-  margin-top: 150px;
+  margin-top: 100px;
   font-size: 4.7vw !important;
   font-weight: bold;
 }
@@ -47,6 +47,7 @@
     padding-left: 50px;
     position: relative;
     bottom: 100px;
+    margin-top: 125px;
     font-size: 3.8em !important;
   }
   .header-image h2 {
@@ -75,18 +76,18 @@
   .header-image h1 {
     padding-left: 30px;
     position: relative;
-    bottom: 54px;
+    bottom: 110px;
     font-size: 28px !important;
   }
   .header-image h2 {
     position: relative;
-    bottom: 54px;
+    bottom: 110px;
     padding-left: 30px;
     font-size: 18px !important;
   }
   .header-image label {
     position: relative;
-    bottom: 54px;
+    bottom: 118px;
     padding-left: 30px;
     font-size: 12px !important;
   }
