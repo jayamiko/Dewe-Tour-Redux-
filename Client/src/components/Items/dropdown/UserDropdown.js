@@ -53,7 +53,7 @@ function UserDropdown() {
 
   return (
     <>
-      <Navbar expand="lg" style={{paddingRight: "50px"}}>
+      <Navbar expand="lg" className="navbar-user">
         <div style={{paddingLeft: "50px"}}></div>
         <Navbar.Toggle
           aria-controls="basic-navbar-nav"
@@ -63,33 +63,33 @@ function UserDropdown() {
           <Nav className="me-auto">
             <Nav.Link href="#chat">
               <Link to="/message" style={{textDecoration: "none"}}>
-                <div className="nav-item-user1" style={{color: "white"}}>
+                <div className="nav-item-user1">
                   <img src={IconChat} width={45} alt=""></img>
-                  Chat
+                  <span>Chat</span>
                 </div>
               </Link>
             </Nav.Link>
             <Nav.Link href="#profile">
               <Link to="/profile" style={{textDecoration: "none"}}>
-                <div className="nav-item-user2" style={{color: "white"}}>
+                <div className="nav-item-user2">
                   <img src={User} alt=""></img>
-                  Profile
+                  <span>Profile</span>
                 </div>
               </Link>
             </Nav.Link>
             <Nav.Link href="#payment">
               <Link to="/payment" style={{textDecoration: "none"}}>
-                <div className="nav-item-user3" style={{color: "white"}}>
+                <div className="nav-item-user3">
                   <img src={Payment} alt=""></img>
-                  Payment
+                  <span>Payment</span>
                 </div>
               </Link>
             </Nav.Link>
             <Nav.Link href="#logout">
               <Link onClick={logoutSession} style={{textDecoration: "none"}}>
-                <div className="nav-item-user4" style={{color: "white"}}>
+                <div className="nav-item-user4">
                   <img src={Logout} alt=""></img>
-                  Logout
+                  <span>Logout</span>
                 </div>
               </Link>
             </Nav.Link>

@@ -5,6 +5,44 @@
   padding-left: 40px;
 }
 
+.nav-item-user4 {
+  margin-right: 100px;
+  margin-top: 50px !important;
+}
+.nav-item-user3 {
+  margin-top: 50px !important;
+}
+.nav-item-user2 {
+  margin-top: 50px !important;
+}
+.nav-item-user1 {
+  margin-top: 44px !important;
+}
+.nav-item-user4 span {
+  padding-left: 10px;
+  color: skyblue;
+  font-weight: 800;
+  font-family: Avenir;
+}
+.nav-item-user3 span {
+  padding-left: 10px;
+  color: skyblue;
+  font-weight: 800;
+  font-family: Avenir;
+}
+.nav-item-user2 span {
+  padding-left: 10px;
+  color: skyblue;
+  font-weight: 800;
+  font-family: Avenir;
+}
+.nav-item-user1 span {
+  padding-left: 10px;
+  color: skyblue;
+  font-weight: 800;
+  font-family: Avenir;
+}
+
 .nav-item-user2-admin {
   position: relative;
   bottom: 80px;
@@ -50,14 +88,23 @@
 
 /* Tablet Device */
 @media only screen and (max-width: 991px) {
+  .nav-item-user1 {
+    margin-top: 0px !important;
+    color: black;
+  }
   .nav-item-user2 {
-    margin-top: 50px;
+    margin-top: 50px !important;
+    color: black;
   }
   .nav-item-user3 {
+    color: black;
     margin-top: 100px !important;
   }
   .nav-item-user4 {
+    color: black;
     margin-top: 150px !important;
+    position: relative;
+    left: 100px;
   }
   .nav-item-user2-admin {
     position: relative;
@@ -83,17 +130,17 @@
 @media only screen and (max-width: 576px) {
   .nav-item-user1 {
     margin-top: 0px;
-    margin-right: 330px;
+    margin-right: 375px;
   }
   .nav-item-user2 {
-    margin-top: 5px;
-    margin-right: 220px;
+    margin-top: 7px !important;
+    margin-right: 250px;
   }
   .nav-item-user3 {
     position: relative;
     bottom: 95px;
     margin-bottom: 100px !important;
-    margin-right: 100px;
+    margin-right: 130px;
   }
   .nav-item-user4 {
     position: relative;

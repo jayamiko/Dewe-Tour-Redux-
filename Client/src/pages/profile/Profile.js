@@ -28,7 +28,6 @@ import Nodata from "../../img/folder.png";
 
 // Import API
 import {API} from "../../config/api";
-import {useParams} from "react-router-dom";
 
 toast.configure();
 const ProfilePage = ({auth: {user}}) => {
