@@ -15,6 +15,7 @@ import Footer from "../../components/Footer/Footer";
 import Spinner from "../../components/atoms/Spinner";
 import ModalLogin from "../../components/Items/modal/ModalLogin";
 import ModalRegister from "../../components/Items/modal/ModalRegister.js";
+import setData from "../../utils/setData";
 
 // Import Style
 import "./DetailTrip.css";
@@ -48,15 +49,16 @@ const DetailTrip = ({
   const history = useHistory();
   const {id} = useParams();
   const currentState = useSelector((state) => state.auth);
+  const isLoginSession = useSelector((state) => state.auth.isLogin);
   const stateAuth = currentState.user;
-  const isLoginSession = useSelector((state) => currentState.isAuthenticated);
+
   // Loading
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
   const [count, setCount] = useState(1);
   const [transaction, setTransaction] = useState({
     counterQty: "",
     total: "",
-    status: "Waiting payment",
+    status: "Waiting Approve",
     attachment: "",
     tripId: "",
     userId: "",
@@ -73,20 +75,10 @@ const DetailTrip = ({
     history.push("/");
   }
 
-  const rupiah = (number) => {
-    return new Intl.NumberFormat("id-ID", {
-      minimumFractionDigits: 0,
-    }).format(number);
-  };
-
   const [show, setShow] = useState({
     login: false,
     register: false,
     confirm: false,
-  });
-
-  const [quotaRemaining, setQuotaRemaining] = useState({
-    quota: tripDetail?.quota - transaction?.counterQty,
   });
 
   const totalPrice = tripDetail?.price * count;
@@ -102,18 +94,13 @@ const DetailTrip = ({
     setTransaction({
       ...transaction,
       counterQty: count,
-      total: isNaN(totalPrice) ? tripDetail : totalPrice,
-      status: "Waiting payment",
+      total: totalPrice === undefined || NaN ? transaction?.total : totalPrice,
+      status: "Waiting Approve",
       attachment: "",
       tripId: id,
       userId: stateAuth.id,
     });
   }, [count]);
-
-  console.log("tripDetail", id);
-  console.log("count", count);
-  console.log("transaction", transaction);
-  console.log("TOTAL", transaction.total);
 
   const [dataTransaction, setDataTransaction] = useState([]);
 
@@ -148,65 +135,41 @@ const DetailTrip = ({
   const handleSubmit = async () => {
     setLoadingSkeleton(true);
     try {
-      if (isLoginSession) {
-        const detailTripData = await API.get(`/trip/${tripDetail?.id}`);
-        const quotaTrip = detailTripData.data.data.quota;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
-        let resultQuota = quotaTrip - transaction?.counterQty;
+      const formData = new FormData();
+      formData.set("counterQty", transaction?.counterQty);
+      formData.set("total", totalPrice);
+      formData.set("status", transaction?.status);
+      formData.set("attachment", transaction?.attachment);
+      formData.set("tripId", transaction?.tripId);
+      formData.set("userId", transaction?.userId);
 
-        if (resultQuota < 0) {
-          toast.success(`Limited Quota Tour`, {
-            position: toast.POSITION.BOTTOM_RIGHT,
-            autoClose: 2000,
-          });
+      await API.post("/transaction", formData, config);
+      setData("transaction", transaction);
 
-          const pushToHome = setTimeout(() => {
-            history.push("/");
-          }, 3000);
-
-          return pushToHome;
-        }
-
-        if (dataTransaction?.status === "Waiting Payment") {
-          toast.success(`Booking is Success`, {
-            position: toast.POSITION.BOTTOM_RIGHT,
-            autoClose: 2000,
-          });
-          history.push("/payment");
-        }
-
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-
-        const bodyTransaction = JSON.stringify(transaction);
-        const response = await API.post(
-          "/transaction",
-          bodyTransaction,
-          config
-        );
-
-        const bodyQuota = JSON.stringify(quotaRemaining);
-        await API.put(`/trip/${tripDetail?.id}`, bodyQuota, config);
-        response.data.status === "success" &&
-          toast.success(`Order successful, now complete your transaction`, {
-            position: toast.POSITION.BOTTOM_RIGHT,
-            autoClose: 2000,
-          });
-        history.push("/payment");
-
-        // Loading
-        const timer = setTimeout(() => {
-          setLoadingSkeleton(false);
-        }, 2000);
-        return () => clearTimeout(timer);
-      } else {
+      if (isLoginSession === false) {
         handleShowLogin();
       }
+
+      toast.success("Booking Success", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 3000,
+      });
+
+      const timer = setTimeout(() => {
+        setLoadingSkeleton(false);
+      }, 1000);
+
+      history.push("/payment");
+      return () => clearTimeout(timer);
     } catch (error) {
-      console.log(error);
+      const message = error?.response?.data?.message || error.message;
+      toast.error(message || "Unknow error");
     }
   };
 

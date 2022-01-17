@@ -94,7 +94,7 @@ export default function PaymentCard({data, setData}) {
                 </div>
               </div>
               <div className="col">
-                {!data?.attachment && data?.status === "Waiting Payment" && (
+                {!data?.attachment && data?.status === "Waiting Approve" && (
                   <InputFileProofPayment
                     setData={setData}
                     preview={preview}
