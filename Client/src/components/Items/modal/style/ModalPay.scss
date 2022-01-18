@@ -1,0 +1,39 @@
+.border-secondary {
+  width: 1035px;
+  height: 493px;
+  border-radius: 5px;
+  right: 300px;
+  top: 50px;
+}
+
+.head-modal-pay {
+  margin-top: 15px;
+
+  h1 {
+    margin-left: 50px;
+    position: relative;
+    left: 100px;
+  }
+}
+
+.col {
+  .image-proof {
+    margin-top: 60px;
+    width: 200px;
+    height: 170px;
+    left: 780px !important;
+  }
+  p {
+    margin-top: 180px;
+    margin-left: 100px;
+    font-style: italic;
+    font-family: Avenir;
+    font-size: 18px;
+  }
+}
+
+.approve-cancel {
+  position: relative;
+  left: 675px;
+  float: right;
+}

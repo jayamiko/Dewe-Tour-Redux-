@@ -55,8 +55,8 @@ function AdminDropdown() {
         />
         <Navbar.Collapse id="basic-navbar-nav" className="nav-collapse">
           <Nav className="me-auto">
-            <Nav.Link href="#profile">
-              <Link to="/profile" style={{textDecoration: "none"}}>
+            <Nav.Link href="#list-transaction">
+              <Link to="/list-transaction" style={{textDecoration: "none"}}>
                 <div className="nav-item-user2-admin" style={{color: "white"}}>
                   <img src="/assets/journey1.png" alt=""></img>
                   <span style={{marginLeft: "10px"}}>Transations</span>

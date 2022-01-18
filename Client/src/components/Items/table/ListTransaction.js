@@ -1,14 +1,20 @@
+// Import React
 import {useState, useEffect} from "react";
-import search from "../../../img/search.png";
-import ModalPay from "../modal/ModalPay";
 import {connect} from "react-redux";
-import {getTransactions, updatePayment} from "../../../actions/TransActions";
 import PropTypes from "prop-types";
+import {getTransactions, updatePayment} from "../../../actions/TransActions";
+
+// Import Components
+import ModalPay from "../modal/ModalPay";
+
+// Import Style
+import search from "../../../img/search.png";
+import Nodata from "../../../img/no-data.jpg";
 
 const ListTransaction = ({
   getTransactions,
   updatePayment,
-  transactions: {transactions, loading},
+  transactions: {transactions, isLoading},
 }) => {
   const [dataPay, setDataPay] = useState({
     id: "",
@@ -47,6 +53,16 @@ const ListTransaction = ({
     <section className="list-transaction" style={{minHeight: 450}}>
       <div className="container">
         <h1 className="h4 fw-bold mb-4">Incoming Transaction</h1>
+        {!transactions?.length && (
+          <div className="container">
+            <div className="not-found d-flex justify-content-center align-items-center">
+              <div className="text-center">
+                <img src={Nodata} alt="Not Found" width="250" height="250" />
+                <h1 className="fw-bold h5">No Transaction</h1>
+              </div>
+            </div>
+          </div>
+        )}
         <table className="table bg-white" style={{fontSize: 12}}>
           <thead>
             <tr>
@@ -118,7 +134,7 @@ const ListTransaction = ({
         isShow={isShow}
         setIsShow={setIsShow}
         handleClose={handleClose}
-        transactions={transactions}
+        dataPay={dataPay}
         updatePayment={updatePayment}
       />
     </section>
