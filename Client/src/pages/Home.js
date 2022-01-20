@@ -1,9 +1,7 @@
 // Import React
-import React from "react";
-import {useState, useEffect} from "react";
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {connect} from "react-redux";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import {useSelector, connect} from "react-redux";
 import PropTypes from "prop-types";
 import {getTrips} from "../actions/TripsActions";
 
@@ -32,6 +30,8 @@ function Home({
   const isAdmin = currentState.auth.user.status === "admin";
 
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
+
+  let navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {

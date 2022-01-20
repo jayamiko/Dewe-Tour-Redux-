@@ -1,10 +1,10 @@
 // Import React
-import {Link, useHistory} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Container} from "react-bootstrap";
 import "./Main.css";
 
 export default function GroupTour({data, isAdmin, searchData}) {
-  const history = useHistory();
+  let navigate = useNavigate();
   const rupiah = (number) => {
     return new Intl.NumberFormat("id-ID", {
       minimumFractionDigits: 0,
@@ -27,7 +27,7 @@ export default function GroupTour({data, isAdmin, searchData}) {
             <button
               className="btn-add-trip"
               onClick={() => {
-                history.push("/add-trip");
+                navigate("/add-trip");
               }}
             >
               Add Trip
@@ -37,12 +37,7 @@ export default function GroupTour({data, isAdmin, searchData}) {
           <h2 className="fs-1 fw-bold">Group Tour</h2>
         )}
       </div>
-      <div
-        className="row gy-5 pb-5"
-        style={{
-          marginTop: "5px",
-        }}
-      >
+      <div className="row gy-5 pb-5" style={{marginTop: "5px"}}>
         {data
           ?.filter((item) => {
             if (

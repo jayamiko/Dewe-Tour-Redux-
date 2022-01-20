@@ -1,7 +1,7 @@
 // Import React
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import React, {Fragment, useState} from "react";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {useEffect} from "react";
-import {useSelector} from "react-redux";
 
 // Import Pages
 import DetailTrip from "./pages/detail_trips/DetailTrip";
@@ -10,7 +10,8 @@ import Payment from "./pages/payment/Payment";
 import Profile from "./pages/profile/Profile";
 import AddTrip from "./pages/addTrip/addTrip";
 import ListTransaction from "./pages/list_transactions/ListTransaction";
-import PrivateRoute from "./components/PrivateRoutes/PrivateRoutes";
+import AuthRoute from "./components/PrivateRoutes/AuthRoute";
+import AdminRoute from "./components/PrivateRoutes/AdminRoute";
 import Chat from "./pages/Chat/Chat";
 import ChatAdmin from "./pages/Chat/Admin/ChatAdmin";
 
@@ -28,43 +29,97 @@ if (localStorage.token) {
 }
 
 function App() {
+  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
+
   useEffect(() => {
     checkUser();
   }, []);
 
-  const currentState = useSelector((state) => state.auth);
-  return currentState.isLoading ? (
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingSkeleton(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
     <>
-      <Spinner customText={"Loading..."} />
+      {loadingSkeleton === true ? (
+        <div>
+          <Spinner customText="Loading.." />
+        </div>
+      ) : (
+        <>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/detail/:id" element={<DetailTrip />} />
+
+              {/* AUTH ROUTE */}
+              <Route
+                path="/profile"
+                element={
+                  <AuthRoute>
+                    <Profile />
+                  </AuthRoute>
+                }
+              />
+              <Route
+                path="/payment"
+                element={
+                  <AuthRoute>
+                    <Payment />
+                  </AuthRoute>
+                }
+              />
+              <Route
+                path="/message"
+                element={
+                  <AuthRoute>
+                    <Chat />
+                  </AuthRoute>
+                }
+              />
+
+              {/* ADMIN ROUTE */}
+              <Route
+                path="/admin-message"
+                element={
+                  <AdminRoute>
+                    <ChatAdmin />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/"
+                element={
+                  <AdminRoute>
+                    <Home />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/add-trip"
+                element={
+                  <AdminRoute>
+                    <AddTrip />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/list-transaction"
+                element={
+                  <AdminRoute>
+                    <ListTransaction />
+                  </AdminRoute>
+                }
+              />
+            </Routes>
+          </BrowserRouter>
+        </>
+      )}
     </>
-  ) : (
-    <BrowserRouter>
-      <Switch>
-        {/* User Only */}
-        <Route exact path="/" component={Home} />
-        <Route exact path="/detail/:id" component={DetailTrip} />
-        <Route exact path="/payment" component={Payment} />
-        <Route exact path="/profile" component={Profile} />
-        <Route path="/message">
-          <Chat />
-        </Route>
-
-        {/* Admin Only */}
-        <PrivateRoute path="/admin/message" component={ChatAdmin} />
-        <PrivateRoute exact path="/add-trip" component={AddTrip} />
-        <PrivateRoute
-          exact
-          path="/list-transaction"
-          component={ListTransaction}
-        />
-
-        {/* if route is not exist, send default route */}
-        {/* <Route>
-          <Redirect to="/not-found" />
-          <NotFound />
-        </Route> */}
-      </Switch>
-    </BrowserRouter>
   );
 }
 

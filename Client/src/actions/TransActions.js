@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {API} from "../config/api";
-import {useHistory} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 // Import Style
 import {toast} from "react-toastify";
 toast.configure();

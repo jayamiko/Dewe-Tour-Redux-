@@ -1,6 +1,6 @@
 // Import React
 import React, {useEffect} from "react";
-import {Link, useHistory} from "react-router-dom";
+import {useNavigate, NavLink} from "react-router-dom";
 import store from "../../../store";
 
 // Import Style
@@ -10,7 +10,6 @@ import "react-toastify/dist/ReactToastify.css";
 import IconChat from "../../../img/chat-icon.png";
 import Logout from "../../../img/logout.png";
 import Header from "../../../img/Header.png";
-import Icon from "../../../img/Icon1.png";
 import {Navbar, Nav} from "react-bootstrap";
 
 // Import API
@@ -20,13 +19,13 @@ import {setAuthToken} from "../../../config/api";
 toast.configure();
 
 function AdminDropdown() {
-  const history = useHistory();
+  let navigate = useNavigate();
   const logoutSession = () => {
     store.dispatch({
       type: "LOGOUT",
     });
 
-    history.push("/");
+    navigate("/");
     window.location.reload();
     toast.success("Logout success, welcome back anytime", {
       position: toast.POSITION.BOTTOM_RIGHT,
@@ -55,22 +54,24 @@ function AdminDropdown() {
         />
         <Navbar.Collapse id="basic-navbar-nav" className="nav-collapse">
           <Nav className="me-auto">
-            <Nav.Link href="#list-transaction">
-              <Link to="/list-transaction" style={{textDecoration: "none"}}>
-                <div className="nav-item-user2-admin" style={{color: "white"}}>
-                  <img src="/assets/journey1.png" alt=""></img>
-                  <span style={{marginLeft: "10px"}}>Transations</span>
-                </div>
-              </Link>
-            </Nav.Link>
-            <Nav.Link href="#logout">
-              <Link onClick={logoutSession} style={{textDecoration: "none"}}>
-                <div className="nav-item-user3-admin" style={{color: "white"}}>
-                  <img src={Logout} alt=""></img>
-                  <span style={{marginLeft: "10px"}}>Logout</span>
-                </div>
-              </Link>
-            </Nav.Link>
+            <NavLink to="/admin-message" className="nav-link">
+              <div className="nav-item-user2-admin" style={{color: "white"}}>
+                <img src={IconChat} alt=""></img>
+                <span style={{marginLeft: "10px"}}>Chat</span>
+              </div>
+            </NavLink>
+            <NavLink to="/list-transaction" className="nav-link">
+              <div className="nav-item-user2-admin" style={{color: "white"}}>
+                <img src="/assets/journey1.png" alt=""></img>
+                <span style={{marginLeft: "10px"}}>Transations</span>
+              </div>
+            </NavLink>
+            <div onClick={logoutSession} className="nav-link">
+              <div className="nav-item-user3-admin" style={{color: "white"}}>
+                <img src={Logout} alt=""></img>
+                <span style={{marginLeft: "10px"}}>Logout</span>
+              </div>
+            </div>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

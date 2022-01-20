@@ -1,6 +1,6 @@
 // Import React
 import {useEffect, useState} from "react";
-import {useHistory, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
@@ -39,15 +39,15 @@ const DetailTrip = ({
   getTransactionDetail,
   match,
 }) => {
+  const {id} = useParams();
   useEffect(() => {
-    getTripDetail(match.params.id);
+    getTripDetail(id);
   }, [getTripDetail]);
   useEffect(() => {
-    getTransactionDetail(match.params.id);
+    getTransactionDetail(id);
   }, [getTransactionDetail]);
 
-  const history = useHistory();
-  const {id} = useParams();
+  let navigate = useNavigate();
   const currentState = useSelector((state) => state.auth);
   const isLoginSession = useSelector((state) => state.auth.isLogin);
   const stateAuth = currentState.user;
@@ -72,7 +72,7 @@ const DetailTrip = ({
   }, []);
 
   if (!Number(id)) {
-    history.push("/");
+    navigate("/");
   }
 
   const [show, setShow] = useState({
@@ -165,7 +165,7 @@ const DetailTrip = ({
         setLoadingSkeleton(false);
       }, 1000);
 
-      history.push("/payment");
+      navigate("/payment");
       return () => clearTimeout(timer);
     } catch (error) {
       const message = error?.response?.data?.message || error.message;

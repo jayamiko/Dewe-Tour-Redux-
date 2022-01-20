@@ -18,9 +18,10 @@ import {Navbar, Nav} from "react-bootstrap";
 const NavbarComp = ({auth: {isAuthenticated, user, isLoading}}) => {
   const currentState = useSelector((state) => state.auth);
   const isAdmin = currentState.user.status === "admin";
+  const isLogin = currentState.isLogin;
   return (
     <>
-      {isAuthenticated ? (
+      {isAuthenticated && isLogin ? (
         isAuthenticated && isAdmin ? (
           <AdminDropdown />
         ) : (

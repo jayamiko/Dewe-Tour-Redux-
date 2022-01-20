@@ -1,6 +1,6 @@
 // Import React
 import {useState, useEffect} from "react";
-import {useHistory} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {handleLogin} from "../../actions/auth";
 import {connect} from "react-redux";
@@ -20,7 +20,7 @@ import {checkUser} from "../../actions/auth";
 toast.configure();
 
 const Login = ({handleLogin, auth: {error, isLoading}}) => {
-  const history = useHistory();
+  let navigate = useNavigate();
 
   const isLoginSession = useSelector((state) => state.isLogin);
   const [modal, setModal] = useState(false);
@@ -28,7 +28,7 @@ const Login = ({handleLogin, auth: {error, isLoading}}) => {
 
   const checkAuth = () => {
     if (isLoginSession) {
-      history.push("/");
+      navigate("/");
     }
   };
   checkAuth();
@@ -60,6 +60,7 @@ const Login = ({handleLogin, auth: {error, isLoading}}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleLogin(email, password);
+    navigate("/");
   };
 
   useEffect(() => {

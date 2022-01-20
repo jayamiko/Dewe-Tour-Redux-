@@ -5,7 +5,6 @@ import Avatar from "@mui/material/Avatar";
 import StyledBadge from "../../utils/StyledBadge";
 
 const Contact = ({datacontact, clickcontact, contact, useronline}) => {
-  console.log(contact);
   return (
     <div className="wrapper-contact">
       {datacontact.map((item) => {

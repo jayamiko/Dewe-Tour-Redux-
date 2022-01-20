@@ -1,8 +1,7 @@
 // Import React
 import React from "react";
-import {Link} from "react-router-dom";
 import {useEffect} from "react";
-import {useHistory} from "react-router-dom";
+import {useNavigate, NavLink} from "react-router-dom";
 import store from "../../../store";
 
 // Import Style
@@ -22,7 +21,7 @@ import {checkUser} from "../../../config/auth";
 toast.configure();
 
 function UserDropdown() {
-  let history = useHistory();
+  let Navigate = useNavigate();
   const logoutSession = () => {
     store.dispatch({
       type: "LOGOUT",
@@ -32,12 +31,11 @@ function UserDropdown() {
         password: "",
       },
     });
-
-    history.push("/");
     toast.success("Logout success, welcome back anytime", {
       position: toast.POSITION.BOTTOM_RIGHT,
       autoClose: 2000,
     });
+
     window.location.reload();
   };
 
@@ -61,38 +59,34 @@ function UserDropdown() {
         />
         <Navbar.Collapse id="basic-navbar-nav" className="nav-collapse">
           <Nav className="me-auto">
-            <Nav.Link href="#chat">
-              <Link to="/message" style={{textDecoration: "none"}}>
-                <div className="nav-item-user1">
-                  <img src={IconChat} width={45} alt=""></img>
-                  <span>Chat</span>
-                </div>
-              </Link>
-            </Nav.Link>
-            <Nav.Link href="#profile">
-              <Link to="/profile" style={{textDecoration: "none"}}>
-                <div className="nav-item-user2">
-                  <img src={User} alt=""></img>
-                  <span>Profile</span>
-                </div>
-              </Link>
-            </Nav.Link>
-            <Nav.Link href="#payment">
-              <Link to="/payment" style={{textDecoration: "none"}}>
-                <div className="nav-item-user3">
-                  <img src={Payment} alt=""></img>
-                  <span>Payment</span>
-                </div>
-              </Link>
-            </Nav.Link>
-            <Nav.Link href="#logout">
-              <Link onClick={logoutSession} style={{textDecoration: "none"}}>
-                <div className="nav-item-user4">
-                  <img src={Logout} alt=""></img>
-                  <span>Logout</span>
-                </div>
-              </Link>
-            </Nav.Link>
+            <NavLink to="/message" className="nav-link">
+              <div className="nav-item-user1">
+                <img src={IconChat} width={45} alt=""></img>
+                <span>Chat</span>
+              </div>
+            </NavLink>
+            <NavLink to="/profile" className="nav-link">
+              <div className="nav-item-user2">
+                <img src={User} alt=""></img>
+                <span>Profile</span>
+              </div>
+            </NavLink>
+            <NavLink to="/payment" className="nav-link">
+              <div className="nav-item-user3">
+                <img src={Payment} alt=""></img>
+                <span>Payment</span>
+              </div>
+            </NavLink>
+            <div
+              onClick={logoutSession}
+              className="nav-link"
+              style={{cursor: "pointer"}}
+            >
+              <div className="nav-item-user4">
+                <img src={Logout} alt=""></img>
+                <span>Logout</span>
+              </div>
+            </div>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

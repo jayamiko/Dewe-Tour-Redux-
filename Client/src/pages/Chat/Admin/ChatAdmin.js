@@ -162,8 +162,6 @@ const ChatAdmin = () => {
     }
   };
 
-  console.log(contact);
-
   // MUI component
   const [drawerOpen, setDrawerOpen] = useState(false);
 

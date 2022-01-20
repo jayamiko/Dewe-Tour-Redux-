@@ -5,6 +5,10 @@
   padding-left: 40px;
 }
 
+.nav-link {
+  cursor: pointer;
+}
+
 .nav-item-user4 {
   margin-right: 100px;
   margin-top: 0px !important;
@@ -91,6 +95,9 @@
   .nav-item-user1 {
     margin-top: 0px !important;
     color: black;
+  }
+  .nav-link {
+    cursor: pointer;
   }
   .nav-item-user2 {
     margin-top: 50px !important;

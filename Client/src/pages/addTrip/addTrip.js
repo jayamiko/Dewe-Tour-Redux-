@@ -1,6 +1,6 @@
 import {Form, Button} from "react-bootstrap";
 import {useEffect, useState} from "react";
-import {useHistory} from "react-router";
+import {useNavigate} from "react-router";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import "./addTrip.css";
@@ -11,7 +11,7 @@ import {addTrip} from "../../actions/TripsActions";
 import PropTypes from "prop-types";
 
 const AddTripPage = ({addTrip}) => {
-  const history = useHistory();
+  let navigate = useNavigate();
   const [preview, setPreview] = useState([]);
   const [countries, setCountries] = useState([]);
 
@@ -74,12 +74,11 @@ const AddTripPage = ({addTrip}) => {
   }, []);
 
   const redirect = () => {
-    history.push(`/`);
+    navigate(`/`);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(input);
 
     addTrip(input, redirect);
   };
