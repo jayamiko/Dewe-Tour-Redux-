@@ -9,7 +9,6 @@ import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IconChat from "../../../img/chat-icon.png";
 import Logout from "../../../img/logout.png";
-import Header from "../../../img/Header.png";
 import {Navbar, Nav} from "react-bootstrap";
 
 // Import API
@@ -55,19 +54,19 @@ function AdminDropdown() {
         <Navbar.Collapse id="basic-navbar-nav" className="nav-collapse">
           <Nav className="me-auto">
             <NavLink to="/admin-message" className="nav-link">
-              <div className="nav-item-user2-admin" style={{color: "white"}}>
-                <img src={IconChat} alt=""></img>
+              <div className="nav-item-user1-admin">
+                <img src={IconChat} alt="" width={50}></img>
                 <span style={{marginLeft: "10px"}}>Chat</span>
               </div>
             </NavLink>
-            <NavLink to="/list-transaction" className="nav-link">
-              <div className="nav-item-user2-admin" style={{color: "white"}}>
+            <NavLink to="/list-transaction" style={{textDecoration: "none"}}>
+              <div className="nav-item-user2-admin">
                 <img src="/assets/journey1.png" alt=""></img>
                 <span style={{marginLeft: "10px"}}>Transations</span>
               </div>
             </NavLink>
-            <div onClick={logoutSession} className="nav-link">
-              <div className="nav-item-user3-admin" style={{color: "white"}}>
+            <div onClick={logoutSession}>
+              <div className="nav-item-user3-admin">
                 <img src={Logout} alt=""></img>
                 <span style={{marginLeft: "10px"}}>Logout</span>
               </div>

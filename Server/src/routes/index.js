@@ -25,10 +25,9 @@ const {
 const {
   addTransaction,
   updatePay,
-  updateConfirmTransaction,
+  updateTransaction,
   getTransactions,
   getTransaction,
-  updateTransaction,
   deleteTransaction,
 } = require("../controllers/transaction");
 const {register, login, checkAuth} = require("../controllers/auth");
@@ -66,12 +65,7 @@ router.get("/transactions", getTransactions);
 router.get("/transaction/:id", getTransaction);
 router.post("/transaction", uploadsFile("attachment"), addTransaction);
 router.put("/transactions/pay/:id", auth, uploadsFile("attachment"), updatePay);
-router.put(
-  "/transactions/confirm/:id",
-  auth,
-  adminOnly,
-  updateConfirmTransaction
-);
+router.put("/transaction/:id", auth, adminOnly, updateTransaction);
 router.delete("/transaction/:id", auth, deleteTransaction);
 
 // Route Auth

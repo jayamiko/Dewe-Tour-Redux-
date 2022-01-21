@@ -1,5 +1,5 @@
 // Import React
-import React, {Fragment, useState} from "react";
+import React, {useState} from "react";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {useEffect} from "react";
 
@@ -9,7 +9,7 @@ import Home from "./pages/Home";
 import Payment from "./pages/payment/Payment";
 import Profile from "./pages/profile/Profile";
 import AddTrip from "./pages/addTrip/addTrip";
-import ListTransaction from "./pages/list_transactions/ListTransaction";
+import ListTransaction from "./pages/Transaction/ListTransaction";
 import AuthRoute from "./components/PrivateRoutes/AuthRoute";
 import AdminRoute from "./components/PrivateRoutes/AdminRoute";
 import Chat from "./pages/Chat/Chat";
@@ -17,7 +17,7 @@ import ChatAdmin from "./pages/Chat/Admin/ChatAdmin";
 
 // Import Style
 import "./App.css";
-import Spinner from "./components/atoms/Spinner";
+import Spinner from "./components/atoms/Spinner/Spinner";
 
 // Import API
 import {checkUser} from "./config/auth";

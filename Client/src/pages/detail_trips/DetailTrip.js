@@ -12,7 +12,7 @@ import {Container} from "react-bootstrap";
 // Import Components
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import Spinner from "../../components/atoms/Spinner";
+import Spinner from "../../components/atoms/Spinner/Spinner";
 import ModalLogin from "../../components/Items/modal/ModalLogin";
 import ModalRegister from "../../components/Items/modal/ModalRegister.js";
 import setData from "../../utils/setData";

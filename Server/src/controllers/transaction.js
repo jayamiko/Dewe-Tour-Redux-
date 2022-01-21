@@ -189,64 +189,29 @@ exports.updatePay = async (req, res) => {
   }
 };
 
-exports.updateConfirmTransaction = async (req, res) => {
-  const {id} = req.params;
-
+exports.updateTransaction = async (req, res) => {
   try {
-    await transaction.update(req.body, {
-      where: {
-        id,
-      },
-    });
+    const {id} = req.params;
 
-    const updatedData = await transaction.findOne({
-      where: {
-        id,
+    await transaction.update(
+      {
+        ...req.body,
       },
-      include: [
-        {
-          model: user,
-          as: "user",
-          attributes: {
-            exclude: ["createdAt", "updatedAt", "password", "status"],
-          },
+      {
+        where: {
+          id: id,
         },
-        {
-          model: trip,
-          as: "trip",
-          include: {
-            model: country,
-            as: "country",
-            attributes: {
-              exclude: ["createdAt", "updatedAt"],
-            },
-          },
-          attributes: {
-            exclude: [
-              "createdAt",
-              "updatedAt",
-              "idCountry",
-              "description",
-              "quota",
-              "image",
-            ],
-          },
-        },
-      ],
-      attributes: {
-        exclude: ["updatedAt", "userId", "tripId"],
-      },
-    });
+      }
+    );
 
     res.send({
-      status: "success",
-      data: updatedData,
+      status: "Success",
+      message: "Update Status Finished",
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       status: "failed",
-      message: "Server error",
+      message: "Internal server error",
     });
   }
 };

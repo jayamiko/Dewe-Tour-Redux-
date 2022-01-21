@@ -7,7 +7,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import PaymentCard from "../../components/Items/card/PaymentCard";
 import Footer from "../../components/Footer/Footer";
 import ModalPopUp from "../../components/Items/modal/popUp";
-import Spinner from "../../components/atoms/Spinner";
+import Spinner from "../../components/atoms/Spinner/Spinner";
 
 // Import Style
 import {toast} from "react-toastify";

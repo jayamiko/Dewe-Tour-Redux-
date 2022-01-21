@@ -12,7 +12,7 @@ import HistoryPayment from "../../components/Items/card/HistoryPayment";
 import InputFileAvatar from "./updateAvatar";
 import Box from "../../components/Items/card/Box";
 import Gap from "../../components/atoms/Gap";
-import Spinner from "../../components/atoms/Spinner";
+import Spinner from "../../components/atoms/Spinner/Spinner";
 
 // Import Style
 import "./Profile.css";

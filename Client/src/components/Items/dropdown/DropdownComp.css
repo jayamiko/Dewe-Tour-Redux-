@@ -47,14 +47,23 @@
   font-family: Avenir;
 }
 
+.nav-item-user1-admin {
+  position: relative;
+  bottom: 90px;
+  color: white;
+}
 .nav-item-user2-admin {
   position: relative;
-  bottom: 80px;
+  margin-left: 25px;
+  bottom: 75px;
+  color: white;
 }
 .nav-item-user3-admin {
   position: relative;
-  bottom: 80px;
-  margin-right: 100px;
+  bottom: 75px;
+  margin-left: 25px;
+  margin-right: 50px;
+  color: white;
 }
 
 .navbar-admin {
@@ -98,6 +107,7 @@
   }
   .nav-link {
     cursor: pointer;
+    /* background-color: orange; */
   }
   .nav-item-user2 {
     margin-top: 50px !important;
@@ -113,17 +123,24 @@
     position: relative;
     left: 100px;
   }
-  .nav-item-user2-admin {
+  .nav-item-user1-admin {
     position: relative;
     bottom: 50px;
-    color: black !important;
     margin-right: 20px;
+    color: black;
+  }
+  .nav-item-user2-admin {
+    position: relative !important;
+    color: black !important;
+    left: 115px;
+    top: 10px;
   }
   .nav-item-user3-admin {
     color: black !important;
     margin-right: 20px;
-    position: relative;
-    top: 0px;
+    position: relative !important;
+    top: 50px;
+    cursor: pointer;
   }
   .nav-item {
     margin-left: 0px;

@@ -1,18 +1,16 @@
 // Import React
+import * as React from "react";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 
 // Import Components
-import Contact from "../../components/atoms/Contact";
+import Contact from "../../components/atoms/Contact/Contact";
 import Gap from "../../components/atoms/Gap";
-import Message from "../../components/atoms/Message";
+import Message from "../../components/atoms/Message/Message";
 
 // Import Style
 import {toast} from "react-toastify";
-import muiButton from "../../utils/MuiButton";
 import playNotif from "../../utils/playNotif";
-// MUI
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -197,7 +195,7 @@ const Chat = () => {
         <div style={{width: "90%", margin: "0 auto"}}>
           <Button
             variant="contained"
-            sx={muiButton}
+            className="btn-drawer"
             onClick={() => setDrawerOpen(true)}
           >
             <RecentActorsIcon sx={{marginRight: "10px"}} /> open contact

@@ -1,5 +1,4 @@
 body {
-  background-color: #000000;
   margin: 0 !important;
   background-color: #f1f1f1;
   padding: 0 !important;
@@ -19,11 +18,6 @@ body {
   border: solid black 2px;
   background-image: url(./img//Header.png);
   height: 75px;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {

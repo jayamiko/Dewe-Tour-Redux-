@@ -1,0 +1,55 @@
+.container-transaction {
+  height: 100vh;
+}
+
+.container-table {
+  margin: 30px;
+}
+
+.title-transaction {
+  font-size: 36px;
+  font-family: Avenir;
+  font-weight: bold;
+}
+
+.table-head {
+  background-color: skyblue;
+  opacity: 0.8;
+}
+
+.head-title {
+  font-weight: bold;
+  font-family: forte;
+}
+
+.prev-attachment {
+  color: blue;
+  font-family: Avenir;
+  font-size: auto;
+}
+
+.btn-approve {
+  background-color: #0acf83 !important;
+  margin-left: 5px;
+  width: 100px !important;
+}
+
+.btn-approve:hover {
+  background-color: #31d898 !important;
+}
+
+.btn-cancel {
+  background-color: #ff0742 !important;
+  margin-left: 5px;
+  width: 100px !important;
+}
+
+.btn-cancel:hover {
+  background-color: #e7476c !important;
+}
+
+@media only screen and (max-width: 991px) {
+  .btn-approve {
+    margin-top: 5px !important;
+  }
+}

@@ -1,7 +1,6 @@
 import "./Message.scss";
 import Avatar from "@mui/material/Avatar";
-import Gap from "./Gap";
-// import {ImgInboxCleanUp} from "../../../assets";
+import Gap from "../Gap";
 
 const Message = ({contact, user, messages, sendmessage}) => {
   return (

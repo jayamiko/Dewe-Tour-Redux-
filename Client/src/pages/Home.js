@@ -16,7 +16,7 @@ import Header from "../components/Header/Header";
 import Navbar from "../components/Navbar/Navbar";
 import GroupTour from "../components/Main/Main";
 import Footer from "../components/Footer/Footer";
-import Spinner from "../components/atoms/Spinner";
+import Spinner from "../components/atoms/Spinner/Spinner";
 
 function Home({
   getTrips,

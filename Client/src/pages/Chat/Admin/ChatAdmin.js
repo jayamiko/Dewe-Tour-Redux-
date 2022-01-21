@@ -1,15 +1,15 @@
+// Import React
+import * as React from "react";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 
 // Import Components
-import Contact from "../../../components/atoms/Contact";
+import Contact from "../../../components/atoms/Contact/Contact";
 import Gap from "../../../components/atoms/Gap";
-import Message from "../../../components/atoms/Message";
+import Message from "../../../components/atoms/Message/Message";
 
 // import Style
 import {toast} from "react-toastify";
-// MUI
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";

@@ -62,6 +62,13 @@ $height: calc(100vh - 20vh);
     background: #f1f1f1;
   }
 
+  .btn-drawer {
+    background-color: #ffaf00 !important;
+  }
+  .btn-drawer:hover {
+    background-color: #e7bb5a !important;
+  }
+
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #888;
