@@ -14,6 +14,7 @@ import AuthRoute from "./components/PrivateRoutes/AuthRoute";
 import AdminRoute from "./components/PrivateRoutes/AdminRoute";
 import Chat from "./pages/Chat/Chat";
 import ChatAdmin from "./pages/Chat/Admin/ChatAdmin";
+import Chart from "./pages/Chart/Chart";
 
 // Import Style
 import "./App.css";
@@ -88,6 +89,14 @@ function App() {
                 element={
                   <AdminRoute>
                     <ChatAdmin />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/stats"
+                element={
+                  <AdminRoute>
+                    <Chart />
                   </AdminRoute>
                 }
               />

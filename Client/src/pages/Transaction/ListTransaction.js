@@ -12,6 +12,9 @@ import Gap from "../../components/atoms/Gap";
 // Import Style
 import "./ListTransaction.css";
 
+import * as React from "react";
+import {DataGrid, GridToolbar} from "@mui/x-data-grid";
+
 // import API
 import {API} from "../../config/api";
 
@@ -80,6 +83,14 @@ const ListTransaction = () => {
     getAllData();
   }, []);
 
+  const VISIBLE_FIELDS = ["username", "trip", "attachment", "status", "action"];
+
+  const data = {
+    dataSet: transaction,
+    visibleFields: VISIBLE_FIELDS,
+    rowLength: transaction.length,
+  };
+
   const stateToChild = {
     transaction,
     page,
@@ -92,7 +103,29 @@ const ListTransaction = () => {
     <>
       <div className="container-transaction">
         <Navbar />
-        <TableContainer handler={handler} getter={stateToChild} />
+        <div style={{height: 400, width: "100%"}}>
+          <DataGrid
+            {...transaction}
+            components={{
+              Toolbar: GridToolbar,
+            }}
+            initialState={{
+              ...transaction.initialState,
+              filter: {
+                filterModel: {
+                  items: [
+                    {
+                      columnField: "status",
+                      operatorValue: "Approve",
+                      value: "Waiting Approve",
+                    },
+                  ],
+                },
+              },
+            }}
+          />
+        </div>
+        {/* <TableContainer handler={handler} getter={stateToChild} /> */}
       </div>
       <Gap height={60} />
       <Footer />
