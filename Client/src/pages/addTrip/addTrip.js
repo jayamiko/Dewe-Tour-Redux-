@@ -111,7 +111,6 @@ const AddTripPage = ({addTrip}) => {
               onChange={handleChange}
               name="country"
             >
-              <option disabled selected></option>
               {countries.map((item) => (
                 <option value={item.id}>{item.name}</option>
               ))}

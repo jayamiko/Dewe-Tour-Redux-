@@ -17,7 +17,7 @@ function Footer() {
       >
         <div class="container text-center">
           <p style={{color: "#fff", fontWeight: "800", fontFamily: "avenir"}}>
-            Copyright @ 2021 Dewe Tour - Jaya Miko - NIS. All Rights reserved
+            Copyright @ 2022 Dewe Tour - Jaya Miko - NIS. All Rights reserved
           </p>
         </div>
       </footer>

@@ -49,19 +49,37 @@
 
 .nav-item-user1-admin {
   position: relative;
+  right: 25px;
   bottom: 90px;
   color: white;
 }
 .nav-item-user2-admin {
   position: relative;
-  margin-left: 25px;
-  bottom: 75px;
+  right: 25px;
+  /* margin-left: 25px; */
+  bottom: 80px;
   color: white;
 }
 .nav-item-user3-admin {
   position: relative;
   bottom: 75px;
+  right: 25px;
   margin-left: 25px;
+  margin-right: 50px;
+  color: white;
+}
+.nav-item-user4-admin {
+  position: relative;
+  bottom: 83px;
+  right: 65px;
+  margin-left: 25px;
+  margin-right: 50px;
+  color: white;
+}
+.nav-item-user5-admin {
+  position: relative;
+  bottom: 73px;
+  right: 75px;
   margin-right: 50px;
   color: white;
 }

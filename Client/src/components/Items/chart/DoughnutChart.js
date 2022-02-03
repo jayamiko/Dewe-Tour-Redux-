@@ -24,7 +24,7 @@ const DoughnutChart = ({data}) => {
           labels: data?.map((x) => x.title),
           datasets: [
             {
-              label: "#QUOTA TRIP",
+              label: "Quota Trips",
               data: data?.map((x) => x.quota),
               backgroundColor: ["blue", "orange"],
               borderColor: ["white"],

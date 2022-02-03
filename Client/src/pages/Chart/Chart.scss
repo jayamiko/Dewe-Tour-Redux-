@@ -1,0 +1,55 @@
+.container-chart {
+  display: flex !important;
+  justify-content: space-between;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 100px;
+  .box-table {
+    font-family: Avenir;
+    h2 {
+      font-weight: bold;
+      font-family: Avenir;
+    }
+  }
+}
+
+.title-chart {
+  margin-left: 50px;
+  font-weight: bold;
+  font-family: Avenir;
+}
+
+.subname-typechart {
+  margin-left: 50px;
+  font-family: Avenir;
+}
+
+.select-type-chart {
+  margin-left: 50px;
+  width: 25% !important;
+  margin-bottom: 50px;
+}
+
+.row-no {
+  margin-right: 60px;
+}
+.row-nametrip {
+  margin-right: 100px;
+}
+.row-country {
+  margin-right: 95px;
+}
+
+@media only screen and (max-width: 991px) {
+  .container-chart {
+    display: flex;
+    flex-direction: column-reverse !important;
+    justify-content: space-evenly;
+    margin-left: 50px;
+    margin-right: 50px;
+
+    .box-chart {
+      margin-bottom: 50px;
+    }
+  }
+}
