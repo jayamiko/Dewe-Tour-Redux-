@@ -14,7 +14,7 @@ import "../App.css";
 // Import Components
 import Header from "../components/Header/Header";
 import Navbar from "../components/Navbar/Navbar";
-import GroupTour from "../components/Main/Main";
+import Main from "../components/Main/Main";
 import Footer from "../components/Footer/Footer";
 import Spinner from "../components/atoms/Spinner/Spinner";
 
@@ -52,7 +52,7 @@ function Home({
       {isAuthenticated && isAdmin ? (
         <>
           <Navbar />
-          <GroupTour data={tripsAll} isAdmin={isAdmin} />
+          <Main data={tripsAll} isAdmin={isAdmin} />
         </>
       ) : (
         <>
@@ -68,7 +68,7 @@ function Home({
             setSearchData={setSearchData}
           />
           {isSearching ? (
-            <GroupTour data={tripsAll} searchData={searchData} />
+            <Main data={tripsAll} searchData={searchData} />
           ) : (
             <>
               {tripsAll === null ? (
@@ -82,7 +82,7 @@ function Home({
                 </div>
               ) : (
                 <Container fluid className="main">
-                  <GroupTour data={tripsAll} />
+                  <Main data={tripsAll} />
                 </Container>
               )}
             </>

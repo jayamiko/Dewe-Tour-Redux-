@@ -1,14 +1,22 @@
-import {Form, Button} from "react-bootstrap";
+// Import React
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
-import Footer from "../../components/Footer/Footer";
-import Navbar from "../../components/Navbar/Navbar";
-import "./addTrip.css";
-import Attach from "../../img/attach.png";
-import {API} from "../../config/api";
 import {connect} from "react-redux";
-import {addTrip} from "../../actions/TripsActions";
 import PropTypes from "prop-types";
+
+// Import Components
+import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
+import Spinner from "../../components/atoms/Spinner/Spinner";
+
+// Import Style
+import "./addTrip.css";
+import {Form, Button} from "react-bootstrap";
+import Attach from "../../img/attach.png";
+
+// Import API
+import {API} from "../../config/api";
+import {addTrip} from "../../actions/TripsActions";
 
 const AddTripPage = ({addTrip}) => {
   let navigate = useNavigate();
@@ -17,7 +25,7 @@ const AddTripPage = ({addTrip}) => {
 
   const [input, setInput] = useState({
     title: "",
-    idCountry: "",
+    idCountry: "0",
     accomodation: "",
     transportation: "",
     eat: "",
@@ -29,6 +37,16 @@ const AddTripPage = ({addTrip}) => {
     description: "",
     image: [],
   });
+
+  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingSkeleton(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleChange = (event) => {
     const updateForm = {...input};
@@ -83,7 +101,11 @@ const AddTripPage = ({addTrip}) => {
     addTrip(input, redirect);
   };
 
-  return (
+  return loadingSkeleton ? (
+    <div>
+      <Spinner customText={"Loading.."} />
+    </div>
+  ) : (
     <div>
       <Navbar />
       <div style={{paddingBottom: "110px", paddingTop: "50px"}}>

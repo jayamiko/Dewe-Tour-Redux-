@@ -3,31 +3,37 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {getTrips} from "../../actions/TripsActions";
 import {Form} from "react-bootstrap";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-} from "@mui/material";
 
 // Import Components
-import "./Chart.scss";
 import {
   DoughnutChart,
   BarChart,
   LineChart,
   PieChart,
 } from "../../components/Items/chart";
+import TableChart from "../../components/Items/table_transaction/TableChart";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
+import Spinner from "../../components/atoms/Spinner/Spinner";
+import BtnHome from "../../components/Button/BtnHome";
+
+// Import Style
+import "./Chart.scss";
 
 function Chart({getTrips, trips: {tripsAll}}) {
   useEffect(() => {
     getTrips();
   }, [getTrips]);
+
+  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingSkeleton(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const typeChart = [
     {
@@ -52,73 +58,36 @@ function Chart({getTrips, trips: {tripsAll}}) {
     setInput(updateForm);
   };
 
-  return (
+  return loadingSkeleton ? (
+    <div>
+      <Spinner customText={"Loading.."} />
+    </div>
+  ) : (
     <div>
       <Navbar />
-      <div style={{marginTop: "-37px"}}>
-        <h1 className="title-chart">STATISTIK QUOTA TRIP</h1>
-        <h6 className="subname-typechart">
-          <i>Type {input.chart}</i>
-        </h6>
-        <Form>
-          <Form.Group className="select-type-chart">
-            <Form.Control as="select" onChange={handleChange} name="chart">
-              <option selected>Pilih Type Chart..</option>
-              {typeChart.map((item) => (
-                <option value={item.id}>{item.type}</option>
-              ))}
-            </Form.Control>
-          </Form.Group>
-        </Form>
+      <div className="header-chart">
+        <div className="head-title">
+          <h1 className="title-chart">STATISTIK QUOTA TRIP</h1>
+          <h6 className="subname-typechart">
+            <i>Type {input.chart}</i>
+          </h6>
+          <Form>
+            <Form.Group className="select-type-chart">
+              <Form.Control as="select" onChange={handleChange} name="chart">
+                <option selected>Pilih Type Chart..</option>
+                {typeChart.map((item) => (
+                  <option value={item.id}>{item.type}</option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+          </Form>
+        </div>
+        <BtnHome />
       </div>
       <div className="container-chart">
         <div className="box-table">
           <h2>Table Statistik</h2>
-          <TableContainer component={Paper} style={{borderRadius: "10px"}}>
-            <Table sx={{minWidth: 650}} aria-label="simple table">
-              <TableHead className="table-head">
-                <TableRow>
-                  <TableCell>
-                    <b>No</b>
-                  </TableCell>
-                  <TableCell>
-                    <b>Name Trip</b>
-                  </TableCell>
-                  <TableCell>
-                    <b>Country</b>
-                  </TableCell>
-                  <TableCell>
-                    <b>Quota</b>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-            </Table>
-
-            <TableBody>
-              {tripsAll.map((item, index) => {
-                return (
-                  <TableRow
-                    hover
-                    key={index}
-                    sx={{"&:last-child td, &:last-child th": {border: 0}}}
-                  >
-                    <TableCell component="th" scope="row">
-                      <p className="row-no">{index + 1}</p>
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <p className="row-nametrip">{item.title}</p>
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <p className="row-country">{item.country.name}</p>
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <p className="row-quota">{item.quota}</p>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </TableContainer>
+          <TableChart data={tripsAll} />
         </div>
         <div className="box-chart">
           {input.chart === "Doughnut" ? (

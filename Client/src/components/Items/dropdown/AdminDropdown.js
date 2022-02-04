@@ -80,7 +80,7 @@ function AdminDropdown() {
                 <span style={{marginLeft: "10px"}}>Statistik</span>
               </div>
             </NavLink>
-            <div onClick={logoutSession}>
+            <div onClick={logoutSession} style={{cursor: "pointer"}}>
               <div className="nav-item-user5-admin">
                 <img src={Logout} alt=""></img>
                 <span style={{marginLeft: "10px"}}>Logout</span>
