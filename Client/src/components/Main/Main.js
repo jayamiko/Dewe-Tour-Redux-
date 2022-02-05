@@ -1,5 +1,5 @@
 // Import React
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 // Import COmponents
 import TripCard from "./TripCard";
@@ -9,15 +9,11 @@ import {Container} from "react-bootstrap";
 import "./Main.scss";
 
 export default function GroupTour({data, isAdmin, searchData}) {
-  let navigate = useNavigate();
-
   const rupiah = (number) => {
     return new Intl.NumberFormat("id-ID", {
       minimumFractionDigits: 0,
     }).format(number);
   };
-
-  console.log(isAdmin);
 
   return (
     <Container>
@@ -32,7 +28,9 @@ export default function GroupTour({data, isAdmin, searchData}) {
           </Container>
         ) : (
           <>
-            <h2 className="fs-1 fw-bold">Group Tour</h2>
+            <h2 className="title-group-tour" style={{textAlign: "center"}}>
+              Group Tour
+            </h2>
 
             {/* CONTENT TRIP */}
             <div className="row gy-5 pb-5" style={{marginTop: "5px"}}>
@@ -69,7 +67,7 @@ export default function GroupTour({data, isAdmin, searchData}) {
                           to={`/detail/${item.id}`}
                           style={{textDecoration: "none"}}
                         >
-                          <div className="card shadow-sm p-2">
+                          <div className="card-trip">
                             <img
                               src={item.image[0].url}
                               alt={item.title}

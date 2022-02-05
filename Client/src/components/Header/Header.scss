@@ -1,13 +1,20 @@
 .carousel-price-text {
-  color: yellow;
+  color: orangered;
   font-size: 34px;
   font-weight: bold;
   font-style: italic;
   text-align: center;
-  width: 400px;
-  margin-left: 325px;
   border-radius: 20px;
-  border: solid 1px #ffffff;
+  padding-left: 70px;
+  background-color: #ffffff;
+  padding-right: 70px;
+  font-family: Avenir;
+  .carousel-quota-text {
+    font-size: 16px;
+    align-items: center;
+    font-family: Avenir;
+    color: rgb(230, 150, 2);
+  }
 }
 
 /* Input */
@@ -15,13 +22,13 @@
   margin-top: 20px;
   padding-left: 100px;
   padding-right: 100px;
-}
-.input-group-text {
-  background-color: #ffaf00;
-  color: #ffffff;
-  border: none;
-  cursor: pointer;
-  font-size: 600;
+  .input-group-text {
+    background-color: #ffaf00;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-size: 600;
+  }
 }
 
 @media only screen and (max-width: 991px) {

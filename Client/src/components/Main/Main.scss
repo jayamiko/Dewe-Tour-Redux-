@@ -24,7 +24,7 @@
       width: 200px;
       background: #ffaf00 !important;
       border-radius: 5px;
-      margin-left: 45px;
+      margin-left: 110px;
       font-family: Avenir;
       font-style: normal;
       padding: 10px 50px;
@@ -44,11 +44,17 @@
       margin-bottom: 30px;
 
       .area-card-trip {
-        background-color: white;
         margin-left: 50px;
         border-radius: 10px;
         box-shadow: 2;
         padding: 15px;
+        transition: 1s;
+      }
+      .area-card-trip:hover {
+        transform: scale(0.9);
+        z-index: 2;
+        // box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.1);
+        box-shadow: 2px 2px 2px #000;
       }
     }
 
@@ -57,6 +63,27 @@
       justify-content: flex-end;
     }
   }
+}
+
+.title-group-tour {
+  font-weight: bold;
+  font-family: Avenir;
+  font-size: 34px;
+}
+
+.card-trip {
+  margin-left: 50px;
+  border-radius: 10px;
+  box-shadow: 2;
+  padding: 15px;
+  box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.1);
+  transition: 1s;
+  background-color: #ffffff;
+}
+.card-trip:hover {
+  transform: scale(1.3);
+  z-index: 2;
+  box-shadow: 2px 2px 2px #000;
 }
 
 /* Paginate Style */

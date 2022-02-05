@@ -3,10 +3,7 @@ import React from "react";
 import {Carousel} from "react-bootstrap";
 
 // Import Style
-import "./Header.css";
-import Trip1a from "../../img/tour/Labuan Bajo/01 - wisata labuan bajo.jpg";
-import Trip1b from "../../img/tour/Labuan Bajo/pulau padar.jpg";
-import Trip2a from "../../img/tour/France/wisata-perancis.jpg";
+import "./Header.scss";
 
 // import Components
 import Navbar from "../Navbar/Navbar";
@@ -31,54 +28,66 @@ function Header(props) {
     setSearchData(result);
   };
 
+  console.log(trips);
+
+  const CarouselView = [
+    {
+      title: "Labuan Bajo",
+      image: trips[0].image[0].url,
+      price: trips[0].price,
+      quota: trips[0].quota,
+    },
+    {
+      title: "Hagia Sophia",
+      image: trips[1].image[0].url,
+      price: trips[1].price,
+      quota: trips[1].quota,
+    },
+    {
+      title: "Paris City",
+      image: trips[2].image[0].url,
+      price: trips[2].price,
+      quota: trips[2].quota,
+    },
+    {
+      title: "Masjidil Haram",
+      image: trips[3].image[0].url,
+      price: trips[3].price,
+      quota: trips[3].quota,
+    },
+  ];
+
   return (
     <>
       <div className="background-nav">
         <Navbar />
       </div>
       <Carousel>
-        <Carousel.Item interval={3000}>
-          <img
-            className="d-block w-100"
-            src={Trip1a}
-            alt="First slide"
-            width={100}
-          />
-          <Carousel.Caption>
-            <h2>
-              <b>{trips[0].title}</b>
-              <p className="carousel-price-text">
-                Rp. {rupiah(trips[0].price)}
-              </p>
-            </h2>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item interval={3000}>
-          <img
-            className="d-block w-100"
-            src={Trip1b}
-            alt="Second slide"
-            width={100}
-          />
-          <Carousel.Caption>
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item interval={3000}>
-          <img
-            className="d-block w-100"
-            src={Trip2a}
-            alt="Third slide"
-            width={100}
-          />
-          <Carousel.Caption>
-            <h3>Third slide label</h3>
-            <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p>
-          </Carousel.Caption>
-        </Carousel.Item>
+        {CarouselView.map((view, index) => {
+          return (
+            <Carousel.Item interval={3000}>
+              <img
+                className="d-block w-100"
+                src={view.image}
+                alt="First slide"
+                width={100}
+              />
+              <Carousel.Caption>
+                <h2>
+                  <b>{view.title}</b>
+                </h2>
+                <h2>
+                  <b className="carousel-price-text">
+                    Rp. {rupiah(view.price)}{" "}
+                    <i className="carousel-quota-text">
+                      ({view.quota} Available)
+                    </i>
+                  </b>
+                </h2>
+              </Carousel.Caption>
+            </Carousel.Item>
+          );
+        })}
       </Carousel>
 
       <div className="input-group mb-3" onSubmit={handleSubmit}>
