@@ -1,6 +1,5 @@
 // Import React
 import React, {useState, useEffect} from "react";
-import {Link} from "react-router-dom";
 import {useSelector, connect} from "react-redux";
 import PropTypes from "prop-types";
 import {getTrips} from "../actions/TripsActions";
@@ -8,7 +7,6 @@ import {getTrips} from "../actions/TripsActions";
 // Import Style
 import {Container} from "react-bootstrap";
 import noResult from "../img/no-result.png";
-import Icon from "../img/Icon1.png";
 import "../App.css";
 
 // Import Components
@@ -56,11 +54,6 @@ function Home({
         </>
       ) : (
         <>
-          <div className="icon-dw">
-            <Link to="/">
-              <img src={Icon} alt="icon" className="icon-dewetour" />
-            </Link>
-          </div>
           <Header
             trips={tripsAll}
             setIsSearching={setIsSearching}

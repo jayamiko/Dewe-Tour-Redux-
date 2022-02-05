@@ -8,14 +8,9 @@ body {
   text-align: center;
 }
 
-.icon-dw {
-  position: absolute;
-  padding-left: 50px;
-  margin-top: 20px;
-}
-
 .background-nav {
-  border: solid black 2px;
+  align-items: center !important;
   background-image: url(./img//Header.png);
-  height: 75px;
+  height: 72.5px;
+  box-shadow: 5;
 }

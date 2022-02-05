@@ -8,7 +8,7 @@ import GoogleLoginBtn from "../Button/GoogleLogin";
 // Import Style
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Palm from "../../img/palm1.png";
+import Palm from "../../img/palm.png";
 import {Button, Modal, Form} from "react-bootstrap";
 
 toast.configure();

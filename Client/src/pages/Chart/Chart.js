@@ -15,7 +15,7 @@ import TableChart from "../../components/Items/table_transaction/TableChart";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import Spinner from "../../components/atoms/Spinner/Spinner";
-import BtnHome from "../../components/Button/BtnHome";
+import BtnBack from "../../components/Button/BtnBack";
 
 // Import Style
 import "./Chart.scss";
@@ -82,7 +82,9 @@ function Chart({getTrips, trips: {tripsAll}}) {
             </Form.Group>
           </Form>
         </div>
-        <BtnHome />
+        <div className="btn-back-stats">
+          <BtnBack link={"/"} />
+        </div>
       </div>
       <div className="container-chart">
         <div className="box-table">

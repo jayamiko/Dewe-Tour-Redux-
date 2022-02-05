@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 // Import Style
 import {Button, Modal, Form} from "react-bootstrap";
 import GoogleLoginBtn from "../../components/Button/GoogleLogin";
-import Palm from "../../img/palm1.png";
+import Palm from "../../img/palm.png";
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

@@ -1,16 +1,12 @@
 import React from "react";
 import {Link} from "react-router-dom";
-// import "./BtnBack.scss";
-import Homeflat from "../../img/homeflat.png";
+import ArrowBack from "../../img/back.png";
 
-function BtnBack() {
+function BtnBack(props) {
   return (
     <div>
-      <Link to="/">
-        <button className="Btn-back">
-          <img src={Homeflat} alt="" width={35} />
-          <p>Back</p>
-        </button>
+      <Link to={props.link}>
+        <img src={ArrowBack} alt="" width={60} />
       </Link>
     </div>
   );

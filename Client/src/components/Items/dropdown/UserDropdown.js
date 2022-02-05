@@ -9,7 +9,7 @@ import "./DropdownComp.css";
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IconChat from "../../../img/chat-icon.png";
-import User from "../../../img/user 2.png";
+import User from "../../../img/user.png";
 import Payment from "../../../img/Vector.png";
 import Logout from "../../../img/logout.png";
 import {Navbar, Nav} from "react-bootstrap";
