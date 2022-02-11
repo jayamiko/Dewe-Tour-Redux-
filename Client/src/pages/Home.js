@@ -14,7 +14,7 @@ import Header from "../components/Header/Header";
 import Navbar from "../components/Navbar/Navbar";
 import Main from "../components/Main/Main";
 import Footer from "../components/Footer/Footer";
-import Spinner from "../components/atoms/Spinner/Spinner";
+import {Spinner} from "../components/atoms/Spinner/Spinner";
 
 function Home({
   getTrips,
@@ -54,12 +54,13 @@ function Home({
         </>
       ) : (
         <>
-          <Header
+          <Navbar />
+          {/* <Header
             trips={tripsAll}
             setIsSearching={setIsSearching}
             searchData={searchData}
             setSearchData={setSearchData}
-          />
+          /> */}
           {isSearching ? (
             <Main data={tripsAll} searchData={searchData} />
           ) : (

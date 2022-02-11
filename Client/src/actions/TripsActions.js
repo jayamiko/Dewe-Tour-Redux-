@@ -32,12 +32,9 @@ export const getTripDetail = (id) => async (dispatch) => {
       payload: response.data.data,
     });
   } catch (error) {
+    console.log(error);
     dispatch({
       type: TRIP_ERROR,
-      payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
-      },
     });
   }
 };

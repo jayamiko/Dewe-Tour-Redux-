@@ -7,7 +7,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import PaymentCard from "../../components/Items/card/PaymentCard";
 import Footer from "../../components/Footer/Footer";
 import ModalPopUp from "../../components/Items/modal/popUp";
-import Spinner from "../../components/atoms/Spinner/Spinner";
+import {Spinner} from "../../components/atoms/Spinner/Spinner";
 
 // Import Style
 import {toast} from "react-toastify";
@@ -51,13 +51,6 @@ export default function Payment() {
   };
 
   const handlePay = async () => {
-    if (!transaction.attachment) {
-      toast.success(`Update Attachment Success`, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 2000,
-      });
-    }
-
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -76,6 +69,13 @@ export default function Payment() {
       formData,
       config
     );
+
+    if (response.status === 200) {
+      toast.success(`Update Attachment Success`, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 2000,
+      });
+    }
     setTransaction(response.data.data);
     setIsShow(true);
   };
@@ -113,7 +113,7 @@ export default function Payment() {
               {transaction?.status === "Waiting Approve" && (
                 <div className="container">
                   <div className="d-flex justify-content-end">
-                    {!transaction?.attachment && (
+                    {transaction?.attachment && (
                       <button
                         className="btn btn-primary mt-2 fw-bold text-white"
                         style={{

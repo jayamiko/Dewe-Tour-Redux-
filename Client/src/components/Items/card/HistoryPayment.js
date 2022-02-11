@@ -1,14 +1,12 @@
-import {useState, useContext} from "react";
-import InputFileProofPayment from "../../Button/InputFileProofPayment";
+import {useState} from "react";
+import InputFileProofPayment from "../../Button/InputFile/InputFileProofPayment";
 import formatNumber from "../Format/format";
 import formatWeek from "../Format/formatWeek";
 import Logo from "../../../img/Icon.png";
 import Nodata from "../../../img/no-data.jpg";
-// import { AuthContext } from '../../../Context/AuthContextProvider'
 
 export default function PaymentCard({data, setData}) {
   const [preview, setPreview] = useState(null);
-  // const { stateAuth } = useContext(AuthContext);
 
   function formatDate(date) {
     const newDate = new Date(date);

@@ -99,37 +99,94 @@ exports.addUsers = async (req, res) => {
   }
 };
 
-exports.updateUser = async (req, res) => {
+exports.UpdateAvatar = async (req, res) => {
+  const {id} = req.params;
+
   try {
-    const {id} = req.params;
-    await user.update(
-      {...req.body},
-      {
-        where: {
-          id,
-        },
-      }
-    );
+    const data = {
+      photo: "http://localhost:5000/uploads/" + req.files.photo[0].filename,
+    };
+    const userData = await user.findOne({
+      where: {
+        id,
+      },
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+
+    await user.update(data, {
+      where: {
+        id,
+      },
+    });
+
+    let updatedData = await user.findOne({
+      where: {
+        id,
+      },
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+
+    updatedData = JSON.parse(JSON.stringify(updatedData));
+    const newUpdatedData = {
+      ...updatedData,
+      photo: updatedData.photo,
+    };
 
     res.send({
       status: "success",
-      message: `Update user id:${id} finished`,
+      data: {
+        user: newUpdatedData,
+      },
     });
   } catch (error) {
     console.log(error);
-    res.send({
+    res.status(500).send({
       status: "failed",
       message: "Server error",
     });
   }
 };
 
-exports.updateUserById = async (req, res) => {
+exports.UpdateUser = async (req, res) => {
   try {
     const {id} = req.user;
 
     await user.update(
-      {...req.body},
+      {
+        ...req.body,
+        photo: "http://localhost:5000/uploads/" + req.files.photo[0].filename,
+      },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+
+    return res.send({
+      status: "success",
+      message: `Update User finished`,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: "failed",
+      message: "Internal server error",
+    });
+  }
+};
+
+exports.UpdateUserById = async (req, res) => {
+  try {
+    const {id} = req.user;
+
+    await user.update(
+      {
+        ...req.body,
+      },
       {
         where: {
           id,
@@ -139,9 +196,10 @@ exports.updateUserById = async (req, res) => {
 
     res.send({
       status: "success",
-      message: "Update user finished",
+      message: `Update profile finished`,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).send({
       status: "failed",
       message: "Internal server error",

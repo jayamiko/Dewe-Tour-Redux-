@@ -3,8 +3,8 @@ import {useState, useEffect} from "react";
 import {toast} from "react-toastify";
 
 // Import Components
-import TableContainer from "../../components/Items/table_transaction/TableContainer";
-import Spinner from "../../components/atoms/Spinner/Spinner";
+import TableContainer from "../../components/Items/Table/Transaction/TableContainer";
+import {Spinner} from "../../components/atoms/Spinner/Spinner";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import Gap from "../../components/atoms/Gap";
@@ -27,8 +27,8 @@ const ListTransaction = () => {
       const response = await API.get("/transactions");
       setTransaction(response.data.data);
     } catch (error) {
-      const message = error.response.data.message || "Unknow error";
-      toast.error(message);
+      console.log(error);
+      toast.error(error);
     }
   };
 

@@ -9,6 +9,20 @@
   height: 30px;
 }
 
+.area-avatar {
+  width: 35.2%;
+}
+
+.title-history-trip {
+  font-family: Avenir;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: 49px;
+  display: flex;
+  align-items: center;
+  margin-left: 120px;
+  margin-top: 120px;
+}
 .imageProfile {
   height: 250px;
   width: 250px;
@@ -69,18 +83,50 @@ small {
   font-weight: bold;
 }
 
-.history-trip {
-  position: absolute;
-  font-weight: bold;
-  height: 49px;
-  left: 110px;
-  top: 830px;
-}
-
 .btnChange {
   background-color: orange !important;
+  width: 100%;
+  cursor: pointer;
 }
 
 .preview-image {
   background-image: url(../../img/ProfileDefault.png);
+}
+
+.btn-filter-waiting-approve {
+  border-radius: 10px;
+  color: #ffffff;
+  font-weight: 900;
+  font-family: Avenir;
+  background: orange;
+}
+
+.btn-filter-approve {
+  border-radius: 10px;
+  color: #ffffff;
+  font-weight: 900;
+  font-family: Avenir;
+  background: green;
+}
+
+.btn-filter-cancel {
+  border-radius: 10px;
+  color: #ffffff;
+  font-weight: 900;
+  font-family: Avenir;
+  background: red;
+}
+
+.no-data-payment {
+  text-align: center;
+  position: relative;
+  bottom: 55px;
+  font-weight: 900;
+  font-family: Avenir;
+}
+
+.container-loading-avatar {
+  height: 350px;
+  background-color: #f1f1f1;
+  width: 100%;
 }

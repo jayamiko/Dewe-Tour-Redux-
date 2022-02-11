@@ -1,14 +1,73 @@
 // Import React
+import React, {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 
-// Import COmponents
+// Import Components
 import TripCard from "./TripCard";
 
 // Import Syle
-import {Container} from "react-bootstrap";
 import "./Main.scss";
+import {toast} from "react-toastify";
+import {Container} from "react-bootstrap";
+
+// Import API
+import {API} from "../../config/api";
+import TableIncome from "../Items/Table/IncomeTrip/TableIncome";
 
 export default function GroupTour({data, isAdmin, searchData}) {
+  const [trip, setTrip] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(2);
+
+  const getTrips = async () => {
+    try {
+      const response = await API.get("/trips");
+      setTrip(response.data.data);
+    } catch (error) {
+      console.log(error);
+      toast.error(error);
+    }
+  };
+
+  const handler = {
+    handleAction: async (actionName, id) => {
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+
+        const body = {status: actionName};
+
+        const response = await API.put("/trip/" + id, body, config);
+        const message = response.data.data || "Success change data";
+        toast.success(message, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 2000,
+        });
+
+        getTrips();
+      } catch (error) {
+        const {message} = error?.response?.data.data;
+        toast.success(message, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 2000,
+        });
+      }
+    },
+    handleChangePage: (event, newPage) => {
+      setPage(newPage);
+    },
+    handleChangeRowsPerPage: (event) => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
+    },
+  };
+  useEffect(() => {
+    getTrips();
+  }, []);
+
   const rupiah = (number) => {
     return new Intl.NumberFormat("id-ID", {
       minimumFractionDigits: 0,
@@ -22,6 +81,13 @@ export default function GroupTour({data, isAdmin, searchData}) {
           <Container className="container-incometrip">
             <div className="head-incometrip">
               <h2 className="title-incometrip">INCOME TRIP</h2>
+              <TableIncome
+                datatrip={data}
+                handler={handler}
+                rowPage={rowsPerPage}
+                page={page}
+              />
+              ;
             </div>
             {/* CONTENT TRIP */}
             <TripCard />

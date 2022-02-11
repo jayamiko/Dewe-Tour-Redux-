@@ -1,111 +1,143 @@
 // Import React
-import {useState} from "react";
-import store from "../../../store";
+import {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {handleLogin} from "../../../actions/auth";
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
 
 // Import Style
-import {Modal} from "react-bootstrap";
+import {Button, Modal, Form} from "react-bootstrap";
+import GoogleLoginBtn from "../../Button/GoogleLogin/GoogleLogin";
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // Import API
-import {API, setAuthToken} from "../../../config/api";
-import {checkUser} from "../../../config/auth";
+import {setAuthToken} from "../../../config/api";
+import {checkUser} from "../../../actions/auth";
 
 toast.configure();
 
-export default function Login({show, handleClose, handleSwitch}) {
-  const [inputLogin, setInputLogin] = useState({
+const Login = ({
+  handleLogin,
+  auth: {error, isLoading},
+  openModalLogin,
+  closeModalLogin,
+  openModalRegister,
+  modal,
+}) => {
+  let navigate = useNavigate();
+
+  const isLoginSession = useSelector((state) => state.isLogin);
+
+  const checkAuth = () => {
+    if (isLoginSession) {
+      navigate("/");
+    }
+  };
+  checkAuth();
+
+  const [formLogin, setFormLogin] = useState({
     email: "",
     password: "",
   });
 
-  const handleLoginChange = (e) => {
-    setInputLogin((prevState) => ({
-      ...prevState,
-      [e.target.id]: e.target.value,
-    }));
+  const {email, password} = formLogin;
+
+  const LoginHandleChange = (e) => {
+    setFormLogin({
+      ...formLogin,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const loginSession = async (event) => {
-    try {
-      event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLogin(email, password);
+    navigate("/");
+  };
 
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-
-      const body = JSON.stringify(inputLogin);
-
-      const response = await API.post("./login", body, config);
-
-      if (response?.status === 200) {
-        toast.success("Login success, welcome " + response.data.data.name);
-        store.dispatch({
-          type: "LOGIN",
-          payload: response.data.data,
-        });
-        setAuthToken(response.data.data.token);
-      }
-      checkUser();
-    } catch (error) {
-      console.log(error);
-      toast.error(`Login Failed`, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 2000,
-      });
+  useEffect(() => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
     }
-  };
+  }, []);
 
-  const handleEnterPressed = (e) => {
-    if (e.keyCode === 13) {
-      loginSession();
-    }
-  };
+  useEffect(() => {
+    checkUser();
+  }, []);
 
   return (
-    <Modal show={show} onHide={handleClose} centered>
-      <Modal.Body className="p-4" style={{width: 416}}>
-        <h4 className="text-center mt-2 mb-4 fw-bold fs-3">Login</h4>
-        <form action="" onSubmit={loginSession} onKeyDown={handleEnterPressed}>
-          <label htmlFor="emailLogin" className="fw-bold mb-2">
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            className="mb-4 form-control"
-            onChange={handleLoginChange}
-            value={inputLogin.email}
-          />
-          <label htmlFor="password" className="fw-bold mb-2">
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            className="mb-4 form-control"
-            onChange={handleLoginChange}
-            value={inputLogin.password}
-          />
+    <>
+      {error === null || isLoading ? (
+        ""
+      ) : (
+        <p style={{textTransform: "capitalize", margin: "0 0"}}>{error}</p>
+      )}
+      <Modal show={modal}>
+        <Modal.Body className="modal-content">
+          <h2 className="text-center my-5">Login</h2>
           <button
-            type="submit"
-            className="btn btn-primary text-white w-100 fw-bold mb-3"
-          >
-            Login
-          </button>
-          <div className="tag-line text-muted text-center">
-            Don't have an account?{" "}
-            <span
-              className="link text-primary text-decoration-underline"
-              onClick={handleSwitch}
-            >
-              Click here
-            </span>
-          </div>
-        </form>
-      </Modal.Body>
-    </Modal>
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            onClick={closeModalLogin}
+          ></button>
+          <Form onSubmit={(e) => handleSubmit(e)}>
+            <Form.Group className="mb-4">
+              <Form.Label className="fw-bold">Email address</Form.Label>
+              <Form.Control
+                name="email"
+                onChange={(e) => LoginHandleChange(e)}
+                type="email"
+                value={email}
+                id="email"
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-4">
+              <Form.Label className="fw-bold">Password</Form.Label>
+              <Form.Control
+                name="password"
+                onChange={(e) => LoginHandleChange(e)}
+                type="password"
+                required
+                id="password"
+              />
+            </Form.Group>
+            <div class="d-flex flex-column gap-2 ">
+              <Button
+                className="text-white fw-bold"
+                variant="warning"
+                type="submit"
+                required
+              >
+                Submit
+              </Button>
+              {/* <GoogleLoginBtn /> */}
+              <small className="text-center">
+                Don't have an account ? click{" "}
+                <a onClick={openModalRegister} href="#register">
+                  Here
+                </a>
+              </small>
+            </div>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </>
   );
-}
+};
+
+Login.propTypes = {
+  handleLogin: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {handleLogin})(Login);

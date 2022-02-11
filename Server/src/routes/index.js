@@ -4,8 +4,9 @@ const {
   addUsers,
   getUser,
   getUsers,
-  updateUser,
-  updateUserById,
+  UpdateAvatar,
+  UpdateUser,
+  UpdateUserById,
   deleteUser,
 } = require("../controllers/user");
 const {
@@ -42,9 +43,10 @@ const {uploadsFile} = require("../middlewares/uploadsFile");
 router.get("/users", getUsers);
 router.get("/user", auth, getUser);
 router.post("/users", addUsers);
-router.put("/user", auth, uploadsFile("photo"), updateUser);
+router.put("/user/:id", uploadsFile("photo"), UpdateAvatar);
+router.put("/user", auth, uploadsFile("photo"), UpdateUser);
+router.put("/user/specific", auth, UpdateUserById);
 router.delete("/user/:id", deleteUser);
-router.put("/user/specific", auth, updateUserById);
 
 // Route Countries
 router.get("/countries", getCountries);

@@ -36,7 +36,14 @@ const authReducer = (state = initialValue, action) => {
         isAuthenticated: true,
         user: payload,
       };
+    case "UPDATE_PROFILE_SUCCESS":
+      return {
+        ...state,
+        user: payload,
+        isLoading: false,
+      };
     case "REGISTER_FAIL":
+    case "UPDATE_PROFILE_FAIL":
     case "AUTH_ERROR":
     case "LOGOUT":
       localStorage.removeItem("token");

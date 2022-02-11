@@ -3,7 +3,7 @@ import {useState} from "react";
 import Icon from "../../../img/Icon.png";
 import formatNumber from "../Format/format";
 import formatWeek from "../Format/formatWeek";
-import InputFileProofPayment from "../../Button/InputFileProofPayment";
+import InputFileProofPayment from "../../Button/InputFile/InputFileProofPayment";
 
 export default function PaymentCard({data, setData}) {
   const [preview, setPreview] = useState(null);

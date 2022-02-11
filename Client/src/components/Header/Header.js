@@ -1,12 +1,9 @@
 // Import React
-import React from "react";
+import React, {useState} from "react";
 import {Carousel} from "react-bootstrap";
 
 // Import Style
 import "./Header.scss";
-
-// import Components
-import Navbar from "../Navbar/Navbar";
 
 function Header(props) {
   const {trips, searchData, setSearchData, setIsSearching} = props;
@@ -28,24 +25,49 @@ function Header(props) {
     setSearchData(result);
   };
 
-  console.log(trips);
+  // const displayCarousel = trips.map((trip, index) => {
+  //   return (
+  //     <Carousel>
+  //       <p>{trip.title}</p>
+  //       <Carousel.Item interval={3000} key={index}>
+  //         <img
+  //           className="d-block w-100"
+  //           src={String(trip.image.url)}
+  //           alt="First slide"
+  //           width={100}
+  //         />
+  //         <Carousel.Caption>
+  //           <h2>
+  //             <b>{trip?.title}</b>
+  //           </h2>
+  //           <h2>
+  //             <b className="carousel-price-text">
+  //               Rp. {rupiah(trip?.price)}
+  //               <i className="carousel-quota-text">({trip?.quota} Available)</i>
+  //             </b>
+  //           </h2>
+  //         </Carousel.Caption>
+  //       </Carousel.Item>
+  //     </Carousel>
+  //   );
+  // });
 
   const CarouselView = [
     {
       title: "Labuan Bajo",
-      image: trips[0].image[0].url,
+      image: trips[0].image[3].url,
       price: trips[0].price,
       quota: trips[0].quota,
     },
     {
       title: "Hagia Sophia",
-      image: trips[1].image[0].url,
+      image: trips[1].image[1].url,
       price: trips[1].price,
       quota: trips[1].quota,
     },
     {
       title: "Paris City",
-      image: trips[2].image[0].url,
+      image: trips[2].image[1].url,
       price: trips[2].price,
       quota: trips[2].quota,
     },
@@ -59,9 +81,6 @@ function Header(props) {
 
   return (
     <>
-      <div className="background-nav">
-        <Navbar />
-      </div>
       <Carousel>
         {CarouselView.map((view, index) => {
           return (

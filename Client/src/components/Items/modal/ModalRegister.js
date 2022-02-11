@@ -1,123 +1,137 @@
-import {useState, useContext} from "react";
-import {Modal} from "react-bootstrap";
+// Import React
+import {useState} from "react";
+import {handleRegister} from "../../../actions/auth";
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
+import GoogleLoginBtn from "../../Button/GoogleLogin/GoogleLogin";
 
-import {API, setAuthToken} from "../../../config/api";
-
-// import { AuthContext } from "../../../Context/AuthContextProvider";
+// Import Style
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {Button, Modal, Form} from "react-bootstrap";
 
 toast.configure();
 
-export default function Login({show, handleClose, handleSwitch}) {
-  // const { dispatch } = useContext(AuthContext);
-
-  const [inputLogin, setInputLogin] = useState({
+const Register = ({
+  handleRegister,
+  openModalLogin,
+  closeModalRegister,
+  register,
+  auth: {error, isLoading},
+}) => {
+  // Form Register
+  const [formRegister, setFormRegister] = useState({
+    name: "",
     email: "",
     password: "",
+    phone: "",
+    address: "",
   });
 
-  const handleLoginChange = (e) => {
-    setInputLogin((prevState) => ({
-      ...prevState,
-      [e.target.id]: e.target.value,
-    }));
+  const registerHandleChange = (e) => {
+    setFormRegister({...formRegister, [e.target.name]: e.target.value});
   };
 
-  // const handleLogin = async (e) => {
-  //     try {
-  //         e.preventDefault();
+  const {email, password, name, phone, address} = formRegister;
 
-  //         const config = {
-  //             headers: {
-  //                 "Content-Type": "application/json",
-  //             },
-  //         };
-
-  //         // Convert form data login to string here ...
-  //         const body = JSON.stringify(inputLogin);
-
-  //         // validate data user from database here ...
-  //         const response = await API.post("/login", body, config).catch((error) => {
-  //             if (error?.response.data.error?.message) {
-  //                 toast.error(`Register Failed`, {
-  //                     position: toast.POSITION.BOTTOM_RIGHT,
-  //                     autoClose: 2000
-  //                 })
-  //             }
-
-  //             if (error?.response.data?.message) {
-  //                 toast.error(`Register Success`, {
-  //                     position: toast.POSITION.BOTTOM_RIGHT,
-  //                     autoClose: 2000
-  //                 })
-  //             }
-  //         });
-
-  //         setAuthToken(response?.data.data.token);
-
-  //         if (response?.status === 200) {
-  //             dispatch({
-  //                 type: "LOGIN_SUCCESS",
-  //                 payload: response.data.data,
-  //             });
-  //             toast.error(`Success`, {
-  //                 position: toast.POSITION.BOTTOM_RIGHT,
-  //                 autoClose: 2000
-  //             })
-  //             handleClose();
-
-  //             setTimeout(() => {
-  //                 window.location.reload();
-  //             }, 1500);
-  //         }
-  //     } catch (error) {
-  //         if (error) throw error;
-  //     }
-  // };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleRegister(email, password, name, phone, address, closeModalRegister());
+  };
 
   return (
-    <Modal show={show} onHide={handleClose} centered>
-      <Modal.Body className="p-4" style={{width: 416}}>
-        <h4 className="text-center mt-2 mb-4 fw-bold fs-3">Login</h4>
-        <form action="" onSubmit={"handleLogin"}>
-          <label htmlFor="emailLogin" className="fw-bold mb-2">
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            className="mb-4 form-control"
-            onChange={handleLoginChange}
-            value={inputLogin.email}
-          />
-          <label htmlFor="password" className="fw-bold mb-2">
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            className="mb-4 form-control"
-            onChange={handleLoginChange}
-            value={inputLogin.password}
-          />
+    <>
+      <Modal show={register}>
+        <Modal.Body className="modal-content">
+          <h2 className="text-center my-5">Register</h2>
           <button
-            type="submit"
-            className="btn btn-primary text-white w-100 fw-bold mb-3"
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            onClick={closeModalRegister}
+            required
           >
-            Login
+            Close
           </button>
-          <div className="tag-line text-muted text-center">
-            Don't have an account?{" "}
-            <span
-              className="link text-primary text-decoration-underline"
-              onClick={handleSwitch}
-            >
-              Click here
-            </span>
-          </div>
-        </form>
-      </Modal.Body>
-    </Modal>
+          <Form onSubmit={(e) => handleSubmit(e)}>
+            <Form.Group className="mb-4" controlId="formBasicName">
+              <Form.Label className="fw-bold">FullName</Form.Label>
+              <Form.Control
+                name="name"
+                onChange={(e) => registerHandleChange(e)}
+                type="text"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-4" controlId="formBasicEmail">
+              <Form.Label className="fw-bold">Email address</Form.Label>
+              <Form.Control
+                onChange={(e) => registerHandleChange(e)}
+                type="email"
+                name="email"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-4" controlId="formBasicPassword">
+              <Form.Label className="fw-bold">Password</Form.Label>
+              <Form.Control
+                onChange={(e) => registerHandleChange(e)}
+                type="password"
+                name="password"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-4" controlId="formBasicPhone">
+              <Form.Label className="fw-bold">Phone</Form.Label>
+              <Form.Control
+                onChange={(e) => registerHandleChange(e)}
+                name="phone"
+                type="text"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-4" controlId="formBasicPhone">
+              <Form.Label className="fw-bold">Address</Form.Label>
+              <Form.Control
+                onChange={(e) => registerHandleChange(e)}
+                name="address"
+                type="text"
+                required
+              />
+            </Form.Group>
+            <div class="d-flex flex-column gap-2 ">
+              <Button
+                className="text-white fw-bold"
+                variant="warning"
+                type="submit"
+                onChange={(e) => registerHandleChange(e)}
+                required
+              >
+                Submit
+              </Button>
+              <small className="text-center">
+                Have an account ? click{" "}
+                <a onClick={openModalLogin} href="">
+                  Here
+                </a>
+              </small>
+              <GoogleLoginBtn />
+            </div>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </>
   );
-}
+};
+
+Register.propTypes = {
+  handleRegister: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {handleRegister})(Register);

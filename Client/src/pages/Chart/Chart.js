@@ -11,11 +11,10 @@ import {
   LineChart,
   PieChart,
 } from "../../components/Items/chart";
-import TableChart from "../../components/Items/table_transaction/TableChart";
+import TableChart from "../../components/Items/Table/Chart/TableChart";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import Spinner from "../../components/atoms/Spinner/Spinner";
-import BtnBack from "../../components/Button/BtnBack";
+import {Spinner} from "../../components/atoms/Spinner/Spinner";
 
 // Import Style
 import "./Chart.scss";
@@ -82,9 +81,7 @@ function Chart({getTrips, trips: {tripsAll}}) {
             </Form.Group>
           </Form>
         </div>
-        <div className="btn-back-stats">
-          <BtnBack link={"/"} />
-        </div>
+        <div className="btn-back-stats"></div>
       </div>
       <div className="container-chart">
         <div className="box-table">

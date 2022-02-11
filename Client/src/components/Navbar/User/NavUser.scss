@@ -1,0 +1,29 @@
+.navbar {
+  background-color: rgb(55, 184, 235);
+}
+.nav-user {
+  float: right;
+  margin-left: 42vw;
+  width: fit-content;
+}
+.text-nav-user {
+  font-size: 18px;
+  font-family: Avenir;
+  font-weight: 500;
+  color: whitesmoke;
+}
+.text-nav-user:hover {
+  font-size: 19px;
+  font-family: Avenir;
+  font-weight: 500;
+  color: orange;
+}
+.icon-nav-user {
+  margin-right: 8px;
+}
+
+@media only screen and (max-width: 991px) {
+  .nav-user {
+    margin-left: 0px !important;
+  }
+}

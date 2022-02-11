@@ -1,3 +1,12 @@
+.spinner-child {
+  display: flex !important;
+  text-align: center !important;
+  justify-content: center !important;
+  align-content: center !important;
+  align-items: center !important;
+  flex-direction: column;
+  height: 100%;
+}
 .spinner-container {
   background-color: #f1f1f1;
   z-index: 99;

@@ -1,112 +1,12 @@
-* {
-  font-family: "Poppins", sans-serif;
-}
-
-.me-auto {
-  width: 100% !important;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.btn-login {
-  border-radius: 4px;
-  padding: 4px 28px;
-  color: white;
-  background-color: skyblue;
-  border: none;
-}
-
-.nav-link {
-  padding-left: 30px !important;
-  color: white;
+.text-nav {
+  font-size: 18px;
   font-family: Avenir;
-  font-weight: 00;
+  font-weight: 500;
+  color: whitesmoke;
 }
-
-.btn-register {
-  border-radius: 4px;
-  color: white;
-  background-color: #ffaf00;
-  border: none;
-  border-radius: 4px;
-  padding: 4px 28px;
-  margin-left: 25px;
-}
-
-.modal-content img {
-  position: absolute;
-  left: 0;
-  right: 61.54%;
-  top: 0;
-  bottom: 87.81%;
-}
-
-.btn-close {
-  position: absolute;
-  left: 90%;
-}
-
-@media only screen and (max-width: 991px) {
-  .me-auto {
-    height: 100px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-  }
-  .nav-link {
-    width: max-content;
-    height: 100px;
-    position: absolute;
-    display: flex !important;
-    flex-direction: column;
-    justify-content: space-between !important;
-  }
-  .btn-login {
-    border-radius: 4px;
-    padding: 4px 20px;
-    color: white;
-    margin-left: 24px;
-    width: 117px;
-    background-color: skyblue;
-    border: none;
-  }
-
-  .btn-register {
-    border-radius: 4px;
-    color: white;
-    background-color: #ffaf00;
-    border: none;
-    border-radius: 4px;
-    padding: 4px 28px;
-    margin-left: 25px;
-  }
-}
-
-/* Mobile Device */
-@media only screen and (max-width: 576px) {
-  .nav-link {
-    width: max-content;
-    /* height: 100px; */
-    display: flex !important;
-    flex-direction: column;
-    justify-content: space-between !important;
-  }
-  .btn-login {
-    border-radius: 4px;
-    padding: 4px 20px;
-    color: white;
-    margin-left: 24px;
-    background-color: skyblue;
-    border: none;
-  }
-  .btn-register {
-    border-radius: 4px;
-    color: white;
-    background-color: #ffaf00;
-    border: none;
-    border-radius: 4px;
-    padding: 4px 28px;
-  }
+.text-nav:hover {
+  font-size: 18px;
+  font-family: Avenir;
+  font-weight: 500;
+  color: orange;
 }

@@ -1,5 +1,4 @@
 // Import React
-import React from "react";
 import {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
@@ -12,13 +11,12 @@ import HistoryPayment from "../../components/Items/card/HistoryPayment";
 import InputFileAvatar from "./updateAvatar";
 import Box from "../../components/Items/card/Box";
 import Gap from "../../components/atoms/Gap";
-import Spinner from "../../components/atoms/Spinner/Spinner";
+import {Spinner} from "../../components/atoms/Spinner/Spinner";
 
 // Import Style
 import "./Profile.css";
 import {Button} from "@mui/material";
 import {toast} from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import {Container} from "react-bootstrap";
 import Avatar from "../../img/avatar.png";
 import Envelope from "../../img/envelope.png";
@@ -29,7 +27,6 @@ import Nodata from "../../img/folder.png";
 // Import API
 import {API} from "../../config/api";
 
-toast.configure();
 const ProfilePage = ({auth: {user}}) => {
   const {name, email, phone, address, photo} = user;
   const [trans, setTrans] = useState([]);
@@ -57,10 +54,11 @@ const ProfilePage = ({auth: {user}}) => {
     phone: "",
     address: "",
     status: "user",
+    photo: photo,
   });
 
   useEffect(() => {
-    getUser();
+    checkUser();
   }, []);
 
   const getData = async () => {
@@ -86,25 +84,6 @@ const ProfilePage = ({auth: {user}}) => {
     getData();
     setFilterData(trans);
   }, []);
-
-  const getUser = async () => {
-    try {
-      const response = await API.get(`/user`);
-      const data = response.data.data;
-      setProfile(response?.data.data);
-
-      setForm({
-        ...form,
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        address: data.address,
-        status: data.status,
-      });
-    } catch (error) {
-      toast.error("Unknow error");
-    }
-  };
 
   function handleEdit() {
     isEditable ? setIsEditable(false) : setIsEditable(true);
@@ -155,12 +134,11 @@ const ProfilePage = ({auth: {user}}) => {
       }, 2000);
 
       handleEdit();
-      getUser();
       checkUser();
       return () => clearTimeout(timer);
     } catch (error) {
       handleEdit();
-      toast.error("Unknow error");
+      toast.error(error.message);
     }
   };
 
@@ -295,20 +273,7 @@ const ProfilePage = ({auth: {user}}) => {
               <InputFileAvatar />
             </Container>
           )}
-          <h1
-            style={{
-              fontFamily: "Avenir",
-              fontWeight: "900",
-              fontSize: "36px",
-              lineHeight: "49px",
-              display: "flex",
-              alignItems: "center",
-              marginLeft: "120px",
-              marginTop: "120px",
-            }}
-          >
-            History Trip
-          </h1>
+          <h1 className="title-history-trip">History Trip</h1>
 
           <div>
             {trans === null ? (

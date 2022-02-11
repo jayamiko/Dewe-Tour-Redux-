@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 // Import Components
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import Spinner from "../../components/atoms/Spinner/Spinner";
+import {Spinner} from "../../components/atoms/Spinner/Spinner";
 
 // Import Style
 import "./addTrip.css";

@@ -7,6 +7,8 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";
+export const UPDATE_PROFILE_SUCCESS = "UPDATE_PROFILE_SUCCESS";
+export const UPDATE_PROFILE_FAIL = "UPDATE_PROFILE_FAIL";
 
 export const checkUser = () => async (dispatch) => {
   if (localStorage.token) {
@@ -84,6 +86,37 @@ export const handleLogin =
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
+      });
+    }
+  };
+
+//Change Profile Pict
+export const changeProfile =
+  (photo, idUser, setLoadingSkeleton) => async (dispatch) => {
+    setLoadingSkeleton(true);
+    try {
+      const formData = new FormData();
+
+      formData.append("photo", photo);
+
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      };
+
+      const response = await API.put(`/user/${idUser}`, formData, config);
+      checkUser();
+      setLoadingSkeleton(false);
+      console.log(setLoadingSkeleton);
+      dispatch({
+        type: UPDATE_PROFILE_SUCCESS,
+        payload: response.data.data.user,
+      });
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: UPDATE_PROFILE_FAIL,
       });
     }
   };

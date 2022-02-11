@@ -1,14 +1,15 @@
 // Import React
-import {Link} from "react-router-dom";
+import {useState} from "react";
+import {Container} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
 // Import Components
-import Login from "./Login";
-import Register from "./Register";
-import AdminDropdown from "../Items/dropdown/AdminDropdown";
-import UserDropdown from "../Items/dropdown/UserDropdown";
+import ModalLogin from "../Items/modal/ModalLogin";
+import ModalRegister from "../Items/modal/ModalRegister";
+import NavbarAdmin from "./Admin/NavbarAdmin";
+import NavbarUser from "./User/NavbarUser";
 
 // Import Style
 import "./Navbar.css";
@@ -19,32 +20,72 @@ const NavbarComp = ({auth: {isAuthenticated, user, isLoading}}) => {
   const currentState = useSelector((state) => state.auth);
   const isAdmin = currentState.user.status === "admin";
   const isLogin = currentState.isLogin;
+
+  const [modal, setModal] = useState(false);
+  const [register, setRegister] = useState(false);
+
+  const openModalLogin = () => {
+    setModal(true);
+    setRegister(false);
+  };
+  const openModalRegister = () => {
+    setRegister(true);
+    setModal(false);
+  };
+  const closeModalRegister = () => {
+    setRegister(false);
+    setModal(false);
+  };
+  const closeModalLogin = () => setModal(false);
+
   return (
     <>
       {isAuthenticated && isLogin ? (
         isAuthenticated && isAdmin ? (
-          <AdminDropdown />
+          <NavbarAdmin />
         ) : (
-          <UserDropdown />
+          <NavbarUser />
         )
       ) : (
         !isAuthenticated && (
           <>
-            <Navbar expand="lg" style={{paddingRight: "50px"}}>
-              <div style={{paddingLeft: "50px"}}></div>
-              <Navbar.Toggle
-                aria-controls="basic-navbar-nav"
-                style={{background: "white", marginTop: "20px"}}
-              />
-              <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="me-auto">
-                  <Nav.Link href="#login" className="nav-link">
-                    <Login />
-                    <Register />
-                  </Nav.Link>
-                </Nav>
-              </Navbar.Collapse>
+            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+              <Container>
+                <Navbar.Brand href="/">
+                  <img src={Icon} alt="" />
+                </Navbar.Brand>
+                <Navbar.Toggle
+                  aria-controls="responsive-navbar-nav"
+                  style={{border: "solid 1px whitesmoke"}}
+                />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                  <Nav>
+                    <Nav.Link href="#services" onClick={openModalLogin}>
+                      <span className="text-nav">Login</span>
+                    </Nav.Link>
+                    <Nav.Link
+                      eventKey={2}
+                      href="#services"
+                      onClick={openModalRegister}
+                    >
+                      <span className="text-nav">Register</span>
+                    </Nav.Link>
+                  </Nav>
+                </Navbar.Collapse>
+              </Container>
             </Navbar>
+            <ModalLogin
+              openModalLogin={openModalLogin}
+              openModalRegister={openModalRegister}
+              modal={modal}
+              closeModalLogin={closeModalLogin}
+            />
+            <ModalRegister
+              openModalLogin={openModalLogin}
+              openModalRegister={openModalRegister}
+              register={register}
+              closeModalRegister={closeModalRegister}
+            />
           </>
         )
       )}

@@ -1,0 +1,30 @@
+.navbar-admin {
+  background-color: rgb(55, 184, 235);
+  margin-bottom: 100px;
+}
+
+.nav-admin {
+  float: right;
+  margin-left: 35vw;
+}
+.text-nav-admin {
+  font-size: 18px;
+  font-family: Avenir;
+  font-weight: 500;
+  color: black !important;
+}
+.text-nav-admin:hover {
+  font-size: 19px;
+  font-family: Avenir;
+  font-weight: 500;
+  color: orange;
+}
+.icon-nav-admin {
+  margin-right: 8px;
+}
+
+@media only screen and (max-width: 991px) {
+  .nav-admin {
+    margin-left: 0px !important;
+  }
+}

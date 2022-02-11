@@ -18,7 +18,7 @@ import Chart from "./pages/Chart/Chart";
 
 // Import Style
 import "./App.css";
-import Spinner from "./components/atoms/Spinner/Spinner";
+import {Spinner} from "./components/atoms/Spinner/Spinner";
 
 // Import API
 import {checkUser} from "./config/auth";
