@@ -55,12 +55,12 @@ function Home({
       ) : (
         <>
           <Navbar />
-          {/* <Header
+          <Header
             trips={tripsAll}
             setIsSearching={setIsSearching}
             searchData={searchData}
             setSearchData={setSearchData}
-          /> */}
+          />
           {isSearching ? (
             <Main data={tripsAll} searchData={searchData} />
           ) : (

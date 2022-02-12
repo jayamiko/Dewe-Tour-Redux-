@@ -44,8 +44,8 @@ router.get("/users", getUsers);
 router.get("/user", auth, getUser);
 router.post("/users", addUsers);
 router.put("/user/:id", uploadsFile("photo"), UpdateAvatar);
-router.put("/user", auth, uploadsFile("photo"), UpdateUser);
-router.put("/user/specific", auth, UpdateUserById);
+router.patch("/user", auth, uploadsFile("photo"), UpdateUser);
+router.patch("/user/specific", auth, UpdateUserById);
 router.delete("/user/:id", deleteUser);
 
 // Route Countries

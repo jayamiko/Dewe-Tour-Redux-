@@ -1,52 +1,139 @@
-.box-profile {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 34px 26px;
-  margin-top: 15px;
-  background-color: var(--primary-alternate);
+p {
+  margin-bottom: 0;
+}
+.sub-info {
+  color: #a8a8a8;
+  font-style: italic;
+}
+
+.card {
+  padding: 30px;
+  margin: 100px 250px;
   border-radius: 8px;
-
-  .list-sosmed {
-    order: 1;
-    & li {
-      display: flex;
-      align-items: center;
-      margin-bottom: 35px;
-
-      img {
-        margin-right: 15px;
-        width: 30px;
-        text-align: center;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly;
+  .card-body {
+    display: flex;
+    justify-content: space-between;
+    .form-edit-profile {
+      .title-edit {
+        font-family: Avenir;
+        font-weight: bold;
+        color: rgb(72, 190, 236);
+      }
+      .form-group {
+        width: 38vw;
+        margin-bottom: 20px;
+        label {
+          font-family: Avenir;
+          font-weight: bold;
+          font-style: italic;
+          color: #a8a8a8;
+        }
       }
     }
-
-    @media screen and (max-width: 800px) {
-      order: 2;
+    .preview-avatar {
+      height: 48vh;
+      width: 35%;
+    }
+    // IMAGE AVATAR
+    .card-img-top {
+      height: 48vh;
+      width: 35%;
+      margin-right: 50px;
     }
   }
 
-  .profile-pic {
+  // AREA BUTTON EDIT
+  .area-btn-edit {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 66px;
+    padding-bottom: 20px;
     align-items: center;
-    order: 2;
-    overflow-x: hidden;
-
-    .button-input-file {
-      .input-file__profile {
-        width: inherit;
-        position: absolute;
-        bottom: 0;
-        left: 0;
+    .change-avatar-edit {
+      padding: 10px;
+      width: 21vw;
+      margin-right: -50px;
+      background-color: orange !important;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      font-family: Avenir;
+      border-radius: 5px;
+      text-align: center;
+      align-items: center;
+      font-size: 20px;
+    }
+    .btn-save {
+      cursor: pointer;
+      background-color: rgb(72, 190, 236);
+      color: white;
+      font-weight: bold;
+      height: 45px;
+      margin-top: 16px;
+    }
+    .btn-input-avatar {
+      border-radius: 5px;
+      width: 100%;
+      .btnChange {
+        padding: 10px;
+        margin-left: 20px;
+        float: right;
+        width: 21vw;
+        background-color: orange !important;
         cursor: pointer;
-        opacity: 0;
       }
     }
+  }
+}
 
-    @media screen and (max-width: 800px) {
-      order: 1;
+@media only screen and (max-width: 991px) {
+  .card {
+    padding: 20px;
+    margin: 50px 50px;
+    border-radius: 8px;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between;
+    .card-body {
+      margin-right: 0;
     }
+    .area-btn-edit {
+      flex-direction: row;
+      .btn-input-avatar {
+        .btnChange {
+          width: 28vw;
+        }
+      }
+      .change-avatar-edit {
+        width: 38%;
+      }
+    }
+    .card-img-top {
+      height: 60vh;
+      width: 40%;
+    }
+  }
+  .preview-avatar {
+    border-radius: 5px;
+    margin-top: 58px;
+  }
+  .form-edit-profile {
+    .form-group {
+      flex-direction: column;
+      display: flex;
+    }
+    .form-group label {
+      width: fit-content;
+    }
+  }
+}
+@media only screen and (max-width: 576px) {
+  .card-img-top {
+    height: 45vh;
+    width: 45%;
   }
 }

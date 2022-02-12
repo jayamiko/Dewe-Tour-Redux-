@@ -1,5 +1,4 @@
 // Import React
-import React, {useState} from "react";
 import {Carousel} from "react-bootstrap";
 
 // Import Style

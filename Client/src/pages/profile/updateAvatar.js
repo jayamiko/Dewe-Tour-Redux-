@@ -8,12 +8,8 @@ import PropTypes from "prop-types";
 import {SpinnerChild} from "../../components/atoms/Spinner/Spinner";
 
 // Import Style
-import "./Profile.css";
+import "./Profile.scss";
 import AvatarDefault from "../../img/ProfileDefault.png";
-import {toast} from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-toast.configure();
 
 function Avatar({auth: {user}, changeProfile}) {
   const {name, email, phone, address, photo} = user;
