@@ -50,6 +50,7 @@ exports.oauthGoogle = async (req, res) => {
     let data = await user.create({
       name: req.body.profileObj.name,
       email: req.body.profileObj.email,
+      gender: req.body.profileObj.gender,
       password: hashedPass,
       phone: "",
       status: "user",

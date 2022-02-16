@@ -1,7 +1,6 @@
 // Import React
 import React from "react";
 import {useEffect} from "react";
-import {useNavigate} from "react-router-dom";
 import store from "../../../store";
 import {Navbar, Nav, Container} from "react-bootstrap";
 
@@ -22,7 +21,6 @@ import {checkUser} from "../../../config/auth";
 toast.configure();
 
 function UserDropdown() {
-  let Navigate = useNavigate();
   const logoutSession = () => {
     store.dispatch({
       type: "LOGOUT",

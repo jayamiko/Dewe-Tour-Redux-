@@ -15,7 +15,7 @@ import {Form, Button} from "react-bootstrap";
 import Attach from "../../img/attach.png";
 
 // Import API
-import {API} from "../../config/api";
+import {API, API_Country} from "../../config/api";
 import {addTrip} from "../../actions/TripsActions";
 
 const AddTripPage = ({addTrip}) => {
@@ -25,7 +25,7 @@ const AddTripPage = ({addTrip}) => {
 
   const [input, setInput] = useState({
     title: "",
-    idCountry: "0",
+    country: "Indonesia",
     accomodation: "",
     transportation: "",
     eat: "",
@@ -65,7 +65,7 @@ const AddTripPage = ({addTrip}) => {
 
   const {
     title,
-    idCountry,
+    country,
     accomodation,
     transportation,
     eat,
@@ -78,17 +78,18 @@ const AddTripPage = ({addTrip}) => {
     image,
   } = input;
 
-  const getCountries = async () => {
+  const restCountries = async () => {
     try {
-      const response = await API.get("/countries");
-      setCountries(response.data.data);
+      const response = await API_Country.get("/v3.1/all");
+      setCountries(response.data);
+      console.log("SUCCESS DATA");
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getCountries();
+    restCountries();
   }, []);
 
   const redirect = () => {
@@ -134,7 +135,7 @@ const AddTripPage = ({addTrip}) => {
               name="country"
             >
               {countries.map((item) => (
-                <option value={item.id}>{item.name}</option>
+                <option value={item.name.common}>{item.name.common}</option>
               ))}
             </Form.Control>
           </Form.Group>

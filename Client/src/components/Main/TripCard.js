@@ -66,7 +66,7 @@ function TripCard({getTrips, trips: {tripsAll}}) {
                       Rp. {rupiah(item.price)}
                     </span>
                   )}
-                  <span className="text-muted">{item.country.name}</span>
+                  <span className="text-muted">{item.country}</span>
                 </div>
               </div>
             </div>

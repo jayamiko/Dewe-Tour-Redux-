@@ -31,7 +31,7 @@ export const checkUser = () => async (dispatch) => {
 
 //Register User
 export const handleRegister =
-  (email, password, name, phone, address, registerModal) =>
+  (email, password, name, gender, phone, address, registerModal) =>
   async (dispatch) => {
     const config = {
       headers: {
@@ -43,6 +43,7 @@ export const handleRegister =
       email,
       password,
       name,
+      gender,
       phone,
       address,
     });
@@ -134,6 +135,7 @@ export const saveProfile =
         const formData = new FormData();
         formData.set("name", form.name);
         formData.set("email", form.email);
+        formData.set("gender", form.gender);
         formData.set("phone", form.phone);
         formData.set("address", form.address);
         formData.set("photo", form.photo[0], form.photo[0].filename);

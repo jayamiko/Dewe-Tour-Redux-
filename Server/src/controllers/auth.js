@@ -8,8 +8,9 @@ const avatarDefault = require("../utils/avatar");
 // register session
 exports.register = async (req, res) => {
   const schema = Joi.object({
-    name: Joi.string().min(6).required(),
+    name: Joi.string().required(),
     email: Joi.string().email().min(8).required(),
+    gender: Joi.string().required(),
     password: Joi.string(),
     phone: Joi.string().min(6).required(),
     address: Joi.string().min(6).required(),
@@ -42,7 +43,7 @@ exports.register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-    const {name, email, phone, address} = req.body;
+    const {name, email, gender, phone, address} = req.body;
 
     const randomAvatar = Math.floor(Math.random() * avatarDefault.length);
 
@@ -51,6 +52,7 @@ exports.register = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      gender,
       phone,
       address,
       status: "user",
@@ -169,6 +171,7 @@ exports.checkAuth = async (req, res) => {
           id: dataUser.id,
           name: dataUser.name,
           email: dataUser.email,
+          gender: dataUser.gender,
           phone: dataUser.phone,
           address: dataUser.address,
           status: dataUser.status,

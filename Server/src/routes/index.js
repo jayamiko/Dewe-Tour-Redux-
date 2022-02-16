@@ -10,13 +10,6 @@ const {
   deleteUser,
 } = require("../controllers/user");
 const {
-  addCountry,
-  getCountries,
-  getCountry,
-  updateCountry,
-  deleteCountry,
-} = require("../controllers/country");
-const {
   addTrip,
   getTrips,
   getTrip,
@@ -47,13 +40,6 @@ router.put("/user/:id", uploadsFile("photo"), UpdateAvatar);
 router.patch("/user", auth, uploadsFile("photo"), UpdateUser);
 router.patch("/user/specific", auth, UpdateUserById);
 router.delete("/user/:id", deleteUser);
-
-// Route Countries
-router.get("/countries", getCountries);
-router.get("/country/:id", getCountry);
-router.post("/countries", auth, adminOnly, addCountry);
-router.put("/countries/:id", auth, adminOnly, updateCountry);
-router.delete("/countries/:id", auth, adminOnly, deleteCountry);
 
 // Route Trips
 router.get("/trips", getTrips);

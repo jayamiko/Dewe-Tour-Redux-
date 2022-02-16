@@ -21,7 +21,7 @@ import Nodata from "../../img/folder.png";
 import {API} from "../../config/api";
 
 const ProfilePage = ({auth: {user}, saveProfile}) => {
-  const {name, email, phone, address, photo} = user;
+  const {name, email, gender, phone, address, photo} = user;
   const [trans, setTrans] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
@@ -41,6 +41,7 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
   const [form, setForm] = useState({
     name,
     email,
+    gender,
     phone,
     address,
     photo,

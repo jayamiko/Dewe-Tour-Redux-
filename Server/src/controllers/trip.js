@@ -1,4 +1,4 @@
-const { trip, country } = require("../../models");
+const {trip, country} = require("../../models");
 
 const fs = require("fs");
 const Joi = require("joi");
@@ -8,7 +8,7 @@ const convertRupiah = require("rupiah-format");
 exports.addTrip = async (req, res) => {
   const schema = Joi.object({
     title: Joi.string().min(5).required(),
-    idCountry: Joi.number().required(),
+    country: Joi.string().required(),
     accomodation: Joi.string().min(5).required(),
     transportation: Joi.string().min(5).required(),
     eat: Joi.string().min(5).required(),
@@ -21,7 +21,7 @@ exports.addTrip = async (req, res) => {
     description: Joi.string().min(10).max(1000).required(),
   });
 
-  const { error } = schema.validate(req.body);
+  const {error} = schema.validate(req.body);
 
   // check if error return response 400
   if (error) {
@@ -46,15 +46,8 @@ exports.addTrip = async (req, res) => {
       where: {
         id: newTrip.id,
       },
-      include: {
-        model: country,
-        as: "country",
-        attributes: {
-          exclude: ["createdAt", "updatedAt"],
-        },
-      },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "idCountry"],
+        exclude: ["createdAt", "updatedAt"],
       },
     });
 
@@ -85,18 +78,10 @@ exports.addTrip = async (req, res) => {
 exports.getTrips = async (req, res) => {
   try {
     let data = await trip.findAll({
-      include: {
-        model: country,
-        as: "country",
-        attributes: {
-          exclude: ["createdAt", "updatedAt"],
-        },
-      },
       attributes: {
         exclude: [
           "createdAt",
           "updatedAt",
-          "idCountry",
           "accomodation",
           "transportation",
           "eat",
@@ -137,22 +122,15 @@ exports.getTrips = async (req, res) => {
 };
 
 exports.getTrip = async (req, res) => {
-  const { id } = req.params;
+  const {id} = req.params;
 
   try {
     let data = await trip.findOne({
       where: {
         id,
       },
-      include: {
-        model: country,
-        as: "country",
-        attributes: {
-          exclude: ["createdAt", "updatedAt"],
-        },
-      },
       attributes: {
-        exclude: ["createdAt", "updatedAt", "idCountry"],
+        exclude: ["createdAt", "updatedAt"],
       },
     });
 
@@ -180,7 +158,7 @@ exports.getTrip = async (req, res) => {
 };
 
 exports.updateTrip = async (req, res) => {
-  const { id } = req.params;
+  const {id} = req.params;
 
   try {
     await trip.update(req.body, {
@@ -193,15 +171,9 @@ exports.updateTrip = async (req, res) => {
       where: {
         id,
       },
-      include: {
-        model: country,
-        as: "country",
-        attributes: {
-          exclude: ["createdAt", "updatedAt"],
-        },
-      },
+
       attributes: {
-        exclude: ["createdAt", "updatedAt", "idCountry"],
+        exclude: ["createdAt", "updatedAt"],
       },
     });
 
@@ -219,7 +191,7 @@ exports.updateTrip = async (req, res) => {
 };
 
 exports.deleteTrip = async (req, res) => {
-  const { id } = req.params;
+  const {id} = req.params;
 
   try {
     const data = await trip.findOne({
@@ -231,7 +203,7 @@ exports.deleteTrip = async (req, res) => {
     const imageStringToArray = JSON.parse(data.image);
 
     for (const item of imageStringToArray) {
-      fs.unlink("uploads/trips/" + item, (err) => {
+      fs.unlink("uploads/" + item, (err) => {
         if (err) throw err;
       });
     }

@@ -1,5 +1,6 @@
 // Import Components
 import {Button} from "@mui/material";
+import {FloatingLabel, Form} from "react-bootstrap";
 
 // import Style
 import "./BoxProfile.scss";
@@ -22,7 +23,7 @@ const BoxProfile = ({
   data,
   save,
 }) => {
-  const {name, email, phone, address, photo} = data;
+  const {name, email, gender, phone, address, photo} = data;
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -35,9 +36,6 @@ const BoxProfile = ({
       setPreview(url);
     }
   };
-
-  console.log(photo);
-  console.log("preview", preview);
 
   return (
     <div>
@@ -76,6 +74,28 @@ const BoxProfile = ({
                       value={form.email}
                       onChange={handleChange}
                     />
+                  </div>
+                </div>
+                <div className="form-group row">
+                  <label for="staticGender" className="col-sm-2 col-form-label">
+                    Gender
+                  </label>
+                  <div className="col-sm-9">
+                    <FloatingLabel
+                      className="text-muted"
+                      controlId="gender"
+                      label="Gender"
+                    >
+                      <Form.Select
+                        aria-label="gender"
+                        value={form.gender}
+                        onChange={handleChange}
+                        name="gender"
+                      >
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </Form.Select>
+                    </FloatingLabel>
                   </div>
                 </div>
                 <div className="form-group row">
@@ -191,6 +211,13 @@ const BoxProfile = ({
                 <div>
                   <p className="fw-bold">{email}</p>
                   <small className="sub-info">Email</small>
+                </div>
+              </div>
+              <div className="d-flex align-items-center gap-3 mb-4 ">
+                <img className="img-1" src={""} alt="gender-icon"></img>
+                <div>
+                  <p className="fw-bold">{gender}</p>
+                  <small className="sub-info">Gender</small>
                 </div>
               </div>
               <div className="d-flex align-items-center gap-3 mb-4 ">

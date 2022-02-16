@@ -90,7 +90,7 @@ function NavbarAdmin() {
                       width={28}
                       className="icon-nav-admin"
                     />
-                    Add Trip
+                    Transaction
                   </span>
                 </Nav.Link>
                 <Nav.Link href="/stats">

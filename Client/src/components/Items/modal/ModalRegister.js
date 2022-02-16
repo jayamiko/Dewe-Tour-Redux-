@@ -24,6 +24,7 @@ const Register = ({
     name: "",
     email: "",
     password: "",
+    gender: "Male",
     phone: "",
     address: "",
   });
@@ -32,11 +33,19 @@ const Register = ({
     setFormRegister({...formRegister, [e.target.name]: e.target.value});
   };
 
-  const {email, password, name, phone, address} = formRegister;
+  const {email, password, name, gender, phone, address} = formRegister;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleRegister(email, password, name, phone, address, closeModalRegister());
+    handleRegister(
+      email,
+      password,
+      name,
+      gender,
+      phone,
+      address,
+      closeModalRegister()
+    );
   };
 
   return (
@@ -81,6 +90,19 @@ const Register = ({
                 name="password"
                 required
               />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label className="fw-bold">Gender</Form.Label>
+              <Form.Control
+                as="select"
+                onChange={(e) => registerHandleChange(e)}
+                type="text"
+                name="country"
+                required
+              >
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </Form.Control>
             </Form.Group>
             <Form.Group className="mb-4" controlId="formBasicPhone">
               <Form.Label className="fw-bold">Phone</Form.Label>

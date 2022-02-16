@@ -106,7 +106,7 @@ export default function GroupTour({data, isAdmin, searchData}) {
                     item?.title
                       .toLowerCase()
                       .includes(searchData?.toLowerCase()) ||
-                    item?.country.name
+                    item?.country
                       .toLowerCase()
                       .includes(searchData?.toLowerCase()) ||
                     String(item?.price)
@@ -160,7 +160,7 @@ export default function GroupTour({data, isAdmin, searchData}) {
                                   </span>
                                 )}
                                 <span className="text-muted">
-                                  {item.country.name}
+                                  {item.country}
                                 </span>
                               </div>
                             </div>

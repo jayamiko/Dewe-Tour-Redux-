@@ -19,6 +19,7 @@ exports.getUsers = async (req, res) => {
         id: item.id,
         email: item.email,
         name: item.name,
+        gender: item.gender,
         phone: item.phone,
         address: item.address,
         photo: photo,

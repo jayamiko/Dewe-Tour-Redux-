@@ -44,7 +44,7 @@ export const addTrip = (payload, redirect) => async (dispatch) => {
   try {
     const {
       title,
-      idCountry,
+      country,
       accomodation,
       transportation,
       eat,
@@ -62,7 +62,7 @@ export const addTrip = (payload, redirect) => async (dispatch) => {
       formData.append("image", image[i]);
     }
     formData.append("title", title);
-    formData.append("idCountry", payload.country);
+    formData.append("country", country);
     formData.append("accomodation", accomodation);
     formData.append("transportation", transportation);
     formData.append("eat", eat);
