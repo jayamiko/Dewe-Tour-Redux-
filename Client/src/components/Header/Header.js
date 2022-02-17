@@ -1,16 +1,13 @@
 // Import React
 import {Carousel} from "react-bootstrap";
+import Rupiah from "../../components/Items/Format/formatRupiah";
 
 // Import Style
 import "./Header.scss";
 
 function Header(props) {
   const {trips, searchData, setSearchData, setIsSearching} = props;
-  const rupiah = (number) => {
-    return new Intl.NumberFormat("id-ID", {
-      minimumFractionDigits: 0,
-    }).format(number);
-  };
+
   const handleSearch = (e) => {
     setSearchData(e.target.value);
     e.target.value !== "" ? setIsSearching(true) : setIsSearching(false);
@@ -24,88 +21,52 @@ function Header(props) {
     setSearchData(result);
   };
 
-  // const displayCarousel = trips.map((trip, index) => {
-  //   return (
-  //     <Carousel>
-  //       <p>{trip.title}</p>
-  //       <Carousel.Item interval={3000} key={index}>
-  //         <img
-  //           className="d-block w-100"
-  //           src={String(trip.image.url)}
-  //           alt="First slide"
-  //           width={100}
-  //         />
-  //         <Carousel.Caption>
-  //           <h2>
-  //             <b>{trip?.title}</b>
-  //           </h2>
-  //           <h2>
-  //             <b className="carousel-price-text">
-  //               Rp. {rupiah(trip?.price)}
-  //               <i className="carousel-quota-text">({trip?.quota} Available)</i>
-  //             </b>
-  //           </h2>
-  //         </Carousel.Caption>
-  //       </Carousel.Item>
-  //     </Carousel>
-  //   );
-  // });
-
-  const CarouselView = [
-    {
-      title: "Labuan Bajo",
-      image: trips[0].image[3].url,
-      price: trips[0].price,
-      quota: trips[0].quota,
-    },
-    {
-      title: "Hagia Sophia",
-      image: trips[1].image[1].url,
-      price: trips[1].price,
-      quota: trips[1].quota,
-    },
-    {
-      title: "Paris City",
-      image: trips[2].image[1].url,
-      price: trips[2].price,
-      quota: trips[2].quota,
-    },
-    {
-      title: "Masjidil Haram",
-      image: trips[3].image[0].url,
-      price: trips[3].price,
-      quota: trips[3].quota,
-    },
-  ];
-
   return (
     <>
       <Carousel>
-        {CarouselView.map((view, index) => {
-          return (
-            <Carousel.Item interval={3000}>
-              <img
-                className="d-block w-100"
-                src={view.image}
-                alt="First slide"
-                width={100}
-              />
-              <Carousel.Caption>
-                <h2>
-                  <b>{view.title}</b>
-                </h2>
-                <h2>
-                  <b className="carousel-price-text">
-                    Rp. {rupiah(view.price)}{" "}
-                    <i className="carousel-quota-text">
-                      ({view.quota} Available)
-                    </i>
-                  </b>
-                </h2>
-              </Carousel.Caption>
-            </Carousel.Item>
-          );
-        })}
+        <Carousel.Item interval={3000}>
+          <img
+            className="d-block w-100"
+            src={trips[0].image[1].url}
+            alt="First slide"
+            width={100}
+          />
+          <Carousel.Caption>
+            <h2>
+              <b>{trips[0].title}</b>
+            </h2>
+            <h2>
+              <b className="carousel-price-text">
+                Rp. {Rupiah(trips[0].price)}{" "}
+                <i className="carousel-quota-text">
+                  ({trips[0].quota} Available)
+                </i>
+              </b>
+            </h2>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item interval={3000}>
+          <img
+            className="d-block w-100"
+            src={trips[1].image[2].url}
+            alt="First slide"
+            width={100}
+          />
+          <Carousel.Caption>
+            <h2>
+              <b>{trips[1].title}</b>
+            </h2>
+            <h2>
+              <b className="carousel-price-text">
+                Rp. {Rupiah(trips[1].price)}{" "}
+                <i className="carousel-quota-text">
+                  ({trips[1].quota} Available)
+                </i>
+              </b>
+            </h2>
+          </Carousel.Caption>
+        </Carousel.Item>
+        );
       </Carousel>
 
       <div className="input-group mb-3" onSubmit={handleSubmit}>

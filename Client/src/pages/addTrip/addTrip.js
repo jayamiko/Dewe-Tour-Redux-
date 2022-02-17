@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
+import CurrencyFormat from "react-currency-format";
 
 // Import Components
 import Navbar from "../../components/Navbar/Navbar";
@@ -10,12 +11,12 @@ import Footer from "../../components/Footer/Footer";
 import {Spinner} from "../../components/atoms/Spinner/Spinner";
 
 // Import Style
-import "./addTrip.css";
+import "./addTrip.scss";
 import {Form, Button} from "react-bootstrap";
 import Attach from "../../img/attach.png";
 
 // Import API
-import {API, API_Country} from "../../config/api";
+import {API_Country} from "../../config/api";
 import {addTrip} from "../../actions/TripsActions";
 
 const AddTripPage = ({addTrip}) => {
@@ -29,11 +30,11 @@ const AddTripPage = ({addTrip}) => {
     accomodation: "",
     transportation: "",
     eat: "",
-    day: "",
-    night: "",
+    day: "1",
+    night: "0",
     dateTrip: "",
-    price: "",
-    quota: "",
+    price: "0",
+    quota: "1",
     description: "",
     image: [],
   });
@@ -109,10 +110,8 @@ const AddTripPage = ({addTrip}) => {
   ) : (
     <div>
       <Navbar />
-      <div style={{paddingBottom: "110px", paddingTop: "50px"}}>
-        <Form
-          style={{width: "1204px", paddingLeft: "100px", marginTop: "20px"}}
-        >
+      <div className="area-add-form">
+        <Form className="form-add-trip">
           <Form.Group className="mb-3">
             <Form.Label>
               <b>Title Trip</b>
@@ -179,7 +178,7 @@ const AddTripPage = ({addTrip}) => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Control
-                  type="text"
+                  type="number"
                   className="input-field"
                   name="day"
                   onChange={handleChange}
@@ -194,7 +193,7 @@ const AddTripPage = ({addTrip}) => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Control
-                  type="text"
+                  type="number"
                   className="input-field"
                   name="night"
                   onChange={handleChange}
@@ -222,19 +221,23 @@ const AddTripPage = ({addTrip}) => {
             <Form.Label>
               <b>Price</b>
             </Form.Label>
-            <Form.Control
-              type="text"
-              className="input-field"
-              name="price"
-              onChange={handleChange}
-            />
+            <div>
+              <CurrencyFormat
+                thousandSeparator={true}
+                prefix={"Rp. "}
+                className="input-field-price"
+                name="price"
+                onChange={handleChange}
+                value={input.price}
+              />
+            </div>
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>
               <b>Quota</b>
             </Form.Label>
             <Form.Control
-              type="text"
+              type="number"
               className="input-field"
               name="quota"
               onChange={handleChange}

@@ -5,6 +5,7 @@ import {useSelector, connect} from "react-redux";
 import PropTypes from "prop-types";
 import {getTrips} from "../../actions/TripsActions";
 import ReactPaginate from "react-paginate";
+import Rupiah from "../../components/Items/Format/formatRupiah";
 
 // Import Syle
 import {Container} from "react-bootstrap";
@@ -25,12 +26,6 @@ function TripCard({getTrips, trips: {tripsAll}}) {
 
   const tripPerPage = 2;
   const pagesVisited = pageNumber * tripPerPage;
-
-  const rupiah = (number) => {
-    return new Intl.NumberFormat("id-ID", {
-      minimumFractionDigits: 0,
-    }).format(number);
-  };
 
   const displayTrips = dataTrip
     .slice(pagesVisited, pagesVisited + tripPerPage)
@@ -63,10 +58,12 @@ function TripCard({getTrips, trips: {tripsAll}}) {
                     </span>
                   ) : (
                     <span style={{color: "orange"}}>
-                      Rp. {rupiah(item.price)}
+                      Rp. {Rupiah(item.price)}
                     </span>
                   )}
-                  <span className="text-muted">{item.country}</span>
+                  <span style={{color: "rgb(55, 184, 235)"}}>
+                    {item.country}
+                  </span>
                 </div>
               </div>
             </div>

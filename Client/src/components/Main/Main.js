@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 
 // Import Components
 import TripCard from "./TripCard";
+import Rupiah from "../../components/Items/Format/formatRupiah";
 
 // Import Syle
 import "./Main.scss";
@@ -67,12 +68,6 @@ export default function GroupTour({data, isAdmin, searchData}) {
   useEffect(() => {
     getTrips();
   }, []);
-
-  const rupiah = (number) => {
-    return new Intl.NumberFormat("id-ID", {
-      minimumFractionDigits: 0,
-    }).format(number);
-  };
 
   return (
     <Container>
@@ -156,10 +151,10 @@ export default function GroupTour({data, isAdmin, searchData}) {
                                   </span>
                                 ) : (
                                   <span style={{color: "orange"}}>
-                                    Rp. {rupiah(item.price)}
+                                    Rp. {Rupiah(item.price)}
                                   </span>
                                 )}
-                                <span className="text-muted">
+                                <span style={{color: "rgb(55, 184, 235)"}}>
                                   {item.country}
                                 </span>
                               </div>

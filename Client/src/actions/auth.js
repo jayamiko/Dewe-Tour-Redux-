@@ -92,36 +92,46 @@ export const handleLogin =
   };
 
 //Change Profile Pict
-export const changeProfile =
-  (photo, idUser, setLoadingSkeleton) => async (dispatch) => {
+export const changeAvatar =
+  (form, isEditable, setIsEditable, setLoadingSkeleton) => async (dispatch) => {
+    setIsEditable(true);
     setLoadingSkeleton(true);
     try {
       const formData = new FormData();
-
-      formData.append("photo", photo);
+      formData.set("photo", form.photo[0], form.photo[0].filename);
 
       const config = {
         headers: {
-          "content-type": "multipart/form-data",
+          "Content-Type": "multipart/form-data",
         },
       };
 
-      const response = await API.put(`/user/${idUser}`, formData, config);
-      checkUser();
+      const body = formData;
+
+      const response = await API.patch("/user", body, config);
+      console.log(response);
       // Set Loading
       const timer = setTimeout(() => {
+        setIsEditable(false);
         setLoadingSkeleton(false);
       }, 1000);
 
-      dispatch({
-        type: UPDATE_PROFILE_SUCCESS,
-        payload: response.data.data.user,
+      // Set Notif
+      toast.success(response?.data.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 2000,
       });
+      dispatch({
+        type: UPDATE_USER_SUCCESS,
+        payload: response.data,
+      });
+
+      checkUser();
       return () => clearTimeout(timer);
     } catch (error) {
       console.log(error);
       dispatch({
-        type: UPDATE_PROFILE_FAIL,
+        type: UPDATE_USER_FAIL,
       });
     }
   };

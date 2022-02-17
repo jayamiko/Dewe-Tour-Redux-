@@ -1,6 +1,6 @@
 import {useState} from "react";
 import InputFileProofPayment from "../../Button/InputFile/InputFileProofPayment";
-import formatNumber from "../Format/format";
+import formatNumber from "../Format/formatNumber";
 import formatWeek from "../Format/formatWeek";
 import Logo from "../../../img/Icon.png";
 import Nodata from "../../../img/no-data.jpg";

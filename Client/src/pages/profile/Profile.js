@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {checkUser} from "../../actions/auth";
+import {changeAvatar} from "../../actions/auth";
 import {saveProfile} from "../../actions/auth";
 
 // Import Components
@@ -50,6 +51,8 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
   const handler = {
     handleSaveProfile: () =>
       saveProfile(form, isEditable, setIsEditable, setLoadingSkeleton),
+    handleChangeAvatar: () =>
+      changeAvatar(form, isEditable, setIsEditable, setLoadingSkeleton),
   };
 
   useEffect(() => {
@@ -111,6 +114,8 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
           setPreview={setPreview}
           data={user}
           save={handler.handleSaveProfile}
+          changeAvatar={handler.handleChangeAvatar}
+          setLoadingSkeleton={setLoadingSkeleton}
         />
 
         <div>
@@ -224,6 +229,7 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
 
 ProfilePage.propTypes = {
   checkUser: PropTypes.object.isRequired,
+  changeAvatar: PropTypes.func.isRequired,
   saveProfile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
@@ -232,4 +238,8 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, {checkUser, saveProfile})(ProfilePage);
+export default connect(mapStateToProps, {
+  checkUser,
+  saveProfile,
+  changeAvatar,
+})(ProfilePage);

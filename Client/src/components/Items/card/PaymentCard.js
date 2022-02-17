@@ -1,7 +1,7 @@
 import {useState} from "react";
 
 import Icon from "../../../img/Icon.png";
-import formatNumber from "../Format/format";
+import formatNumber from "../Format/formatNumber";
 import formatWeek from "../Format/formatWeek";
 import InputFileProofPayment from "../../Button/InputFile/InputFileProofPayment";
 

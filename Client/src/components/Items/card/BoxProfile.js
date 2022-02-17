@@ -9,6 +9,7 @@ import "./BoxProfile.scss";
 import AvatarDefault from "../../../img/ProfileDefault.png";
 import Avatar from "../../../img/avatar.png";
 import Envelope from "../../../img/envelope.png";
+import GenderIcon from "../../../img/gender-icon.png";
 import Call from "../../../img/phone.png";
 import Map from "../../../img/map.png";
 import EditIcon from "../../../img/symbol-edit.png";
@@ -22,6 +23,8 @@ const BoxProfile = ({
   setPreview,
   data,
   save,
+  changeAvatar,
+  setLoadingSkeleton,
 }) => {
   const {name, email, gender, phone, address, photo} = data;
   const handleChange = (e) => {
@@ -164,24 +167,6 @@ const BoxProfile = ({
               >
                 Change Photo Profile
               </label>
-              {/* <div className="btn-input-avatar">
-                <input
-                  type="file"
-                  onChange={handleChange}
-                  className="inputFileAvatar"
-                  hidden
-                  multiple
-                />
-                <label
-                  htmlFor="photo"
-                  className="btn btnChange mt-3 text-white fw-bold"
-                  onClick={() => {
-                    document.getElementsByName("photo")[0].click();
-                  }}
-                >
-                  Change Photo Profile
-                </label>
-              </div> */}
             </div>
           </div>
         </>
@@ -214,7 +199,7 @@ const BoxProfile = ({
                 </div>
               </div>
               <div className="d-flex align-items-center gap-3 mb-4 ">
-                <img className="img-1" src={""} alt="gender-icon"></img>
+                <img src={GenderIcon} width={35} alt="gender-icon"></img>
                 <div>
                   <p className="fw-bold">{gender}</p>
                   <small className="sub-info">Gender</small>
@@ -238,31 +223,10 @@ const BoxProfile = ({
             <img
               src={photo === null || false ? AvatarDefault : photo}
               name="photo"
-              type="file"
               className="card-img-top"
               alt="avatar"
               width={100}
             />
-          </div>
-          <div className="area-btn-edit">
-            <div className="btn-input-avatar">
-              <input
-                type="file"
-                onChange={handleChange}
-                className="inputFileAvatar"
-                hidden
-                multiple
-              />
-              <label
-                htmlFor="photo"
-                className="btn btnChange mt-3 text-white fw-bold"
-                onClick={() => {
-                  document.getElementsByName("photo")[0].click();
-                }}
-              >
-                Change Photo Profile
-              </label>
-            </div>
           </div>
         </div>
       )}
