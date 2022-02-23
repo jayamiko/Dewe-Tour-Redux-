@@ -1,19 +1,24 @@
-.carousel-price-text {
-  color: orangered;
-  font-size: 34px;
-  font-weight: bold;
-  font-style: italic;
-  text-align: center;
-  border-radius: 20px;
-  padding-left: 70px;
+.price-carousel {
   background-color: #ffffff;
-  padding-right: 70px;
-  font-family: Avenir;
-  .carousel-quota-text {
-    font-size: 16px;
-    align-items: center;
+  border-radius: 10px;
+  width: 20vw;
+  font-size: 2.1vw;
+  margin-left: 380px !important;
+  .carousel-price-text {
+    color: orangered;
+    font-weight: bold;
+    font-style: italic;
+    border-radius: 20px;
+    // padding-right: 70px;
     font-family: Avenir;
-    color: rgb(230, 150, 2);
+    width: 50vw !important;
+    .carousel-quota-text {
+      text-align: center !important;
+      font-size: 16px;
+      align-items: center;
+      font-family: Avenir;
+      color: rgb(230, 150, 2);
+    }
   }
 }
 
@@ -32,6 +37,11 @@
 }
 
 @media only screen and (max-width: 991px) {
+  .price-carousel {
+    margin-left: 120px !important;
+    width: 35vw;
+    font-size: 4vw;
+  }
   .header-image {
     height: 205vh !important;
   }
@@ -62,6 +72,11 @@
 }
 
 @media only screen and (max-width: 576px) {
+  .price-carousel {
+    margin-left: 80px !important;
+    width: 35vw;
+    font-size: 5vw;
+  }
   .header-image {
     height: 205vh !important;
   }

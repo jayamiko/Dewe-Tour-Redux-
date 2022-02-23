@@ -3,13 +3,13 @@ import {useState} from "react";
 import {handleRegister} from "../../../actions/auth";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import GoogleLoginBtn from "../../Button/GoogleLogin/GoogleLogin";
+// import GoogleLoginBtn from "../../Button/GoogleLogin/GoogleLogin";
 
 // Import Style
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {Button, Modal, Form} from "react-bootstrap";
-
+import PhoneInput from "../../Button/Input/InputPhone";
 toast.configure();
 
 const Register = ({
@@ -19,13 +19,13 @@ const Register = ({
   register,
   auth: {error, isLoading},
 }) => {
+  const [phone, setPhone] = useState("");
   // Form Register
   const [formRegister, setFormRegister] = useState({
     name: "",
     email: "",
     password: "",
     gender: "Male",
-    phone: "",
     address: "",
   });
 
@@ -33,8 +33,7 @@ const Register = ({
     setFormRegister({...formRegister, [e.target.name]: e.target.value});
   };
 
-  const {email, password, name, gender, phone, address} = formRegister;
-
+  const {email, password, name, gender, address} = formRegister;
   const handleSubmit = (e) => {
     e.preventDefault();
     handleRegister(
@@ -52,7 +51,6 @@ const Register = ({
     <>
       <Modal show={register}>
         <Modal.Body className="modal-content">
-          <h2 className="text-center my-5">Register</h2>
           <button
             type="button"
             className="btn-close"
@@ -60,9 +58,8 @@ const Register = ({
             aria-label="Close"
             onClick={closeModalRegister}
             required
-          >
-            Close
-          </button>
+          ></button>
+          <h2 className="text-center my-5">Register</h2>
           <Form onSubmit={(e) => handleSubmit(e)}>
             <Form.Group className="mb-4" controlId="formBasicName">
               <Form.Label className="fw-bold">FullName</Form.Label>
@@ -104,15 +101,10 @@ const Register = ({
                 <option value="Female">Female</option>
               </Form.Control>
             </Form.Group>
-            <Form.Group className="mb-4" controlId="formBasicPhone">
-              <Form.Label className="fw-bold">Phone</Form.Label>
-              <Form.Control
-                onChange={(e) => registerHandleChange(e)}
-                name="phone"
-                type="text"
-                required
-              />
-            </Form.Group>
+            <div>
+              <PhoneInput name="phone" value={phone} setValue={setPhone} />
+              {phone}
+            </div>
             <Form.Group className="mb-4" controlId="formBasicPhone">
               <Form.Label className="fw-bold">Address</Form.Label>
               <Form.Control
@@ -138,7 +130,7 @@ const Register = ({
                   Here
                 </a>
               </small>
-              <GoogleLoginBtn />
+              {/* <GoogleLoginBtn /> */}
             </div>
           </Form>
         </Modal.Body>

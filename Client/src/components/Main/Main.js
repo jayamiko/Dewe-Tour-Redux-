@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 // Import Components
 import TripCard from "./TripCard";
 import Rupiah from "../../components/Items/Format/formatRupiah";
+import Progress from "../../components/Items/Progress/ProgressQuota";
 
 // Import Syle
 import "./Main.scss";
@@ -132,13 +133,15 @@ export default function GroupTour({data, isAdmin, searchData}) {
                             <img
                               src={item.image[0].url}
                               alt={item.title}
-                              className="card-img-top rounded mb-1"
-                              width="328"
-                              height="241"
+                              className="card-img-trip rounded mb-1"
                             />
                             <div className="capacity rounded-start bg-white text-dark d-flex justify-content-center align-items-center fw-bold">
                               {item.quota}/{item.maxQuota}
                             </div>
+                            <Progress
+                              value={item.quota}
+                              maxQuota={item.maxQuota}
+                            />
                             <div className="card-body">
                               <h5 className="card-title mb-3 text-dark fw-bold text-truncate">
                                 {item.title}

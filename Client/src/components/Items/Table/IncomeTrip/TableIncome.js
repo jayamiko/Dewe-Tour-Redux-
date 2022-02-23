@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import {TablePagination} from "@mui/material";
 import "./TableIncome.scss";
+import Rupiah from "../../Format/formatRupiah";
 
 function TableIncome({datatrip, handler, rowPage, page}) {
   const {handleChangePage, handleChangeRowsPerPage} = handler;
@@ -48,7 +49,10 @@ function TableIncome({datatrip, handler, rowPage, page}) {
                     <span className="table-row-income">{trip.title}</span>
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    <span className="table-row-income">Rp. 10.000.000</span>
+                    <span className="table-row-income">
+                      {" "}
+                      Rp. {Rupiah((trip.maxQuota - trip.quota) * trip.price)}
+                    </span>
                   </TableCell>
                 </TableRow>
               );

@@ -10,7 +10,6 @@ import {saveProfile} from "../../actions/auth";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import HistoryPayment from "../../components/Items/card/HistoryPayment";
-import Box from "../../components/Items/card/Box";
 import BoxProfile from "../../components/Items/card/BoxProfile";
 import {Spinner} from "../../components/atoms/Spinner/Spinner";
 
@@ -185,12 +184,15 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
                     <>
                       {filterData.map((item, index) => {
                         return (
-                          <Box key={index}>
+                          <div
+                            className="flex flex-col gap-2 py-2 px-6 mb-10 bg-white border-2  border-gray-300 rounded-md"
+                            key={index}
+                          >
                             <HistoryPayment
                               data={item}
                               key={`paymentCard-${index}`}
                             />
-                          </Box>
+                          </div>
                         );
                       })}
                     </>

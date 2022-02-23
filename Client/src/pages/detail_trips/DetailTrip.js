@@ -1,15 +1,14 @@
 // Import React
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useSelector, connect} from "react-redux";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
 import {getTripDetail} from "../../actions/TripsActions";
 import {getTransactionDetail} from "../../actions/TransActions";
 import moment from "moment";
-import {Container} from "react-bootstrap";
 
 // Import Components
+import {Container} from "react-bootstrap";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import {Spinner} from "../../components/atoms/Spinner/Spinner";
@@ -80,7 +79,7 @@ const DetailTrip = ({
     confirm: false,
   });
 
-  const totalPrice = tripDetail?.price * count;
+  const totalPrice = tripDetail?.price * transaction?.counterQty;
   const totalPriceInString = totalPrice
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -131,9 +130,48 @@ const DetailTrip = ({
     }
   };
 
+  const [quotaRemaining, setQuotaRemaining] = useState({
+    quota: tripDetail?.quota - transaction?.counterQty,
+  });
+
+  const handleSubtract = () => {
+    if (transaction?.counterQty > 0) {
+      const subtract = transaction?.counterQty - 1;
+      const updateQuota = tripDetail?.quota - subtract;
+      setQuotaRemaining({quota: updateQuota});
+      setTransaction(() => ({
+        ...transaction,
+        counterQty: subtract,
+      }));
+    }
+  };
+
+  const handleAdd = () => {
+    if (transaction?.counterQty < tripDetail?.quota) {
+      const add = transaction?.counterQty + 1;
+      const updateQuota = tripDetail?.quota - add;
+      setQuotaRemaining({quota: updateQuota});
+      setTransaction(() => ({
+        ...transaction,
+        counterQty: add,
+      }));
+    }
+  };
+
   const handleSubmit = async () => {
     setLoadingSkeleton(true);
     try {
+      const detailTripData = await API.get(`/trip/${tripDetail?.id}`);
+      const quotaTrip = detailTripData.data.data.quota;
+
+      let resultQuota = quotaTrip - transaction?.counterQty;
+
+      if (resultQuota < 0) {
+        toast.success(`Limited Quota Tour`, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 2000,
+        });
+      }
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -148,17 +186,20 @@ const DetailTrip = ({
       formData.set("tripId", transaction?.tripId);
       formData.set("userId", transaction?.userId);
 
-      await API.post("/transaction", formData, config);
+      const response = await API.post("/transaction", formData, config);
       setData("transaction", transaction);
+
+      const bodyQuota = JSON.stringify(quotaRemaining);
+      await API.put(`/trip/${tripDetail?.id}`, bodyQuota, config);
+      response.data.status === "success" &&
+        toast.success(`Order successful, now complete your transaction`, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 2000,
+        });
 
       if (isLoginSession === false) {
         handleShowLogin();
       }
-
-      toast.success("Booking Success", {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 3000,
-      });
 
       const timer = setTimeout(() => {
         setLoadingSkeleton(false);
@@ -187,7 +228,7 @@ const DetailTrip = ({
           <h1>
             {tripDetail?.day}D/{tripDetail?.night}N {tripDetail?.title}
           </h1>
-          <small>{tripDetail?.country.name}</small>
+          <small>{tripDetail?.country}</small>
 
           {/* IMAGE TOUR */}
           <img
@@ -268,21 +309,11 @@ const DetailTrip = ({
               <div className="price-area">
                 <span>{`Rp. ${priceInString}`}/Person</span>
                 <div className="counter-area">
-                  <button
-                    onClick={() => (count === 1 ? "" : setCount(count - 1))}
-                  >
-                    -
-                  </button>
+                  <button onClick={handleSubtract}>-</button>
                   <div className="d-inline-block text-center">
                     <span className="counter">{transaction?.counterQty}</span>
                   </div>
-                  <button
-                    onClick={() =>
-                      count === tripDetail?.quota ? "" : setCount(count + 1)
-                    }
-                  >
-                    +
-                  </button>
+                  <button onClick={handleAdd}>+</button>
                 </div>
               </div>
 

@@ -62,7 +62,7 @@ function UserDropdown() {
             />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="nav-user">
-                <Nav.Link eventKey={1} href="/message">
+                {/* <Nav.Link eventKey={1} href="/message">
                   <span className="text-nav-user">
                     <img
                       src={IconChat}
@@ -72,7 +72,7 @@ function UserDropdown() {
                     />
                     Chat
                   </span>
-                </Nav.Link>
+                </Nav.Link> */}
                 <Nav.Link eventKey={2} href="/payment">
                   <span className="text-nav-user">
                     <img

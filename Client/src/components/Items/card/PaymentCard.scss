@@ -1,0 +1,101 @@
+* {
+  box-sizing: border-box;
+}
+
+.cardPayment {
+  padding: 15px;
+  background-color: #ffffff;
+  margin: 100px 180px;
+  border-radius: 8px;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-evenly;
+  .cardBodyPayment {
+    border: solid red;
+  }
+}
+
+.btnChange {
+  background-color: orange !important;
+}
+
+.notifStatus {
+  align-items: center !important;
+  justify-content: center !important;
+  color: orange !important;
+  border-radius: 2px;
+  background: cornsilk;
+  border: solid black 1px;
+  font-family: "Avenir";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 10vw;
+  font-size: 0.75em;
+}
+
+.notifWarning {
+  color: orange !important;
+  height: 24px;
+  border-radius: 2px;
+  background: cornsilk;
+  border: solid black 1px;
+  font-family: "Avenir";
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.notifSuccess {
+  color: green !important;
+  height: 24px;
+  border-radius: 5px !important;
+  background: cornsilk;
+  border: solid black 1px;
+  font-family: "Avenir";
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.notifDanger {
+  color: maroon !important;
+  height: 24px;
+  background: cornsilk;
+  border: solid black 1px;
+  border-radius: 5px;
+  font-family: "Avenir";
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+@media only screen and (max-width: 991px) {
+  .cardPayment {
+    padding: 20px;
+    margin: 50px 50px;
+    border-radius: 8px;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between;
+    .cardBodyPayment {
+      margin-right: 0;
+    }
+  }
+  .notifStatus {
+    width: 15vw;
+  }
+}

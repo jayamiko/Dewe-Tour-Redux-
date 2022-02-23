@@ -37,21 +37,8 @@ exports.getTransactions = async (req, res) => {
         {
           model: trip,
           as: "trip",
-          include: {
-            model: country,
-            as: "country",
-            attributes: {
-              exclude: ["createdAt", "updatedAt"],
-            },
-          },
           attributes: {
-            exclude: [
-              "createdAt",
-              "updatedAt",
-              "idCountry",
-              "description",
-              "image",
-            ],
+            exclude: ["createdAt", "updatedAt", "description", "image"],
           },
         },
       ],
@@ -163,15 +150,8 @@ exports.updatePay = async (req, res) => {
         {
           model: trip,
           as: "trip",
-          include: {
-            model: country,
-            as: "country",
-            attributes: {
-              exclude: ["createdAt", "updatedAt"],
-            },
-          },
           attributes: {
-            exclude: ["createdAt", "updatedAt", "idCountry", "description"],
+            exclude: ["createdAt", "updatedAt", "description"],
           },
         },
       ],

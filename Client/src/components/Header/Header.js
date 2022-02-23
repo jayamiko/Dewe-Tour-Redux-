@@ -4,6 +4,9 @@ import Rupiah from "../../components/Items/Format/formatRupiah";
 
 // Import Style
 import "./Header.scss";
+import LabuanBajo from "../../img/tour/Labuan Bajo/01-labuanbajo-carousell.jpg";
+import Beach from "../../img/tour/beach/beach-carousell.jpg";
+import Paris from "../../img/tour/France/eiffel-carousell.jpg";
 
 function Header(props) {
   const {trips, searchData, setSearchData, setIsSearching} = props;
@@ -27,46 +30,51 @@ function Header(props) {
         <Carousel.Item interval={3000}>
           <img
             className="d-block w-100"
-            src={trips[0].image[1].url}
+            src={LabuanBajo}
             alt="First slide"
             width={100}
           />
-          <Carousel.Caption>
+          <Carousel.Caption className="carousel-caption">
             <h2>
-              <b>{trips[0].title}</b>
+              <b>Labuan Bajo</b>
             </h2>
-            <h2>
-              <b className="carousel-price-text">
-                Rp. {Rupiah(trips[0].price)}{" "}
-                <i className="carousel-quota-text">
-                  ({trips[0].quota} Available)
-                </i>
-              </b>
-            </h2>
+            <div className="price-carousel">
+              <b className="carousel-price-text">Rp. {Rupiah("2000000")} </b>
+            </div>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item interval={3000}>
           <img
             className="d-block w-100"
-            src={trips[1].image[2].url}
+            src={Beach}
             alt="First slide"
             width={100}
           />
           <Carousel.Caption>
             <h2>
-              <b>{trips[1].title}</b>
+              <b>Maladewa Beach</b>
             </h2>
-            <h2>
-              <b className="carousel-price-text">
-                Rp. {Rupiah(trips[1].price)}{" "}
-                <i className="carousel-quota-text">
-                  ({trips[1].quota} Available)
-                </i>
-              </b>
-            </h2>
+            <div className="price-carousel">
+              <b className="carousel-price-text">Rp. {Rupiah("5000000")} </b>
+            </div>
           </Carousel.Caption>
         </Carousel.Item>
-        );
+        <Carousel.Item interval={3000}>
+          <img
+            className="d-block w-100"
+            src={Paris}
+            alt="First slide"
+            width={100}
+          />
+          <Carousel.Caption>
+            <h2>
+              <b>Eiffel Tower</b>
+            </h2>
+            <div className="price-carousel">
+              <b className="carousel-price-text">Rp. {Rupiah("20000000")} </b>
+            </div>
+          </Carousel.Caption>
+        </Carousel.Item>
       </Carousel>
 
       <div className="input-group mb-3" onSubmit={handleSubmit}>

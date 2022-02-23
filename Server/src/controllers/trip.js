@@ -171,7 +171,6 @@ exports.updateTrip = async (req, res) => {
       where: {
         id,
       },
-
       attributes: {
         exclude: ["createdAt", "updatedAt"],
       },

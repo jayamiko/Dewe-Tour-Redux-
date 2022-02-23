@@ -47,7 +47,7 @@ export default function TableChart({data}) {
                   <p className="row-nametrip">{item.title}</p>
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  <p className="row-country">{item.country.name}</p>
+                  <p className="row-country">{item.country}</p>
                 </TableCell>
                 <TableCell component="th" scope="row">
                   <p className="row-quota">{item.quota}</p>

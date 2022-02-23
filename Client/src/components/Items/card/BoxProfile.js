@@ -45,7 +45,7 @@ const BoxProfile = ({
       {isEditable ? (
         <>
           {/* TAMPILAN SAAT EDIT */}
-          <div className="card">
+          <div className="cardProfile">
             <div className="card-body">
               <form className="form-edit-profile">
                 <h2 className="title-edit">Edit Personal Info</h2>
@@ -171,7 +171,7 @@ const BoxProfile = ({
           </div>
         </>
       ) : (
-        <div className="card">
+        <div className="cardProfile">
           <div className="card-body">
             <form className="form-edit-profile">
               <h2 className="title-edit">

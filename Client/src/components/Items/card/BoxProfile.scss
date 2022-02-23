@@ -6,8 +6,9 @@ p {
   font-style: italic;
 }
 
-.card {
+.cardProfile {
   padding: 30px;
+  background-color: white;
   margin: 100px 250px;
   border-radius: 8px;
   display: flex !important;
@@ -92,7 +93,7 @@ p {
 }
 
 @media only screen and (max-width: 991px) {
-  .card {
+  .cardProfile {
     padding: 20px;
     margin: 50px 50px;
     border-radius: 8px;

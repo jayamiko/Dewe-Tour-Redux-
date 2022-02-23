@@ -34,9 +34,7 @@ const GoogleLoginBtn = () => {
         toast.success("Login success, welcome " + fullname);
       }
     } catch (error) {
-      const message = error.message;
       console.log(error);
-      toast.error(message);
     }
   };
 

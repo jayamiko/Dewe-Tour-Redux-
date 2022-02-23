@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 
 // Import Style
 import {Button, Modal, Form} from "react-bootstrap";
-import GoogleLoginBtn from "../../Button/GoogleLogin/GoogleLogin";
+// import GoogleLoginBtn from "../../Button/GoogleLogin/GoogleLogin";
 
 // Import API
 import {setAuthToken} from "../../../config/api";
@@ -31,7 +31,6 @@ const Login = ({
       navigate("/");
     }
   };
-  checkAuth();
 
   const [formLogin, setFormLogin] = useState({
     email: "",
@@ -51,6 +50,7 @@ const Login = ({
     e.preventDefault();
     handleLogin(email, password);
     navigate("/");
+    checkAuth();
   };
 
   useEffect(() => {
@@ -59,20 +59,10 @@ const Login = ({
     }
   }, []);
 
-  useEffect(() => {
-    checkUser();
-  }, []);
-
   return (
     <>
-      {error === null || isLoading ? (
-        ""
-      ) : (
-        <p style={{textTransform: "capitalize", margin: "0 0"}}>{error}</p>
-      )}
       <Modal show={modal}>
         <Modal.Body className="modal-content">
-          <h2 className="text-center my-5">Login</h2>
           <button
             type="button"
             class="btn-close"
@@ -80,6 +70,7 @@ const Login = ({
             aria-label="Close"
             onClick={closeModalLogin}
           ></button>
+          <h2 className="text-center my-5">Login</h2>
           <Form onSubmit={(e) => handleSubmit(e)}>
             <Form.Group className="mb-4">
               <Form.Label className="fw-bold">Email address</Form.Label>

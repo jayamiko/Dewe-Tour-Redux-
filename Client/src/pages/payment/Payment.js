@@ -10,6 +10,7 @@ import ModalPopUp from "../../components/Items/modal/popUp";
 import {Spinner} from "../../components/atoms/Spinner/Spinner";
 
 // Import Style
+import "./Payment.scss";
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -64,6 +65,17 @@ export default function Payment() {
       transaction.attachment[0].name
     );
 
+    const configJSON = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    let sumQuota = transaction.trip.quota - transaction.counterQty;
+    const returnQuota = JSON.stringify({quota: sumQuota});
+
+    await API.put(`/trip/${transaction.trip.id}`, returnQuota, configJSON);
+
     const response = await API.put(
       `/transactions/pay/${transaction.id}`,
       formData,
@@ -92,7 +104,7 @@ export default function Payment() {
         <div className="background-nav">
           <Navbar />
         </div>
-        <main>
+        <main className="main-payment">
           {!transaction ? (
             <div className="container">
               <div className="not-found d-flex justify-content-center align-items-center">
@@ -110,25 +122,14 @@ export default function Payment() {
           ) : (
             <>
               <PaymentCard data={transaction} setData={setTransaction} />
-              {transaction?.status === "Waiting Approve" && (
-                <div className="container">
-                  <div className="d-flex justify-content-end">
-                    {transaction?.attachment && (
-                      <button
-                        className="btn btn-primary mt-2 fw-bold text-white"
-                        style={{
-                          width: 213,
-                          height: 50,
-                          backgroundColor: "orange",
-                        }}
-                        onClick={handlePay}
-                      >
-                        PAY
-                      </button>
-                    )}
-                  </div>
-                </div>
-              )}
+              <>
+                {transaction?.attachment &&
+                  transaction?.status === "Waiting Approve" && (
+                    <button className="btn-pay" onClick={handlePay}>
+                      PAY
+                    </button>
+                  )}
+              </>
               <ModalPopUp isShow={isShow} handleClose={handleClose} />
             </>
           )}

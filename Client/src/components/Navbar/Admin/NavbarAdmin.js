@@ -60,7 +60,7 @@ function NavbarAdmin() {
             />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="nav-admin">
-                <Nav.Link eventKey={1} href="/message">
+                {/* <Nav.Link eventKey={1} href="/message">
                   <span className="text-nav-admin">
                     <img
                       src={IconChat}
@@ -70,7 +70,7 @@ function NavbarAdmin() {
                     />
                     Chat
                   </span>
-                </Nav.Link>
+                </Nav.Link> */}
                 <Nav.Link eventKey={2} href="/add-trip">
                   <span className="text-nav-admin">
                     <img
