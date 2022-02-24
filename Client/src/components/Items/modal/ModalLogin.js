@@ -1,18 +1,21 @@
 // Import React
 import {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {handleLogin} from "../../../actions/auth";
-import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
-// Import Style
+// Import Libraries
+import {useNavigate} from "react-router-dom";
+import {useSelector, connect} from "react-redux";
+import {useFormik} from "formik";
+import * as Yup from "yup";
+
+// Import Components
+import {handleLogin} from "../../../actions/auth";
 import {Button, Modal, Form} from "react-bootstrap";
 // import GoogleLoginBtn from "../../Button/GoogleLogin/GoogleLogin";
 
 // Import API
 import {setAuthToken} from "../../../config/api";
-import {checkUser} from "../../../actions/auth";
+import {toast} from "react-toastify";
 
 const Login = ({
   handleLogin,
@@ -32,26 +35,28 @@ const Login = ({
     }
   };
 
-  const [formLogin, setFormLogin] = useState({
-    email: "",
-    password: "",
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email("Invalid Email Format").required("Required!"),
+      password: Yup.string()
+        .min(7, "Minimum 7 Characters")
+        .required("Required!"),
+    }),
+    onSubmit: (values) => {
+      handleLogin(values.email, values.password);
+      if (isLoginSession) {
+        closeModalLogin();
+        checkAuth();
+        toast.success("Login Success");
+      } else {
+        toast.error("Login Failed");
+      }
+    },
   });
-
-  const {email, password} = formLogin;
-
-  const LoginHandleChange = (e) => {
-    setFormLogin({
-      ...formLogin,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleLogin(email, password);
-    navigate("/");
-    checkAuth();
-  };
 
   useEffect(() => {
     if (localStorage.token) {
@@ -71,28 +76,35 @@ const Login = ({
             onClick={closeModalLogin}
           ></button>
           <h2 className="text-center my-5">Login</h2>
-          <Form onSubmit={(e) => handleSubmit(e)}>
+          <Form onSubmit={formik.handleSubmit}>
             <Form.Group className="mb-4">
               <Form.Label className="fw-bold">Email address</Form.Label>
               <Form.Control
                 name="email"
-                onChange={(e) => LoginHandleChange(e)}
+                onChange={formik.handleChange}
                 type="email"
-                value={email}
+                value={formik.values.email}
                 id="email"
                 required
               />
+              {formik.errors.email && formik.touched.email && (
+                <p style={{color: "red"}}>{formik.errors.email}</p>
+              )}
             </Form.Group>
 
             <Form.Group className="mb-4">
               <Form.Label className="fw-bold">Password</Form.Label>
               <Form.Control
                 name="password"
-                onChange={(e) => LoginHandleChange(e)}
+                onChange={formik.handleChange}
                 type="password"
-                required
+                value={formik.values.password}
                 id="password"
+                required
               />
+              {formik.errors.password && formik.touched.password && (
+                <p style={{color: "red"}}>{formik.errors.password}</p>
+              )}
             </Form.Group>
             <div class="d-flex flex-column gap-2 ">
               <Button

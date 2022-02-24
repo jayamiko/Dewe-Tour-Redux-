@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 // Import Components
 import TripCard from "./TripCard";
 import Rupiah from "../../components/Items/Format/formatRupiah";
-import Progress from "../../components/Items/Progress/ProgressQuota";
+import Progress from "../Items/Progress/ProgressQuota";
 
 // Import Syle
 import "./Main.scss";
@@ -27,7 +27,6 @@ export default function GroupTour({data, isAdmin, searchData}) {
       setTrip(response.data.data);
     } catch (error) {
       console.log(error);
-      toast.error(error);
     }
   };
 
@@ -69,6 +68,8 @@ export default function GroupTour({data, isAdmin, searchData}) {
   useEffect(() => {
     getTrips();
   }, []);
+
+  console.log(trip.quota);
 
   return (
     <Container>

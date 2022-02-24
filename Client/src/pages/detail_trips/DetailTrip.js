@@ -133,7 +133,6 @@ const DetailTrip = ({
   const [quotaRemaining, setQuotaRemaining] = useState({
     quota: tripDetail?.quota - transaction?.counterQty,
   });
-
   const handleSubtract = () => {
     if (transaction?.counterQty > 0) {
       const subtract = transaction?.counterQty - 1;
@@ -149,8 +148,8 @@ const DetailTrip = ({
   const handleAdd = () => {
     if (transaction?.counterQty < tripDetail?.quota) {
       const add = transaction?.counterQty + 1;
-      const updateQuota = tripDetail?.quota - add;
-      setQuotaRemaining({quota: updateQuota});
+      // const updateQuota = tripDetail?.quota - add;
+      // setQuotaRemaining({quota: updateQuota});
       setTransaction(() => ({
         ...transaction,
         counterQty: add,
@@ -161,17 +160,6 @@ const DetailTrip = ({
   const handleSubmit = async () => {
     setLoadingSkeleton(true);
     try {
-      const detailTripData = await API.get(`/trip/${tripDetail?.id}`);
-      const quotaTrip = detailTripData.data.data.quota;
-
-      let resultQuota = quotaTrip - transaction?.counterQty;
-
-      if (resultQuota < 0) {
-        toast.success(`Limited Quota Tour`, {
-          position: toast.POSITION.BOTTOM_RIGHT,
-          autoClose: 2000,
-        });
-      }
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -189,8 +177,8 @@ const DetailTrip = ({
       const response = await API.post("/transaction", formData, config);
       setData("transaction", transaction);
 
-      const bodyQuota = JSON.stringify(quotaRemaining);
-      await API.put(`/trip/${tripDetail?.id}`, bodyQuota, config);
+      // const bodyQuota = JSON.stringify(quotaRemaining);
+      // await API.put(`/trip/${tripDetail?.id}`, bodyQuota, config);
       response.data.status === "success" &&
         toast.success(`Order successful, now complete your transaction`, {
           position: toast.POSITION.BOTTOM_RIGHT,
@@ -212,6 +200,10 @@ const DetailTrip = ({
       toast.error(message || "Unknow error");
     }
   };
+
+  console.log(tripDetail.price * transaction.counterQty);
+
+  console.log(tripDetail?.quota);
 
   return loadingSkeleton ? (
     <>
@@ -321,7 +313,7 @@ const DetailTrip = ({
 
               <div className="total">
                 <div className="title-total">Total :</div>
-                <p>{`Rp. ${totalPriceInString}`}</p>
+                <p>RP. {tripDetail?.price * transaction?.counterQty}</p>
               </div>
               <hr />
               <button

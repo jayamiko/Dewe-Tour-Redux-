@@ -33,7 +33,7 @@ const AddTripPage = ({addTrip}) => {
     day: "1",
     night: "0",
     dateTrip: "",
-    price: "0",
+    price,
     quota: "1",
     description: "",
     image: [],
@@ -83,7 +83,6 @@ const AddTripPage = ({addTrip}) => {
     try {
       const response = await API_Country.get("/v3.1/all");
       setCountries(response.data);
-      console.log("SUCCESS DATA");
     } catch (error) {
       console.log(error);
     }
@@ -102,6 +101,9 @@ const AddTripPage = ({addTrip}) => {
 
     addTrip(input, redirect);
   };
+
+  console.log(typeof input.price);
+  console.log(typeof input.day);
 
   return loadingSkeleton ? (
     <div>

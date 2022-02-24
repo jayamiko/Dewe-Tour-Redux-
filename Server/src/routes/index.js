@@ -13,7 +13,6 @@ const {
   addTrip,
   getTrips,
   getTrip,
-  getSearch,
   updateTrip,
   deleteTrip,
 } = require("../controllers/trip");
@@ -45,7 +44,6 @@ router.delete("/user/:id", deleteUser);
 // Route Trips
 router.get("/trips", getTrips);
 router.get("/trip/:id", getTrip);
-router.get("/trip", getSearch);
 router.post("/trip", uploadsFile("image"), addTrip);
 router.put("/trip/:id", auth, updateTrip);
 router.delete("/trip/:id", auth, adminOnly, deleteTrip);

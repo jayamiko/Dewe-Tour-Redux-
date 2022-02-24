@@ -5,54 +5,6 @@ const Joi = require("joi");
 
 const convertRupiah = require("rupiah-format");
 
-exports.getSearch = async (req, res) => {
-  const titleQuery = req.query.title;
-  const {Op} = require("sequelize");
-
-  try {
-    let data = await trip.findAll({
-      where: {
-        title: {
-          [Op.substring]: titleQuery,
-        },
-      },
-      attributes: {
-        exclude: ["createdAt", "updatedAt"],
-      },
-    });
-
-    data = JSON.parse(JSON.stringify(data));
-
-    const newData = data.map((item) => ({
-      id: item.id,
-      title: item.title,
-      country: item.country,
-      accomodation: item.accomodation,
-      transportation: item.transportation,
-      eat: item.eat,
-      day: item.day,
-      night: item.night,
-      dateTrip: item.dateTrip,
-      price: item.price,
-      quota: item.quota,
-      maxQuota: item.maxQuota,
-      image: "http://localhost:5000/upload/" + item.image.url,
-      description: item.description,
-    }));
-
-    res.send({
-      status: "Success",
-      data: newData,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      status: "Failed",
-      message: "Server error",
-    });
-  }
-};
-
 exports.addTrip = async (req, res) => {
   const schema = Joi.object({
     title: Joi.string().min(5).required(),

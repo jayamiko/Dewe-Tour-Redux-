@@ -1,14 +1,18 @@
 // Import React
 import React, {useState, useEffect} from "react";
+import PropTypes from "prop-types";
+
+// Import Libraries
 import {Link, useNavigate} from "react-router-dom";
 import {useSelector, connect} from "react-redux";
-import PropTypes from "prop-types";
+
+// Import Components
 import {getTrips} from "../../actions/TripsActions";
 import ReactPaginate from "react-paginate";
 import Rupiah from "../../components/Items/Format/formatRupiah";
+import Progress from "../Items/Progress/ProgressQuota";
 
 // Import Syle
-import {Container} from "react-bootstrap";
 import "./Main.scss";
 
 function TripCard({getTrips, trips: {tripsAll}}) {
@@ -47,6 +51,7 @@ function TripCard({getTrips, trips: {tripsAll}}) {
               <div className="capacity rounded-start bg-white text-dark d-flex justify-content-center align-items-center fw-bold">
                 {item.quota}/{item.maxQuota}
               </div>
+              <Progress value={item.quota} maxQuota={item.maxQuota} />
               <div className="card-body">
                 <h5 className="card-title mb-3 text-dark fw-bold text-truncate">
                   {item.title}

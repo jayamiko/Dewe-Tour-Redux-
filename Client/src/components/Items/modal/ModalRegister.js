@@ -103,7 +103,6 @@ const Register = ({
             </Form.Group>
             <div>
               <PhoneInput name="phone" value={phone} setValue={setPhone} />
-              {phone}
             </div>
             <Form.Group className="mb-4" controlId="formBasicPhone">
               <Form.Label className="fw-bold">Address</Form.Label>
