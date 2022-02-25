@@ -22,6 +22,15 @@ const ListTransaction = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
 
+  useEffect(() => {
+    document.title = "Transactions";
+    const timer = setTimeout(() => {
+      setLoadingSkeleton(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const getAllData = async () => {
     try {
       const response = await API.get("/transactions");
@@ -31,14 +40,6 @@ const ListTransaction = () => {
       toast.error(error);
     }
   };
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoadingSkeleton(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const handler = {
     handleAction: async (actionName, id) => {

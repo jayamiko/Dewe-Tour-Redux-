@@ -21,8 +21,6 @@ import {io} from "socket.io-client";
 
 let socket;
 const Chat = () => {
-  const title = "Complain";
-  document.title = "DeweTour | " + title;
   const currentState = useSelector((state) => state.auth);
 
   const [userOnline, setUserOnline] = useState([]);
@@ -63,6 +61,7 @@ const Chat = () => {
   };
 
   useEffect(() => {
+    document.title = "Chat Room";
     socket = io("http://localhost:5000", {
       auth: {
         token: localStorage.getItem("token"),

@@ -28,6 +28,7 @@ export default function Payment() {
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
 
   useEffect(() => {
+    document.title = "Payment";
     const timer = setTimeout(() => {
       setLoadingSkeleton(false);
     }, 1000);

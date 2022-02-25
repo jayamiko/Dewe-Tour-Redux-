@@ -31,6 +31,7 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
 
   useEffect(() => {
+    document.title = "Profile";
     const timer = setTimeout(() => {
       setLoadingSkeleton(false);
     }, 1000);

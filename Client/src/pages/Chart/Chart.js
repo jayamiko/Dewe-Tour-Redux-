@@ -21,6 +21,7 @@ import "./Chart.scss";
 
 function Chart({getTrips, trips: {tripsAll}}) {
   useEffect(() => {
+    document.title = "Statistik";
     getTrips();
   }, [getTrips]);
 

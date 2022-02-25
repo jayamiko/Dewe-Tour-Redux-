@@ -27,6 +27,7 @@ const AddTripPage = ({addTrip}) => {
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
 
   useEffect(() => {
+    document.title = "Add Trip";
     const timer = setTimeout(() => {
       setLoadingSkeleton(false);
     }, 1000);
@@ -34,9 +35,31 @@ const AddTripPage = ({addTrip}) => {
     return () => clearTimeout(timer);
   }, []);
 
+  const konvertPricetoNumber = (number) => {
+    let splitPrice = number.split("Rp. ").toString();
+    let removeComma = splitPrice.replace(/[^\w\s]/gi, ""); //Hapus Koma dalam String
+    return parseInt(removeComma);
+  };
+
+  const restCountries = async () => {
+    try {
+      const response = await API_Country.get("/v3.1/all");
+      setCountries(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const sortCountries = countries.map((country) => {
+    let dataCountry = country?.name?.common;
+    return dataCountry;
+  });
+
+  let dataCountries = sortCountries.sort();
+
   const [input, setInput] = useState({
     title: "",
-    country: "Indonesia",
+    country: "Afghanistan",
     accomodation: "",
     transportation: "",
     eat: "",
@@ -48,6 +71,8 @@ const AddTripPage = ({addTrip}) => {
     description: "",
     image: [],
   });
+
+  console.log(input);
 
   const handleChange = (event) => {
     const {
@@ -78,22 +103,7 @@ const AddTripPage = ({addTrip}) => {
     }
   };
 
-  const konvertPricetoNumber = (number) => {
-    let splitPrice = number.split("Rp. ").toString();
-    let removeComma = splitPrice.replace(/[^\w\s]/gi, ""); //Hapus Koma dalam String
-    return parseInt(removeComma);
-  };
-
   let priceResult = konvertPricetoNumber(input.price);
-
-  const restCountries = async () => {
-    try {
-      const response = await API_Country.get("/v3.1/all");
-      setCountries(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
     restCountries();
@@ -140,8 +150,8 @@ const AddTripPage = ({addTrip}) => {
               name="country"
               placeholder="Selection Countries"
             >
-              {countries.map((item) => (
-                <option value={item.name.common}>{item.name.common}</option>
+              {dataCountries.map((listCountry) => (
+                <option value={listCountry}>{listCountry}</option>
               ))}
             </Form.Control>
           </Form.Group>

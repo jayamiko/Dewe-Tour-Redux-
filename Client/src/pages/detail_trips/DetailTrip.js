@@ -63,6 +63,7 @@ const DetailTrip = ({
     userId: "",
   });
   useEffect(() => {
+    document.title = "Detail Trip";
     const timer = setTimeout(() => {
       setLoadingSkeleton(false);
     }, 1000);

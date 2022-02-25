@@ -23,7 +23,6 @@ function Home({
 }) {
   const [searchData, setSearchData] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const [value, setValue] = useState(false);
 
   const currentState = useSelector((state) => state);
   const isAdmin = currentState.auth.user.status === "admin";
@@ -39,6 +38,7 @@ function Home({
   }, []);
 
   useEffect(() => {
+    document.title = "Home";
     getTrips();
   }, [getTrips]);
 
