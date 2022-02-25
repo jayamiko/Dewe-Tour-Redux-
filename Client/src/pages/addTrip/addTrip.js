@@ -24,21 +24,6 @@ const AddTripPage = ({addTrip}) => {
   const [preview, setPreview] = useState([]);
   const [countries, setCountries] = useState([]);
 
-  const [input, setInput] = useState({
-    title: "",
-    country: "Indonesia",
-    accomodation: "",
-    transportation: "",
-    eat: "",
-    day: "1",
-    night: "0",
-    dateTrip: "",
-    price,
-    quota: "1",
-    description: "",
-    image: [],
-  });
-
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
 
   useEffect(() => {
@@ -49,7 +34,36 @@ const AddTripPage = ({addTrip}) => {
     return () => clearTimeout(timer);
   }, []);
 
+  const [input, setInput] = useState({
+    title: "",
+    country: "Indonesia",
+    accomodation: "",
+    transportation: "",
+    eat: "",
+    day: "1",
+    night: "0",
+    dateTrip: "",
+    price: "",
+    quota: "1",
+    description: "",
+    image: [],
+  });
+
   const handleChange = (event) => {
+    const {
+      title,
+      country,
+      accomodation,
+      transportation,
+      eat,
+      day,
+      night,
+      dateTrip,
+      price,
+      quota,
+      description,
+      image,
+    } = input;
     const updateForm = {...input};
     updateForm[event.target.name] =
       event.target.type === "file" ? event.target.files : event.target.value;
@@ -64,20 +78,13 @@ const AddTripPage = ({addTrip}) => {
     }
   };
 
-  const {
-    title,
-    country,
-    accomodation,
-    transportation,
-    eat,
-    day,
-    night,
-    dateTrip,
-    price,
-    quota,
-    description,
-    image,
-  } = input;
+  const konvertPricetoNumber = (number) => {
+    let splitPrice = number.split("Rp. ").toString();
+    let removeComma = splitPrice.replace(/[^\w\s]/gi, ""); //Hapus Koma dalam String
+    return parseInt(removeComma);
+  };
+
+  let priceResult = konvertPricetoNumber(input.price);
 
   const restCountries = async () => {
     try {
@@ -99,11 +106,8 @@ const AddTripPage = ({addTrip}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    addTrip(input, redirect);
+    addTrip(input, redirect, priceResult);
   };
-
-  console.log(typeof input.price);
-  console.log(typeof input.day);
 
   return loadingSkeleton ? (
     <div>
@@ -134,6 +138,7 @@ const AddTripPage = ({addTrip}) => {
               as="select"
               onChange={handleChange}
               name="country"
+              placeholder="Selection Countries"
             >
               {countries.map((item) => (
                 <option value={item.name.common}>{item.name.common}</option>

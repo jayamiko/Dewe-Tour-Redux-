@@ -53,7 +53,7 @@ const Login = ({
         checkAuth();
         toast.success("Login Success");
       } else {
-        toast.error("Login Failed");
+        toast.error("Email or Password incorrect");
       }
     },
   });

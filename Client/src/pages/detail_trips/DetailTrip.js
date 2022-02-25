@@ -14,6 +14,7 @@ import Footer from "../../components/Footer/Footer";
 import {Spinner} from "../../components/atoms/Spinner/Spinner";
 import ModalLogin from "../../components/Items/modal/ModalLogin2";
 import setData from "../../utils/setData";
+import Rupiah from "../../components/Items/Format/formatRupiah";
 
 // Import Style
 import "./DetailTrip.css";
@@ -130,14 +131,9 @@ const DetailTrip = ({
     }
   };
 
-  const [quotaRemaining, setQuotaRemaining] = useState({
-    quota: tripDetail?.quota - transaction?.counterQty,
-  });
   const handleSubtract = () => {
-    if (transaction?.counterQty > 0) {
+    if (transaction?.counterQty > 1) {
       const subtract = transaction?.counterQty - 1;
-      const updateQuota = tripDetail?.quota - subtract;
-      setQuotaRemaining({quota: updateQuota});
       setTransaction(() => ({
         ...transaction,
         counterQty: subtract,
@@ -148,8 +144,6 @@ const DetailTrip = ({
   const handleAdd = () => {
     if (transaction?.counterQty < tripDetail?.quota) {
       const add = transaction?.counterQty + 1;
-      // const updateQuota = tripDetail?.quota - add;
-      // setQuotaRemaining({quota: updateQuota});
       setTransaction(() => ({
         ...transaction,
         counterQty: add,
@@ -177,8 +171,6 @@ const DetailTrip = ({
       const response = await API.post("/transaction", formData, config);
       setData("transaction", transaction);
 
-      // const bodyQuota = JSON.stringify(quotaRemaining);
-      // await API.put(`/trip/${tripDetail?.id}`, bodyQuota, config);
       response.data.status === "success" &&
         toast.success(`Order successful, now complete your transaction`, {
           position: toast.POSITION.BOTTOM_RIGHT,
@@ -200,10 +192,6 @@ const DetailTrip = ({
       toast.error(message || "Unknow error");
     }
   };
-
-  console.log(tripDetail.price * transaction.counterQty);
-
-  console.log(tripDetail?.quota);
 
   return loadingSkeleton ? (
     <>
@@ -313,7 +301,7 @@ const DetailTrip = ({
 
               <div className="total">
                 <div className="title-total">Total :</div>
-                <p>RP. {tripDetail?.price * transaction?.counterQty}</p>
+                <p>Rp. {Rupiah(totalPrice)}</p>
               </div>
               <hr />
               <button

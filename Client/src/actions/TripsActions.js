@@ -40,7 +40,7 @@ export const getTripDetail = (id) => async (dispatch) => {
 };
 
 //Add Music
-export const addTrip = (payload, redirect) => async (dispatch) => {
+export const addTrip = (payload, redirect, price) => async (dispatch) => {
   try {
     const {
       title,
@@ -51,7 +51,6 @@ export const addTrip = (payload, redirect) => async (dispatch) => {
       day,
       night,
       dateTrip,
-      price,
       quota,
       description,
       image,
