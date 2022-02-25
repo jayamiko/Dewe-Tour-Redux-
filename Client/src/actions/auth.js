@@ -31,7 +31,7 @@ export const checkUser = () => async (dispatch) => {
 
 //Register User
 export const handleRegister =
-  (email, password, name, gender, phone, address, registerModal) =>
+  (name, email, password, gender, phone, address, registerModal) =>
   async (dispatch) => {
     const config = {
       headers: {
@@ -40,9 +40,9 @@ export const handleRegister =
     };
 
     const body = JSON.stringify({
+      name,
       email,
       password,
-      name,
       gender,
       phone,
       address,
