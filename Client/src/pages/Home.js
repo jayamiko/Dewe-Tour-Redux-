@@ -24,8 +24,8 @@ function Home({
   const [searchData, setSearchData] = useState("");
   const [isSearching, setIsSearching] = useState(false);
 
-  const currentState = useSelector((state) => state);
-  const isAdmin = currentState.auth.user.status === "admin";
+  const currentState = useSelector((state) => state.auth);
+  const isAdmin = currentState.user.status === "admin";
 
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
 

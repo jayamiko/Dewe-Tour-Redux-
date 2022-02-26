@@ -69,8 +69,6 @@ export default function GroupTour({data, isAdmin, searchData}) {
     getTrips();
   }, []);
 
-  console.log(trip.quota);
-
   return (
     <Container>
       <div>

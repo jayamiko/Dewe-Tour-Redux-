@@ -66,7 +66,7 @@ export default function Login({show, handleClose, handleSwitch}) {
 
   return (
     <Modal show={show} onHide={handleClose} centered>
-      <Modal.Body className="p-4" style={{width: 416}}>
+      <Modal.Body className="p-4">
         <h4 className="text-center mt-2 mb-4 fw-bold fs-3">Login</h4>
         <form action="" onSubmit={loginSession} onKeyDown={handleEnterPressed}>
           <label htmlFor="emailLogin" className="fw-bold mb-2">
@@ -95,15 +95,6 @@ export default function Login({show, handleClose, handleSwitch}) {
           >
             Login
           </button>
-          <div className="tag-line text-muted text-center">
-            Don't have an account?{" "}
-            <span
-              className="link text-primary text-decoration-underline"
-              onClick={handleSwitch}
-            >
-              Click here
-            </span>
-          </div>
         </form>
       </Modal.Body>
     </Modal>

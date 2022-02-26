@@ -50,6 +50,7 @@ const DetailTrip = ({
   const currentState = useSelector((state) => state.auth);
   const isLoginSession = useSelector((state) => state.auth.isLogin);
   const stateAuth = currentState.user;
+  console.log(isLoginSession);
 
   // Loading
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
@@ -84,10 +85,10 @@ const DetailTrip = ({
   const totalPrice = tripDetail?.price * transaction?.counterQty;
   const totalPriceInString = totalPrice
     .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   const priceInString = tripDetail.price
     ?.toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
   // for set data
   useEffect(() => {
@@ -171,26 +172,44 @@ const DetailTrip = ({
 
       const response = await API.post("/transaction", formData, config);
       setData("transaction", transaction);
-
-      response.data.status === "success" &&
+      if (response.data.status === 200) {
         toast.success(`Order successful, now complete your transaction`, {
           position: toast.POSITION.BOTTOM_RIGHT,
           autoClose: 2000,
         });
-
-      if (isLoginSession === false) {
-        handleShowLogin();
       }
+
+      // response.data.status === "success" &&
+      //   toast.success(`Order successful, now complete your transaction`, {
+      //     position: toast.POSITION.BOTTOM_RIGHT,
+      //     autoClose: 2000,
+      //   });
 
       const timer = setTimeout(() => {
         setLoadingSkeleton(false);
       }, 1000);
 
       navigate("/payment");
+      if (isLoginSession === false) {
+        handleShowLogin();
+      }
       return () => clearTimeout(timer);
     } catch (error) {
-      const message = error?.response?.data?.message || error.message;
-      toast.error(message || "Unknow error");
+      if (isLoginSession === false) {
+        setLoadingSkeleton(false);
+        toast.warning("You need to login", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 2000,
+        });
+        handleShowLogin();
+      } else {
+        setLoadingSkeleton(false);
+        const message = error?.response?.data?.message || error.message;
+        toast.error(message, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 2000,
+        });
+      }
     }
   };
 

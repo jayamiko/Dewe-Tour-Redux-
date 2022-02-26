@@ -1,10 +1,9 @@
 // Import React
-import {useState, useEffect} from "react";
+import {useEffect} from "react";
 import PropTypes from "prop-types";
 
 // Import Libraries
-import {useNavigate} from "react-router-dom";
-import {useSelector, connect} from "react-redux";
+import {connect} from "react-redux";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 
@@ -15,7 +14,6 @@ import {Button, Modal, Form} from "react-bootstrap";
 
 // Import API
 import {setAuthToken} from "../../../config/api";
-import {toast} from "react-toastify";
 
 const Login = ({
   handleLogin,
@@ -25,16 +23,6 @@ const Login = ({
   openModalRegister,
   modal,
 }) => {
-  let navigate = useNavigate();
-
-  const isLoginSession = useSelector((state) => state.isLogin);
-
-  const checkAuth = () => {
-    if (isLoginSession) {
-      navigate("/");
-    }
-  };
-
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -47,14 +35,10 @@ const Login = ({
         .required("Required!"),
     }),
     onSubmit: (values) => {
-      handleLogin(values.email, values.password);
-      if (isLoginSession) {
-        closeModalLogin();
-        checkAuth();
-        toast.success("Login Success");
-      } else {
-        toast.error("Email or Password incorrect");
-      }
+      handleLogin(values.email, values.password, closeModalLogin);
+      setTimeout(() => {
+        formik.setSubmitting(false);
+      }, 2000);
     },
   });
 
@@ -81,9 +65,10 @@ const Login = ({
               <Form.Label className="fw-bold">Email address</Form.Label>
               <Form.Control
                 name="email"
-                onChange={formik.handleChange}
                 type="email"
+                onChange={formik.handleChange}
                 value={formik.values.email}
+                onBlur={formik.handleBlur}
                 id="email"
                 required
               />
@@ -96,9 +81,10 @@ const Login = ({
               <Form.Label className="fw-bold">Password</Form.Label>
               <Form.Control
                 name="password"
-                onChange={formik.handleChange}
                 type="password"
+                onChange={formik.handleChange}
                 value={formik.values.password}
+                onBlur={formik.handleBlur}
                 id="password"
                 required
               />
@@ -111,6 +97,7 @@ const Login = ({
                 className="text-white fw-bold"
                 variant="warning"
                 type="submit"
+                disabled={formik.isSubmitting}
                 required
               >
                 Submit

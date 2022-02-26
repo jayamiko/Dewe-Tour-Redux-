@@ -65,7 +65,7 @@ export const handleRegister =
   };
 
 export const handleLogin =
-  (email, password, modalLogin) => async (dispatch) => {
+  (email, password, closeModalLogin) => async (dispatch) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -76,15 +76,25 @@ export const handleLogin =
 
     try {
       const response = await API.post("/login", body, config);
+      if (response.status === 200) {
+        toast.success("Login is Successfully", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 2000,
+        });
+        //ambil data user
+        dispatch(checkUser());
+        closeModalLogin();
+      }
       dispatch({
         type: LOGIN_SUCCESS,
         payload: response.data.user,
       });
-
-      //ambil data user
-      dispatch(checkUser());
-      modalLogin(); //close modal login
     } catch (err) {
+      console.log(err);
+      toast.error("Email or Password is Incorrect", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 2000,
+      });
       dispatch({
         type: LOGIN_FAIL,
       });
@@ -109,7 +119,6 @@ export const changeAvatar =
       const body = formData;
 
       const response = await API.patch("/user", body, config);
-      console.log(response);
       // Set Loading
       const timer = setTimeout(() => {
         setIsEditable(false);
