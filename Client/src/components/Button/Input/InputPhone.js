@@ -14,6 +14,7 @@ export default function InputPhone({name, value, setValue}) {
         value={value}
         onChange={setValue}
         name={name}
+        required
       />
     </Form.Group>
   );

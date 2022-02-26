@@ -179,12 +179,6 @@ const DetailTrip = ({
         });
       }
 
-      // response.data.status === "success" &&
-      //   toast.success(`Order successful, now complete your transaction`, {
-      //     position: toast.POSITION.BOTTOM_RIGHT,
-      //     autoClose: 2000,
-      //   });
-
       const timer = setTimeout(() => {
         setLoadingSkeleton(false);
       }, 1000);

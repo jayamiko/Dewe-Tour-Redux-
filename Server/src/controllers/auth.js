@@ -29,15 +29,36 @@ exports.register = async (req, res) => {
     const nameExist = allUser.find((item) => req.body.name === item.name);
     const emailExist = allUser.find((item) => req.body.email === item.email);
 
+    if (emailExist && nameExist) {
+      return res.status(400).send({
+        status: true,
+        message: {
+          existName: true,
+          existEmail: true,
+          messageName: "Full Name already exist",
+          messageEmail: "Email already exist",
+          message: "Full Name & Email already exist",
+        },
+      });
+    }
     if (nameExist) {
       return res.status(400).send({
-        status: "failed",
-        message: "Full Name already exist",
+        status: true,
+        message: {
+          existName: true,
+          existEmail: false,
+          message: "Full Name already exist",
+        },
       });
-    } else if (emailExist) {
+    }
+    if (emailExist) {
       return res.status(400).send({
-        status: "failed",
-        message: "Email already exist",
+        status: true,
+        message: {
+          existName: false,
+          existEmail: true,
+          message: "Email already exist",
+        },
       });
     }
 

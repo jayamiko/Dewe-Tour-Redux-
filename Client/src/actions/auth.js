@@ -31,7 +31,7 @@ export const checkUser = () => async (dispatch) => {
 
 //Register User
 export const handleRegister =
-  (name, email, password, gender, phone, address, registerModal) =>
+  (name, email, password, gender, phone, address, setRegister, setPhone) =>
   async (dispatch) => {
     const config = {
       headers: {
@@ -50,16 +50,29 @@ export const handleRegister =
 
     try {
       const response = await API.post("/register", body, config);
+      toast.success("Register is Successfully", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 2000,
+      });
+      dispatch(checkUser());
+      setPhone("");
+      setRegister(false);
       dispatch({
         type: REGISTER_SUCCESS,
-        payload: response.data.data,
+        payload: response.data.user,
       });
 
       dispatch(checkUser());
-      registerModal();
     } catch (error) {
+      const message = error.response.data.message.message;
+      setRegister(true);
+      toast.warning(message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 2000,
+      });
       dispatch({
         type: REGISTER_FAIL,
+        payload: message,
       });
     }
   };

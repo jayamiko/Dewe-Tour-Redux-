@@ -24,9 +24,12 @@ const Register = ({
   openModalLogin,
   closeModalRegister,
   register,
+  setRegister,
   auth: {error, isLoading},
 }) => {
   const [phone, setPhone] = useState("");
+
+  const messageError = error ? error : "";
 
   const formik = useFormik({
     // initial values
@@ -39,7 +42,7 @@ const Register = ({
     },
     // validation schema
     validationSchema: Yup.object({
-      name: Yup.string().required(),
+      name: Yup.string().min(4).required(),
       email: Yup.string().required().email("Invalid email format"),
       password: Yup.string()
         .required()
@@ -61,12 +64,33 @@ const Register = ({
         values.gender,
         phone,
         values.address,
-        closeModalRegister()
+        setRegister,
+        setPhone
       );
       formik.setSubmitting(false);
-      formik.resetForm();
     },
   });
+
+  const toolTipRegister = (
+    nameInput,
+    touched,
+    existName,
+    messageName,
+    value,
+    input
+  ) => {
+    if (nameInput && touched) {
+      return <span style={{color: "red"}}>{nameInput}</span>;
+    } else if (existName) {
+      return (
+        <span style={{color: "orange"}}>
+          {messageError.message || messageName}
+        </span>
+      );
+    } else if (value !== "") {
+      return <span style={{color: "green"}}>{input}</span>;
+    }
+  };
 
   return (
     <>
@@ -83,15 +107,19 @@ const Register = ({
           <h2 className="text-center my-5">Register</h2>
           <Form onSubmit={formik.handleSubmit}>
             <Form.Group className="mb-4" controlId="formBasicName">
-              <Form.Label className="fw-bold">FullName</Form.Label>
+              <Form.Label className="fw-bold">Full Name</Form.Label>
               <Form.Control
                 name="name"
                 type="text"
                 {...formik.getFieldProps("name")}
                 required
               />
-              {formik.errors.name && formik.touched.name && (
-                <p style={{color: "red"}}>{formik.errors.name}</p>
+              {toolTipRegister(
+                formik.errors.name,
+                formik.touched.name,
+                messageError.existName,
+                messageError.messageName,
+                formik.values.name
               )}
             </Form.Group>
             <Form.Group className="mb-4" controlId="formBasicEmail">
@@ -102,8 +130,13 @@ const Register = ({
                 {...formik.getFieldProps("email")}
                 required
               />
-              {formik.errors.email && formik.touched.email && (
-                <p style={{color: "red"}}>{formik.errors.email}</p>
+              {toolTipRegister(
+                formik.errors.email,
+                formik.touched.email,
+                messageError.existEmail,
+                messageError.messageEmail,
+                formik.values.email,
+                "Email Valid"
               )}
             </Form.Group>
             <Form.Group className="mb-4" controlId="formBasicPassword">
@@ -114,8 +147,13 @@ const Register = ({
                 {...formik.getFieldProps("password")}
                 required
               />
-              {formik.errors.password && formik.touched.password && (
-                <p style={{color: "red"}}>{formik.errors.password}</p>
+              {toolTipRegister(
+                formik.errors.password,
+                formik.touched.password,
+                null,
+                null,
+                formik.values.password,
+                "Password Valid"
               )}
             </Form.Group>
             <Form.Group>
@@ -136,9 +174,6 @@ const Register = ({
             </Form.Group>
             <div>
               <PhoneInput name="phone" value={phone} setValue={setPhone} />
-              {phone === "" && (
-                <p style={{color: "red"}}>{"Phone is Required!"}</p>
-              )}
             </div>
             <Form.Group className="mb-4" controlId="formBasicPhone">
               <Form.Label className="fw-bold">Address</Form.Label>

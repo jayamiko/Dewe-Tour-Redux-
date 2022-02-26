@@ -4,6 +4,7 @@ const initialValue = {
   isLoading: true,
   isLogin: false,
   user: {},
+  error: {},
 };
 
 const authReducer = (state = initialValue, action) => {
@@ -16,6 +17,7 @@ const authReducer = (state = initialValue, action) => {
         isAuthenticated: true,
         isLoading: false,
         user: payload,
+        error: {},
       };
     case "AUTH_SUCCESS":
     case "REGISTER_SUCCESS":
@@ -26,6 +28,7 @@ const authReducer = (state = initialValue, action) => {
         isLogin: true,
         isAuthenticated: true,
         user: payload,
+        error: {},
       };
     case "LOGIN_SUCCESS":
       localStorage.setItem("token", payload.token);
@@ -35,6 +38,7 @@ const authReducer = (state = initialValue, action) => {
         isLogin: true,
         isAuthenticated: true,
         user: payload,
+        error: {},
       };
     case "UPDATE_PROFILE_SUCCESS":
       return {
@@ -53,6 +57,12 @@ const authReducer = (state = initialValue, action) => {
         isLoading: false,
       };
     case "REGISTER_FAIL":
+      return {
+        ...state,
+        user: {},
+        error: payload,
+        isLoading: false,
+      };
     case "UPDATE_PROFILE_FAIL":
     case "UPDATE_USER_FAIL":
     case "AUTH_ERROR":
