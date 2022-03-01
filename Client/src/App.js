@@ -29,6 +29,8 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
+console.log(localStorage.token);
+
 function App() {
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
 

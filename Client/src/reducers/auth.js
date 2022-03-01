@@ -40,6 +40,16 @@ const authReducer = (state = initialValue, action) => {
         user: payload,
         error: {},
       };
+    case "LOGIN_GOOGLE_SUCCESS":
+      localStorage.setItem("token", payload.token);
+
+      return {
+        isLoading: false,
+        isLogin: true,
+        isAuthenticated: true,
+        user: payload,
+        error: {},
+      };
     case "UPDATE_PROFILE_SUCCESS":
       return {
         ...state,
@@ -63,6 +73,7 @@ const authReducer = (state = initialValue, action) => {
         error: payload,
         isLoading: false,
       };
+    case "LOGIN_GOOGLE_FAIL":
     case "UPDATE_PROFILE_FAIL":
     case "UPDATE_USER_FAIL":
     case "AUTH_ERROR":

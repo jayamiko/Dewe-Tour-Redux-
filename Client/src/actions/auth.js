@@ -1,5 +1,6 @@
 import {API, setAuthToken} from "../config/api";
 import {toast} from "react-toastify";
+
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -10,6 +11,8 @@ export const UPDATE_PROFILE_SUCCESS = "UPDATE_PROFILE_SUCCESS";
 export const UPDATE_PROFILE_FAIL = "UPDATE_PROFILE_FAIL";
 export const UPDATE_USER_SUCCESS = "UPDATE_PROFILE_SUCCESS";
 export const UPDATE_USER_FAIL = "UPDATE_PROFILE_FAIL";
+export const LOGIN_GOOGLE_SUCCESS = "LOGIN_GOOGLE_SUCCESS";
+export const LOGIN_GOOGLE_FAIL = "LOGIN_GOOGLE_FAIL";
 
 export const checkUser = () => async (dispatch) => {
   if (localStorage.token) {
@@ -31,7 +34,7 @@ export const checkUser = () => async (dispatch) => {
 
 //Register User
 export const handleRegister =
-  (name, email, password, gender, phone, address, setRegister, setPhone) =>
+  ({authGoogle}, setRegister, setPhone, token) =>
   async (dispatch) => {
     const config = {
       headers: {
@@ -39,13 +42,12 @@ export const handleRegister =
       },
     };
 
+    if (token) {
+      setAuthToken(token);
+    }
+
     const body = JSON.stringify({
-      name,
-      email,
-      password,
-      gender,
-      phone,
-      address,
+      ...authGoogle,
     });
 
     try {
@@ -54,18 +56,19 @@ export const handleRegister =
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 2000,
       });
-      dispatch(checkUser());
       setPhone("");
       setRegister(false);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: response.data.user,
       });
-
-      dispatch(checkUser());
+      // dispatch(checkUser());
     } catch (error) {
-      const message = error.response.data.message.message;
-      setRegister(true);
+      console.log({error});
+      const message =
+        error.response.data.message.message === undefined
+          ? "Login Failed"
+          : error.response.data.message.message;
       toast.warning(message, {
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 2000,
@@ -95,15 +98,15 @@ export const handleLogin =
           autoClose: 2000,
         });
         //ambil data user
-        dispatch(checkUser());
-        closeModalLogin();
+        // dispatch(checkUser());
       }
+      closeModalLogin();
       dispatch({
         type: LOGIN_SUCCESS,
         payload: response.data.user,
       });
     } catch (err) {
-      console.log(err);
+      console.log({err});
       toast.error("Email or Password is Incorrect", {
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 2000,

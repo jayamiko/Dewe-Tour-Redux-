@@ -1,6 +1,13 @@
 import "./Spinner.css";
 
 export function Spinner(props) {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingSkeleton(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <div className="spinner-container">
       <svg

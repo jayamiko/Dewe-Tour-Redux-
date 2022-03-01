@@ -24,18 +24,9 @@ function Home({
   const [searchData, setSearchData] = useState("");
   const [isSearching, setIsSearching] = useState(false);
 
-  const currentState = useSelector((state) => state);
-  const isAdmin = currentState.auth.user.status === "admin";
-
+  const currentState = useSelector((state) => state.auth.user);
+  const isAdmin = currentState.status === "admin";
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoadingSkeleton(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     document.title = "Home";

@@ -7,13 +7,56 @@
   border-radius: 5px;
 }
 
-// .icon-google {
-//   width: 1.8em;
-//   position: relative;
-//   top: 680px !important;
-//   left: 138px !important;
-// }
-// .btn-login-google span {
-//   font-weight: bold;
-//   padding-left: 10px;
-// }
+// Style Button Google (with Firebase)
+$white: #fff;
+$google-blue: #4285f4;
+$button-active-blue: #1669f2;
+
+.area-google-btn {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  height: 70px;
+  padding: 40px 0;
+  .google-btn {
+    width: 220px;
+    height: 42px;
+    background-color: $google-blue;
+    border-radius: 2px;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between !important;
+    .google-icon-wrapper {
+      // position: absolute;
+      margin-top: 1px;
+      margin-left: 1px;
+      width: 40px;
+      height: 36px;
+      border-radius: 2px;
+      background-color: $white;
+    }
+    .google-icon {
+      position: absolute;
+      margin-top: 11px;
+      margin-left: 11px;
+      width: 18px;
+      height: 18px;
+    }
+    .btn-text {
+      margin-right: 10px;
+      color: $white;
+      font-size: 16px;
+      letter-spacing: 0.2px;
+      font-family: "Roboto";
+    }
+    &:hover {
+      box-shadow: 0 0 6px $google-blue;
+    }
+    &:active {
+      background: $button-active-blue;
+    }
+  }
+}

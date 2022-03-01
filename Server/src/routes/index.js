@@ -24,7 +24,12 @@ const {
   getTransaction,
   deleteTransaction,
 } = require("../controllers/transaction");
-const {register, login, checkAuth} = require("../controllers/auth");
+const {
+  register,
+  loginGoogle,
+  login,
+  checkAuth,
+} = require("../controllers/auth");
 
 const {oauthGoogle} = require("../controllers/oauth");
 
@@ -59,6 +64,7 @@ router.delete("/transaction/:id", auth, deleteTransaction);
 // Route Auth
 router.post("/login", login);
 router.post("/register", register);
+router.post("/login/google", loginGoogle);
 router.post("/auth/google", oauthGoogle);
 router.get("/check-auth", auth, checkAuth);
 

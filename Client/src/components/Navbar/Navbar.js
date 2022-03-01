@@ -78,6 +78,7 @@ const NavbarComp = ({auth: {isAuthenticated, user, isLoading}}) => {
               openModalLogin={openModalLogin}
               openModalRegister={openModalRegister}
               modal={modal}
+              setModal={setModal}
               closeModalLogin={closeModalLogin}
             />
             <ModalRegister

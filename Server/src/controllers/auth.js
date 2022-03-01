@@ -10,10 +10,11 @@ exports.register = async (req, res) => {
   const schema = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email().min(8).required(),
-    gender: Joi.string().required(),
+    gender: Joi.string(),
     password: Joi.string(),
-    phone: Joi.string().min(6).required(),
-    address: Joi.string().min(6).required(),
+    phone: Joi.string().min(6),
+    address: Joi.string().min(6),
+    photo: Joi.string(),
   });
 
   const {error} = schema.validate(req.body);
@@ -64,7 +65,7 @@ exports.register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-    const {name, email, gender, phone, address} = req.body;
+    const {name, email, gender, phone, address, photo} = req.body;
 
     const randomAvatar = Math.floor(Math.random() * avatarDefault.length);
 
@@ -77,7 +78,7 @@ exports.register = async (req, res) => {
       phone,
       address,
       status: "user",
-      photo: path_avatar + avatarDefault[randomAvatar],
+      photo: photo === null ? path_avatar + avatarDefault[randomAvatar] : photo,
     });
 
     const token = jwt.sign(
@@ -89,11 +90,12 @@ exports.register = async (req, res) => {
     res.status(200).send({
       status: "success",
       user: {
-        name: newUser.name,
+        name: newUser,
         token,
       },
     });
   } catch (error) {
+    console.log(error)
     res.status(500).send({
       status: "failed",
       message: "Internal server error",
@@ -153,7 +155,70 @@ exports.login = async (req, res) => {
     res.status(200).send({
       status: "success",
       user: {
-        name: userExist.name,
+        name: userExist,
+        token,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: "failed",
+      message: "Internal server error",
+    });
+  }
+};
+
+// Login With Google
+exports.loginGoogle = async (req, res) => {
+  const schema = Joi.object({
+    name: Joi.string().min(3).required(),
+    email: Joi.string().email().min(6).required(),
+    phone: Joi.string().min(10),
+    photo: Joi.string(),
+  });
+
+  const {error} = schema.validate(req.body);
+
+  if (error) {
+    return res.status(400).send({
+      error: {message: error.details[0].message},
+    });
+  }
+
+  try {
+    const userExist = await user.findOne({
+      where: {
+        email: req.body.email,
+      },
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+
+    if (!userExist) {
+      return res.status(400).send({
+        status: "failed",
+        message: "Email or password are incorrect",
+      });
+    }
+
+    if (!isPassValid) {
+      return res.status(400).send({
+        status: "failed",
+        message: "Email or password are incorrect",
+      });
+    }
+
+    // create jwt token, and add id, status user to token. expiresIn for expires date of token
+    const token = jwt.sign(
+      {id: userExist.id, status: userExist.status},
+      process.env.TOKEN_KEY,
+      {expiresIn: "1d"}
+    );
+    res.status(200).send({
+      status: "success",
+      user: {
+        name: userExist,
         token,
       },
     });

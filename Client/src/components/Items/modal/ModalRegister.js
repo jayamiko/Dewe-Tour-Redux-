@@ -6,14 +6,18 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {useFormik} from "formik";
 import * as Yup from "yup";
+import {signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 
 // Import Components
+import {auth} from "../../../firebase";
 import {Button, Modal, Form} from "react-bootstrap";
 import {handleRegister} from "../../../actions/auth";
 import PhoneInput from "../../Button/Input/InputPhone";
+import {ButtonGoogleLogin} from "../../Button/GoogleLogin/GoogleLogin";
 // import GoogleLoginBtn from "../../Button/GoogleLogin/GoogleLogin";
 
 // Import Style
+import "../../Button/GoogleLogin/GoogleLogin.scss";
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -28,8 +32,31 @@ const Register = ({
   auth: {error, isLoading},
 }) => {
   const [phone, setPhone] = useState("");
-
   const messageError = error ? error : "";
+
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((res) => {
+        const auth = res.user;
+        const idToken = res._tokenResponse.idToken;
+
+        const authGoogle = {
+          name: auth.displayName,
+          email: auth.email,
+          password: "qwerty114",
+          gender: "Male",
+          phone: auth.phoneNumber ? auth.phoneNumber : "No Phone",
+          address: "address does not exist",
+          photo: auth.photoURL,
+        };
+
+        handleRegister({authGoogle}, setRegister, setPhone, idToken);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const formik = useFormik({
     // initial values
@@ -57,16 +84,15 @@ const Register = ({
     }),
     // handle submission
     onSubmit: (values) => {
-      handleRegister(
-        values.name,
-        values.email,
-        values.password,
-        values.gender,
-        phone,
-        values.address,
-        setRegister,
-        setPhone
-      );
+      const authGoogle = {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        gender: values.gender,
+        phone: phone,
+        address: values.address,
+      };
+      handleRegister({authGoogle}, setRegister, setPhone);
       formik.setSubmitting(false);
     },
   });
@@ -87,7 +113,7 @@ const Register = ({
           {messageError.message || messageName}
         </span>
       );
-    } else if (value !== "") {
+    } else if (value !== "" && !nameInput) {
       return <span style={{color: "green"}}>{input}</span>;
     }
   };
@@ -104,7 +130,9 @@ const Register = ({
             onClick={closeModalRegister}
             required
           ></button>
-          <h2 className="text-center my-5">Register</h2>
+          <br></br>
+          <ButtonGoogleLogin eventHandler={signInWithGoogle} />
+          <hr></hr>
           <Form onSubmit={formik.handleSubmit}>
             <Form.Group className="mb-4" controlId="formBasicName">
               <Form.Label className="fw-bold">Full Name</Form.Label>

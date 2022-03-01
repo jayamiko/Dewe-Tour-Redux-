@@ -9,7 +9,7 @@ import store from "../../../store";
 import "./GoogleLogin.scss";
 import {toast} from "react-toastify";
 
-const GoogleLoginBtn = () => {
+export const GoogleLoginBtn = () => {
   const responseGoogle = async (response) => {
     try {
       const config = {
@@ -50,4 +50,22 @@ const GoogleLoginBtn = () => {
   );
 };
 
-export default GoogleLoginBtn;
+export function ButtonGoogleLogin(props) {
+  return (
+    <div className="area-google-btn">
+      <h6 className="fw-bold">SIGN UP WITH GOOGLE</h6>
+      <div className="google-btn" onClick={props.eventHandler}>
+        <div className="google-icon-wrapper">
+          <img
+            className="google-icon"
+            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+            alt="icon-google"
+          />
+        </div>
+        <p className="btn-text">
+          <b>Sign in with google</b>
+        </p>
+      </div>
+    </div>
+  );
+}
