@@ -1,4 +1,4 @@
-// Import React
+// Import Components
 import {Carousel} from "react-bootstrap";
 import Rupiah from "../../components/Items/Format/formatRupiah";
 

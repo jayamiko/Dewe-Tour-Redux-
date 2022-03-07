@@ -8,7 +8,6 @@ import CurrencyFormat from "react-currency-format";
 // Import Components
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import {Spinner} from "../../components/atoms/Spinner/Spinner";
 
 // Import Style
 import "./addTrip.scss";
@@ -24,15 +23,9 @@ const AddTripPage = ({addTrip}) => {
   const [preview, setPreview] = useState([]);
   const [countries, setCountries] = useState([]);
 
-  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
-
   useEffect(() => {
     document.title = "Add Trip";
-    const timer = setTimeout(() => {
-      setLoadingSkeleton(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
+    restCountries();
   }, []);
 
   const konvertPricetoNumber = (number) => {
@@ -72,8 +65,6 @@ const AddTripPage = ({addTrip}) => {
     image: [],
   });
 
-  console.log(input);
-
   const handleChange = (event) => {
     const {
       title,
@@ -105,10 +96,6 @@ const AddTripPage = ({addTrip}) => {
 
   let priceResult = konvertPricetoNumber(input.price);
 
-  useEffect(() => {
-    restCountries();
-  }, []);
-
   const redirect = () => {
     navigate(`/`);
   };
@@ -119,11 +106,7 @@ const AddTripPage = ({addTrip}) => {
     addTrip(input, redirect, priceResult);
   };
 
-  return loadingSkeleton ? (
-    <div>
-      <Spinner customText={"Loading.."} />
-    </div>
-  ) : (
+  return (
     <div>
       <Navbar />
       <div className="area-add-form">

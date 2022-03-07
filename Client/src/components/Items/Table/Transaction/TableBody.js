@@ -1,7 +1,7 @@
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import {Button} from "@mui/material";
-import "../../../../pages/Transaction/ListTransaction.css";
+import "../../../../pages/Transaction/Transaction.scss";
 
 const TableBodyComp = ({UIComponent, getter, handler: {handleAction}}) => {
   const {transaction, page, rowsPerPage} = getter;

@@ -1,9 +1,8 @@
 // Import Style
-import "../../../../pages/Transaction/ListTransaction.css";
+import "../../../../pages/Transaction/Transaction.scss";
 import Nodata from "../../../../img/no-data.jpg";
 
 // Import Component
-import Gap from "../../../atoms/Gap";
 import TableHead from "../../../Items/Table/Transaction/TableHead";
 import {TablePagination} from "@mui/material";
 
@@ -14,7 +13,6 @@ const TableContainer = ({handler, getter}) => {
   return (
     <div className="container-table">
       <h1 className="title-transaction">Book Transactions</h1>
-      <Gap height={29} />
       {!transaction.length ? (
         <img src={Nodata} alt="No Data Transaction" />
       ) : (

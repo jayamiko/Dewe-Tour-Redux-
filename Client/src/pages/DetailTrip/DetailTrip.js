@@ -11,12 +11,11 @@ import moment from "moment";
 import {Container} from "react-bootstrap";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import {Spinner} from "../../components/atoms/Spinner/Spinner";
+import LoadingAnimation from "../../components/atoms/Loading/Loading";
 import ModalLogin from "../../components/Items/modal/ModalLogin2";
-import setData from "../../utils/setData";
 import Rupiah from "../../components/Items/Format/formatRupiah";
 
-// Import Style
+// Import Style & Images
 import "./DetailTrip.css";
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -41,20 +40,19 @@ const DetailTrip = ({
   const {id} = useParams();
   useEffect(() => {
     getTripDetail(id);
-  }, [getTripDetail]);
+  }, [getTripDetail, id]);
   useEffect(() => {
     getTransactionDetail(id);
-  }, [getTransactionDetail]);
+  }, [getTransactionDetail, id]);
 
+  const count = 1;
   let navigate = useNavigate();
   const currentState = useSelector((state) => state.auth);
   const isLoginSession = useSelector((state) => state.auth.isLogin);
   const stateAuth = currentState.user;
-  console.log(isLoginSession);
 
   // Loading
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
-  const [count, setCount] = useState(1);
   const [transaction, setTransaction] = useState({
     counterQty: "",
     total: "",
@@ -65,6 +63,7 @@ const DetailTrip = ({
   });
   useEffect(() => {
     document.title = "Detail Trip";
+    // getDataTransactionsByUserId();
     const timer = setTimeout(() => {
       setLoadingSkeleton(false);
     }, 1000);
@@ -83,9 +82,6 @@ const DetailTrip = ({
   });
 
   const totalPrice = tripDetail?.price * transaction?.counterQty;
-  const totalPriceInString = totalPrice
-    .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   const priceInString = tripDetail.price
     ?.toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -101,7 +97,7 @@ const DetailTrip = ({
       tripId: id,
       userId: stateAuth.id,
     });
-  }, [count]);
+  }, [count, totalPrice, stateAuth, transaction, id]);
 
   const [dataTransaction, setDataTransaction] = useState([]);
 
@@ -112,10 +108,6 @@ const DetailTrip = ({
     );
     setDataTransaction(filteredTransactions[filteredTransactions.length - 1]);
   };
-
-  useEffect(() => {
-    getDataTransactionsByUserId();
-  }, []);
 
   const handleClose = () => {
     setShow({login: false, register: false});
@@ -171,7 +163,7 @@ const DetailTrip = ({
       formData.set("userId", transaction?.userId);
 
       const response = await API.post("/transaction", formData, config);
-      setData("transaction", transaction);
+      localStorage.setItem("transaction", JSON.stringify(transaction));
       if (response.data.status === 200) {
         toast.success(`Order successful, now complete your transaction`, {
           position: toast.POSITION.BOTTOM_RIGHT,
@@ -209,7 +201,7 @@ const DetailTrip = ({
 
   return loadingSkeleton ? (
     <>
-      <Spinner customText={"Loading.."} />
+      <LoadingAnimation text={"Sedang Melakukan Payment.."} />
     </>
   ) : (
     <div>

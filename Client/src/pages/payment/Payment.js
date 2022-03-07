@@ -7,7 +7,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import PaymentCard from "../../components/Items/card/PaymentCard";
 import Footer from "../../components/Footer/Footer";
 import ModalPopUp from "../../components/Items/modal/popUp";
-import {Spinner} from "../../components/atoms/Spinner/Spinner";
+import NotData from "../../components/atoms/NotData/NotData";
 
 // Import Style
 import "./Payment.scss";
@@ -25,15 +25,10 @@ export default function Payment() {
 
   const [isShow, setIsShow] = useState(false);
   const [transaction, setTransaction] = useState(null);
-  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
 
   useEffect(() => {
     document.title = "Payment";
-    const timer = setTimeout(() => {
-      setLoadingSkeleton(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
+    getLastTransaction();
   }, []);
 
   const handleClose = () => {
@@ -93,13 +88,7 @@ export default function Payment() {
     setIsShow(true);
   };
 
-  useEffect(() => {
-    getLastTransaction();
-  }, []);
-
-  return loadingSkeleton ? (
-    <Spinner customText={"Loading.."} />
-  ) : (
+  return (
     <>
       <div style={{height: "120vh"}}>
         <div className="background-nav">
@@ -109,14 +98,8 @@ export default function Payment() {
           {!transaction ? (
             <div className="container">
               <div className="not-found d-flex justify-content-center align-items-center">
-                <div className="text-center">
-                  <img
-                    src={"NotFoundIcon"}
-                    alt="Not Found"
-                    width="250"
-                    height="250"
-                  />
-                  <h1 className="fw-bold h5">No Transaction Yet</h1>
+                <div>
+                  <NotData name={stateAuth.name} />
                 </div>
               </div>
             </div>

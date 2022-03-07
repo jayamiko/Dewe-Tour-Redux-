@@ -8,7 +8,7 @@ import {
   Paper,
 } from "@mui/material";
 import TableBodyComp from "./TableBody";
-import "../../../../pages/Transaction/ListTransaction.css";
+import "../../../../pages/Transaction/Transaction.scss";
 
 const TableHeadComp = ({getter, handler}) => {
   return (

@@ -11,11 +11,11 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import HistoryPayment from "../../components/Items/card/HistoryPayment";
 import BoxProfile from "../../components/Items/card/BoxProfile";
-import {Spinner} from "../../components/atoms/Spinner/Spinner";
+import LoadingAnimation from "../../components/atoms/Loading/Loading";
 
 // Import Style
 import "./Profile.scss";
-import Nodata from "../../img/folder.png";
+import Nodata from "../../components/atoms/NotData/NotData";
 
 // Import API
 import {API} from "../../config/api";
@@ -26,6 +26,7 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
   const [filterData, setFilterData] = useState([]);
 
   const [isEditable, setIsEditable] = useState(false);
+  const [isFilter, setIsFilter] = useState(false);
 
   const [preview, setPreview] = useState(photo);
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
@@ -59,7 +60,7 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
     checkUser();
   }, []);
 
-  const getData = async () => {
+  const getDataTransactions = async () => {
     try {
       const response = await API.get("/transactions");
 
@@ -79,23 +80,24 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
   };
 
   useEffect(() => {
-    getData();
+    getDataTransactions();
     setFilterData(trans);
   }, []);
+
+  const dataByUser = trans.filter((item) => item?.user.id === user?.id);
 
   const filterDataByStatus = (e) => {
     const status = e.target.id;
 
-    const data = trans.filter(
-      (item) => item?.user.id === user?.id && item.status === status
-    );
+    const data = dataByUser.filter((item) => item.status === status);
 
     setFilterData(data);
+    setIsFilter(true);
   };
 
   return loadingSkeleton ? (
     <div>
-      <Spinner customText={"Loading.."} />
+      <LoadingAnimation />
     </div>
   ) : (
     <div>
@@ -120,108 +122,80 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
 
         <div>
           <h1 className="title-history-trip">History Trip</h1>
-
           <div>
-            {trans === null ? (
-              <div>
-                <Spinner customText={"Loading.."} />
-              </div>
-            ) : (
-              <section className="container mx-auto">
-                <div
-                  className="bg-blue-100 flex my-10"
-                  style={{
-                    marginBottom: "25px",
-                    marginTop: "25px",
-                    marginLeft: "10px",
-                  }}
+            <section className="container mx-auto">
+              <div
+                className="bg-blue-100 flex my-10"
+                style={{
+                  marginBottom: "25px",
+                  marginTop: "25px",
+                  marginLeft: "10px",
+                }}
+              >
+                <button
+                  onClick={filterDataByStatus}
+                  id="Waiting Approve"
+                  className="bg-gray-50 py-2 px-4 w-full hover:bg-yellow-500 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
                 >
-                  <button
-                    onClick={filterDataByStatus}
-                    id="Waiting Approve"
-                    className="bg-gray-50 py-2 px-4 w-full hover:bg-yellow-500 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
-                    style={{
-                      borderRadius: "10px",
-                      color: "#FFFFFF",
-                      fontWeight: "900",
-                      fontFamily: "Avenir",
-                      background: "orange",
-                    }}
-                  >
-                    Waiting Approve
-                  </button>
-                  <button
-                    onClick={filterDataByStatus}
-                    id="Approve"
-                    className="bg-gray-50 py-2 px-4 w-full hover:bg-green-500 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
-                    style={{
-                      borderRadius: "10px",
-                      color: "#FFFFFF",
-                      fontWeight: "900",
-                      fontFamily: "Avenir",
-                      background: "green",
-                    }}
-                  >
-                    Approve
-                  </button>
-                  <button
-                    onClick={filterDataByStatus}
-                    id="Cancel"
-                    className="bg-gray-50 py-2 px-4 w-full hover:bg-red-600 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
-                    style={{
-                      borderRadius: "10px",
-                      color: "#FFFFFF",
-                      fontWeight: "900",
-                      fontFamily: "Avenir",
-                      background: "red",
-                    }}
-                  >
-                    Canceled
-                  </button>
-                </div>
+                  Waiting Approve
+                </button>
+                <button
+                  onClick={filterDataByStatus}
+                  id="Approve"
+                  className="bg-gray-50 py-2 px-4 w-full hover:bg-green-500 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
+                >
+                  Approve
+                </button>
+                <button
+                  onClick={filterDataByStatus}
+                  id="Cancel"
+                  className="bg-gray-50 py-2 px-4 w-full hover:bg-red-600 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
+                >
+                  Canceled
+                </button>
+              </div>
 
+              {/* PERTAMA TAMPIL */}
+              {dataByUser && !isFilter ? (
                 <>
-                  {filterData.length > 0 ? (
-                    <>
-                      {filterData.map((item, index) => {
-                        return (
-                          <div
-                            className="flex flex-col gap-2 py-2 px-6 mb-10 bg-white border-2  border-gray-300 rounded-md"
-                            key={index}
-                          >
-                            <HistoryPayment
-                              data={item}
-                              key={`paymentCard-${index}`}
-                            />
-                          </div>
-                        );
-                      })}
-                    </>
-                  ) : (
-                    <>
-                      <img
-                        src={Nodata}
-                        alt=""
-                        width="450px"
-                        height="450px"
-                        style={{marginLeft: "450px"}}
-                      />
-                      <h1
-                        style={{
-                          textAlign: "center",
-                          position: "relative",
-                          bottom: "55px",
-                          fontWeight: "900",
-                          fontFamily: "Avenir",
-                        }}
-                      >
-                        No Data Payment
-                      </h1>
-                    </>
-                  )}
+                  {dataByUser.map((item, index) => {
+                    return (
+                      <div key={index}>
+                        <HistoryPayment
+                          data={item}
+                          key={`paymentCard-${index}`}
+                        />
+                        {/* <hr></hr> */}
+                      </div>
+                    );
+                  })}
                 </>
-              </section>
-            )}
+              ) : (
+                filterData &&
+                isFilter && (
+                  <>
+                    {filterData.map((item, index) => {
+                      return (
+                        <div key={index}>
+                          <HistoryPayment
+                            data={item}
+                            key={`paymentCard-${index}`}
+                          />
+                          {/* <hr></hr> */}
+                        </div>
+                      );
+                    })}
+                  </>
+                )
+              )}
+
+              {dataByUser.length === 0 ||
+                (filterData.length === 0 && (
+                  <div>
+                    <Nodata name={name} />
+                  </div>
+                ))}
+            </section>
           </div>
         </div>
       </div>

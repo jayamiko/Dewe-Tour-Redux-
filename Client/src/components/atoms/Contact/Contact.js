@@ -2,7 +2,7 @@ import "./Contact.scss";
 
 // MUI component
 import Avatar from "@mui/material/Avatar";
-import StyledBadge from "../../../utils/StyledBadge";
+import StyledBadge from "../../utils/StyledBadge";
 
 const Contact = ({datacontact, clickcontact, contact, useronline}) => {
   return (

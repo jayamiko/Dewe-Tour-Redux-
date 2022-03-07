@@ -14,7 +14,6 @@ exports.register = async (req, res) => {
     password: Joi.string(),
     phone: Joi.string().min(6),
     address: Joi.string().min(6),
-    photo: Joi.string(),
   });
 
   const {error} = schema.validate(req.body);
@@ -65,7 +64,7 @@ exports.register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-    const {name, email, gender, phone, address, photo} = req.body;
+    const {name, email, gender, phone, address} = req.body;
 
     const randomAvatar = Math.floor(Math.random() * avatarDefault.length);
 
@@ -78,7 +77,7 @@ exports.register = async (req, res) => {
       phone,
       address,
       status: "user",
-      photo: photo === null ? path_avatar + avatarDefault[randomAvatar] : photo,
+      photo: path_avatar + avatarDefault[randomAvatar],
     });
 
     const token = jwt.sign(
@@ -95,7 +94,7 @@ exports.register = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).send({
       status: "failed",
       message: "Internal server error",

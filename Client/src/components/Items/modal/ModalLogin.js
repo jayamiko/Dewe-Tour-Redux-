@@ -9,14 +9,9 @@ import * as Yup from "yup";
 import {signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 
 // Import Components
-import {
-  handleLogin,
-  loginWithGoogle,
-  handleRegister,
-} from "../../../actions/auth";
+import {handleLogin} from "../../../actions/auth";
 import {Button, Modal, Form} from "react-bootstrap";
 import {auth} from "../../../firebase";
-// import GoogleLoginBtn from "../../Button/GoogleLogin/GoogleLogin";
 
 // Import API
 import {setAuthToken} from "../../../config/api";
@@ -30,12 +25,12 @@ const Login = ({
   modal,
   setModal,
 }) => {
-  const [authGoogle, setAuthGoogle] = useState({
-    name: "",
-    email: "",
-    phone: null,
-    photo: null,
-  });
+  // const [authGoogle, setAuthGoogle] = useState({
+  //   name: "",
+  //   email: "",
+  //   phone: null,
+  //   photo: null,
+  // });
 
   // const signInWithGoogle = () => {
   //   const provider = new GoogleAuthProvider();

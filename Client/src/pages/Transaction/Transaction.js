@@ -4,31 +4,25 @@ import {toast} from "react-toastify";
 
 // Import Components
 import TableContainer from "../../components/Items/Table/Transaction/TableContainer";
-import {Spinner} from "../../components/atoms/Spinner/Spinner";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import Gap from "../../components/atoms/Gap";
 
 // Import Style
-import "./ListTransaction.css";
+import "./Transaction.scss";
 
 // import API
 import {API} from "../../config/api";
 
-const ListTransaction = () => {
+const Transaction = () => {
   const [transaction, setTransaction] = useState([]);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
 
   useEffect(() => {
     document.title = "Transactions";
-    const timer = setTimeout(() => {
-      setLoadingSkeleton(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
+    getAllData();
   }, []);
 
   const getAllData = async () => {
@@ -77,19 +71,13 @@ const ListTransaction = () => {
     },
   };
 
-  useEffect(() => {
-    getAllData();
-  }, []);
-
   const stateToChild = {
     transaction,
     page,
     rowsPerPage,
   };
 
-  return loadingSkeleton ? (
-    <Spinner customText={"Loading.."} />
-  ) : (
+  return (
     <>
       <div className="container-transaction">
         <Navbar />
@@ -101,4 +89,4 @@ const ListTransaction = () => {
   );
 };
 
-export default ListTransaction;
+export default Transaction;

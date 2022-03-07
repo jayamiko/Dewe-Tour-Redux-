@@ -21,6 +21,7 @@ export const checkUser = () => async (dispatch) => {
 
   try {
     const res = await API.get("/check-auth");
+    console.log(res);
     dispatch({
       type: USER_LOADED,
       payload: res.data.data.user,

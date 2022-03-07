@@ -2,19 +2,18 @@
 import React, {useState, useEffect} from "react";
 import {useSelector, connect} from "react-redux";
 import PropTypes from "prop-types";
-import {getTrips} from "../actions/TripsActions";
+import {getTrips} from "../../actions/TripsActions";
 
 // Import Style
 import {Container} from "react-bootstrap";
-import noResult from "../img/no-result.png";
-import "../App.css";
+import noResult from "../../img/no-result.png";
+import "../../App.css";
 
 // Import Components
-import Header from "../components/Header/Header";
-import Navbar from "../components/Navbar/Navbar";
-import Main from "../components/Main/Main";
-import Footer from "../components/Footer/Footer";
-import {Spinner} from "../components/atoms/Spinner/Spinner";
+import Header from "../../components/Header/Header";
+import Navbar from "../../components/Navbar/Navbar";
+import Main from "../../components/Main/Main";
+import Footer from "../../components/Footer/Footer";
 
 function Home({
   getTrips,
@@ -26,18 +25,13 @@ function Home({
 
   const currentState = useSelector((state) => state.auth.user);
   const isAdmin = currentState.status === "admin";
-  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
 
   useEffect(() => {
     document.title = "Home";
     getTrips();
   }, [getTrips]);
 
-  return loadingSkeleton || isLoading ? (
-    <div>
-      <Spinner customText={"Loading.."} />
-    </div>
-  ) : (
+  return (
     <>
       {isAuthenticated && isAdmin ? (
         <>

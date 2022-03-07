@@ -1,24 +1,26 @@
 // Import React
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {useEffect} from "react";
-
+import {useSelector} from "react-redux";
 // Import Pages
-import DetailTrip from "./pages/detail_trips/DetailTrip";
-import Home from "./pages/Home";
-import Payment from "./pages/payment/Payment";
-import Profile from "./pages/profile/Profile";
-import AddTrip from "./pages/addTrip/addTrip";
-import ListTransaction from "./pages/Transaction/ListTransaction";
+import {
+  Home,
+  DetailTrip,
+  AddTrip,
+  Transaction,
+  Payment,
+  Profile,
+  Chat,
+  ChatAdmin,
+  Chart,
+  NotFoundPage,
+} from "./pages";
 import AuthRoute from "./components/PrivateRoutes/AuthRoute";
 import AdminRoute from "./components/PrivateRoutes/AdminRoute";
-import Chat from "./pages/Chat/Chat";
-import ChatAdmin from "./pages/Chat/Admin/ChatAdmin";
-import Chart from "./pages/Chart/Chart";
 
 // Import Style
 import "./App.css";
-import {Spinner} from "./components/atoms/Spinner/Spinner";
+import LoadingAnimation from "./components/atoms/Loading/Loading";
 
 // Import API
 import {checkUser} from "./config/auth";
@@ -29,10 +31,9 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-console.log(localStorage.token);
-
 function App() {
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
+  const nameProfile = useSelector((state) => state.auth.user.name);
 
   useEffect(() => {
     checkUser();
@@ -41,16 +42,21 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoadingSkeleton(false);
-    }, 1000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
 
+  const titleLoading =
+    document.URL === "http://localhost:3000/profile"
+      ? `${nameProfile ? `Welcome ${nameProfile}` : "...Loading"}`
+      : "Welcome To Dewe Tour";
+
   return (
     <>
-      {loadingSkeleton === true ? (
+      {loadingSkeleton ? (
         <div>
-          <Spinner customText="Loading.." />
+          <LoadingAnimation text={titleLoading} />
         </div>
       ) : (
         <>
@@ -122,10 +128,11 @@ function App() {
                 path="/list-transaction"
                 element={
                   <AdminRoute>
-                    <ListTransaction />
+                    <Transaction />
                   </AdminRoute>
                 }
               />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </BrowserRouter>
         </>

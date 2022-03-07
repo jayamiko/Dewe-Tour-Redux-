@@ -1,6 +1,5 @@
 import "./Message.scss";
 import Avatar from "@mui/material/Avatar";
-import Gap from "../Gap";
 
 const Message = ({contact, user, messages, sendmessage}) => {
   return (
@@ -20,7 +19,6 @@ const Message = ({contact, user, messages, sendmessage}) => {
                   {item.idSender !== user.id && (
                     <div style={{marginLeft: "20px"}}>
                       <Avatar alt={contact?.name} src={contact?.photo} />
-                      <Gap width={10} />
                     </div>
                   )}
                   <div
@@ -55,7 +53,6 @@ const Message = ({contact, user, messages, sendmessage}) => {
           }}
         >
           <div>No Message</div>
-          <Gap height={30} />
           <div style={{textAlign: "center"}}>
             {/* <img width="280px" src={ImgInboxCleanUp} alt="empty message" /> */}
           </div>

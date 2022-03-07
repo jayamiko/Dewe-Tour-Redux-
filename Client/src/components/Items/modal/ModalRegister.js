@@ -1,23 +1,21 @@
 // Import React
-import {useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 
 // Import Libraries
+import {auth} from "../../../firebase";
 import {connect} from "react-redux";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 
 // Import Components
-import {auth} from "../../../firebase";
 import {Button, Modal, Form} from "react-bootstrap";
 import {handleRegister} from "../../../actions/auth";
-import PhoneInput from "../../Button/Input/InputPhone";
-import {ButtonGoogleLogin} from "../../Button/GoogleLogin/GoogleLogin";
-// import GoogleLoginBtn from "../../Button/GoogleLogin/GoogleLogin";
+import ButtonGoogleLogin from "../../Button/GoogleLogin/GoogleLogin";
+import InputPhone from "../../Button/Input/InputPhone";
 
 // Import Style
-import "../../Button/GoogleLogin/GoogleLogin.scss";
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -201,7 +199,7 @@ const Register = ({
               )}
             </Form.Group>
             <div>
-              <PhoneInput name="phone" value={phone} setValue={setPhone} />
+              <InputPhone name="phone" value={phone} setValue={setPhone} />
             </div>
             <Form.Group className="mb-4" controlId="formBasicPhone">
               <Form.Label className="fw-bold">Address</Form.Label>

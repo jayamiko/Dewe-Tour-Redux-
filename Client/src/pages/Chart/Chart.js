@@ -14,7 +14,6 @@ import {
 import TableChart from "../../components/Items/Table/Chart/TableChart";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import {Spinner} from "../../components/atoms/Spinner/Spinner";
 
 // Import Style
 import "./Chart.scss";
@@ -24,16 +23,6 @@ function Chart({getTrips, trips: {tripsAll}}) {
     document.title = "Statistik";
     getTrips();
   }, [getTrips]);
-
-  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoadingSkeleton(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const typeChart = [
     {
@@ -58,11 +47,7 @@ function Chart({getTrips, trips: {tripsAll}}) {
     setInput(updateForm);
   };
 
-  return loadingSkeleton ? (
-    <div>
-      <Spinner customText={"Loading.."} />
-    </div>
-  ) : (
+  return (
     <div>
       <Navbar />
       <div className="header-chart">
