@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {checkUser} from "../../actions/auth";
-import {changeAvatar} from "../../actions/auth";
 import {saveProfile} from "../../actions/auth";
 
 // Import Components
@@ -32,7 +31,7 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
 
   useEffect(() => {
-    document.title = "Profile";
+    document.title = `Profile ${name}`;
     const timer = setTimeout(() => {
       setLoadingSkeleton(false);
     }, 1000);
@@ -52,13 +51,7 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
   const handler = {
     handleSaveProfile: () =>
       saveProfile(form, isEditable, setIsEditable, setLoadingSkeleton),
-    handleChangeAvatar: () =>
-      changeAvatar(form, isEditable, setIsEditable, setLoadingSkeleton),
   };
-
-  useEffect(() => {
-    checkUser();
-  }, []);
 
   const getDataTransactions = async () => {
     try {
@@ -81,23 +74,27 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
 
   useEffect(() => {
     getDataTransactions();
+    checkUser();
     setFilterData(trans);
   }, []);
 
-  const dataByUser = trans.filter((item) => item?.user.id === user?.id);
+  const handlerFilterData = {
+    byUser: trans.filter((item) => item?.user.id === user?.id),
+    byStatus: (e) => {
+      const status = e.target.id;
 
-  const filterDataByStatus = (e) => {
-    const status = e.target.id;
+      const data = trans.filter(
+        (item) => item.user.id === user?.id && item.status === status
+      );
 
-    const data = dataByUser.filter((item) => item.status === status);
-
-    setFilterData(data);
-    setIsFilter(true);
+      setFilterData(data);
+      setIsFilter(true);
+    },
   };
 
   return loadingSkeleton ? (
     <div>
-      <LoadingAnimation />
+      <LoadingAnimation text="Loading.." />
     </div>
   ) : (
     <div>
@@ -116,38 +113,29 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
           setPreview={setPreview}
           data={user}
           save={handler.handleSaveProfile}
-          changeAvatar={handler.handleChangeAvatar}
-          setLoadingSkeleton={setLoadingSkeleton}
         />
 
         <div>
           <h1 className="title-history-trip">History Trip</h1>
           <div>
             <section className="container mx-auto">
-              <div
-                className="bg-blue-100 flex my-10"
-                style={{
-                  marginBottom: "25px",
-                  marginTop: "25px",
-                  marginLeft: "10px",
-                }}
-              >
+              <div className="bg-blue-100 flex my-10">
                 <button
-                  onClick={filterDataByStatus}
+                  onClick={handlerFilterData.byStatus}
                   id="Waiting Approve"
                   className="bg-gray-50 py-2 px-4 w-full hover:bg-yellow-500 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
                 >
                   Waiting Approve
                 </button>
                 <button
-                  onClick={filterDataByStatus}
+                  onClick={handlerFilterData.byStatus}
                   id="Approve"
                   className="bg-gray-50 py-2 px-4 w-full hover:bg-green-500 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
                 >
                   Approve
                 </button>
                 <button
-                  onClick={filterDataByStatus}
+                  onClick={handlerFilterData.byStatus}
                   id="Cancel"
                   className="bg-gray-50 py-2 px-4 w-full hover:bg-red-600 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
                 >
@@ -155,10 +143,9 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
                 </button>
               </div>
 
-              {/* PERTAMA TAMPIL */}
-              {dataByUser && !isFilter ? (
+              {handlerFilterData.byUser && !isFilter ? (
                 <>
-                  {dataByUser.map((item, index) => {
+                  {handlerFilterData.byUser.map((item, index) => {
                     return (
                       <div key={index}>
                         <HistoryPayment
@@ -189,7 +176,7 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
                 )
               )}
 
-              {dataByUser.length === 0 ||
+              {handlerFilterData.byUser.length === 0 ||
                 (filterData.length === 0 && (
                   <div>
                     <Nodata name={name} />
@@ -206,7 +193,6 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
 
 ProfilePage.propTypes = {
   checkUser: PropTypes.object.isRequired,
-  changeAvatar: PropTypes.func.isRequired,
   saveProfile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
@@ -218,5 +204,4 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   checkUser,
   saveProfile,
-  changeAvatar,
 })(ProfilePage);

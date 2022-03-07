@@ -11,7 +11,6 @@ import moment from "moment";
 import {Container} from "react-bootstrap";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import LoadingAnimation from "../../components/atoms/Loading/Loading";
 import ModalLogin from "../../components/Items/modal/ModalLogin2";
 import Rupiah from "../../components/Items/Format/formatRupiah";
 
@@ -40,16 +39,17 @@ const DetailTrip = ({
   const {id} = useParams();
   useEffect(() => {
     getTripDetail(id);
-  }, [getTripDetail, id]);
+  }, [getTripDetail]);
   useEffect(() => {
     getTransactionDetail(id);
-  }, [getTransactionDetail, id]);
+  }, [getTransactionDetail]);
 
   const count = 1;
   let navigate = useNavigate();
   const currentState = useSelector((state) => state.auth);
   const isLoginSession = useSelector((state) => state.auth.isLogin);
   const stateAuth = currentState.user;
+  const {image} = tripDetail;
 
   // Loading
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
@@ -63,12 +63,6 @@ const DetailTrip = ({
   });
   useEffect(() => {
     document.title = "Detail Trip";
-    // getDataTransactionsByUserId();
-    const timer = setTimeout(() => {
-      setLoadingSkeleton(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
   }, []);
 
   if (!Number(id)) {
@@ -82,7 +76,7 @@ const DetailTrip = ({
   });
 
   const totalPrice = tripDetail?.price * transaction?.counterQty;
-  const priceInString = tripDetail.price
+  const priceInString = tripDetail?.price
     ?.toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
@@ -97,17 +91,7 @@ const DetailTrip = ({
       tripId: id,
       userId: stateAuth.id,
     });
-  }, [count, totalPrice, stateAuth, transaction, id]);
-
-  const [dataTransaction, setDataTransaction] = useState([]);
-
-  const getDataTransactionsByUserId = async () => {
-    const response = await API.get("/transactions");
-    const filteredTransactions = response?.data?.data.filter(
-      (item) => item?.user?.id === stateAuth.id
-    );
-    setDataTransaction(filteredTransactions[filteredTransactions.length - 1]);
-  };
+  }, [count]);
 
   const handleClose = () => {
     setShow({login: false, register: false});
@@ -199,11 +183,7 @@ const DetailTrip = ({
     }
   };
 
-  return loadingSkeleton ? (
-    <>
-      <LoadingAnimation text={"Sedang Melakukan Payment.."} />
-    </>
-  ) : (
+  return (
     <div>
       <div className="background-nav">
         <Navbar />
@@ -215,34 +195,31 @@ const DetailTrip = ({
             {tripDetail?.day}D/{tripDetail?.night}N {tripDetail?.title}
           </h1>
           <small>{tripDetail?.country}</small>
-
           {/* IMAGE TOUR */}
           <img
-            src={tripDetail?.image[0].url}
+            src={image?.[0]}
             alt="trip-reguler"
             className="image-tour-reguler"
           />
           <div className="image-tour-other">
             <img
-              src={tripDetail?.image[1].url}
+              src={image?.[1]}
               alt="other trip 1"
               className="other-trip-item"
             />
             <img
-              src={tripDetail?.image[2].url}
+              src={image?.[2]}
               alt="other trip 2"
               className="other-trip-item"
             />
             <img
-              src={tripDetail?.image[3].url}
+              src={image?.[3]}
               alt="other trip 3"
               className="other-trip-item"
             />
           </div>
-
           {/* INFO DESCRIPTION */}
           <h3 className="information-trip">Information Trip</h3>
-
           <div className="info-trip">
             <div>
               <p className="title-info">Accomodation</p>
@@ -286,10 +263,8 @@ const DetailTrip = ({
               </div>
             </div>
           </div>
-
           <h3 className="title-description">Description</h3>
           <p className="description">{tripDetail?.description}</p>
-
           <section>
             <div>
               <div className="price-area">
@@ -333,6 +308,8 @@ const DetailTrip = ({
 };
 
 DetailTrip.propTypes = {
+  getTripDetail: PropTypes.object.isRequired,
+  getTransactionDetail: PropTypes.object.isRequired,
   trips: PropTypes.object.isRequired,
   transactions: PropTypes.object.isRequired,
 };

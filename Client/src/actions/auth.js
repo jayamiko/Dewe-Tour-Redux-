@@ -118,50 +118,6 @@ export const handleLogin =
     }
   };
 
-//Change Profile Pict
-export const changeAvatar =
-  (form, isEditable, setIsEditable, setLoadingSkeleton) => async (dispatch) => {
-    setIsEditable(true);
-    setLoadingSkeleton(true);
-    try {
-      const formData = new FormData();
-      formData.set("photo", form.photo[0], form.photo[0].filename);
-
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-
-      const body = formData;
-
-      const response = await API.patch("/user", body, config);
-      // Set Loading
-      const timer = setTimeout(() => {
-        setIsEditable(false);
-        setLoadingSkeleton(false);
-      }, 1000);
-
-      // Set Notif
-      toast.success(response?.data.message, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 2000,
-      });
-      dispatch({
-        type: UPDATE_USER_SUCCESS,
-        payload: response.data,
-      });
-
-      checkUser();
-      return () => clearTimeout(timer);
-    } catch (error) {
-      console.log(error);
-      dispatch({
-        type: UPDATE_USER_FAIL,
-      });
-    }
-  };
-
 export const saveProfile =
   (form, isEditable, setIsEditable, setLoadingSkeleton) => async (dispatch) => {
     setIsEditable(true);

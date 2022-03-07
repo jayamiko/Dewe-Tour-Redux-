@@ -23,7 +23,6 @@ const BoxProfile = ({
   setPreview,
   data,
   save,
-  setLoadingSkeleton,
 }) => {
   const {name, email, gender, phone, address, photo} = data;
   const handleChange = (e) => {

@@ -1,15 +1,12 @@
 // Import Components
-import {Carousel} from "react-bootstrap";
-import Rupiah from "../../components/Items/Format/formatRupiah";
+import Carousell from "../utils/Carousell";
 
 // Import Style
 import "./Header.scss";
-import LabuanBajo from "../../img/tour/Labuan Bajo/01-labuanbajo-carousell.jpg";
-import Beach from "../../img/tour/beach/beach-carousell.jpg";
-import Paris from "../../img/tour/France/eiffel-carousell.jpg";
 
 function Header(props) {
   const {trips, searchData, setSearchData, setIsSearching} = props;
+  const [Paris, LabuanBajo, HagiaSophia] = trips;
 
   const handleSearch = (e) => {
     setSearchData(e.target.value);
@@ -26,56 +23,11 @@ function Header(props) {
 
   return (
     <>
-      <Carousel>
-        <Carousel.Item interval={3000}>
-          <img
-            className="d-block w-100"
-            src={LabuanBajo}
-            alt="First slide"
-            width={100}
-          />
-          <Carousel.Caption className="carousel-caption">
-            <h2>
-              <b>Labuan Bajo</b>
-            </h2>
-            <div className="price-carousel">
-              <b className="carousel-price-text">Rp. {Rupiah("2000000")} </b>
-            </div>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item interval={3000}>
-          <img
-            className="d-block w-100"
-            src={Beach}
-            alt="First slide"
-            width={100}
-          />
-          <Carousel.Caption>
-            <h2>
-              <b>Maladewa Beach</b>
-            </h2>
-            <div className="price-carousel">
-              <b className="carousel-price-text">Rp. {Rupiah("5000000")} </b>
-            </div>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item interval={3000}>
-          <img
-            className="d-block w-100"
-            src={Paris}
-            alt="First slide"
-            width={100}
-          />
-          <Carousel.Caption>
-            <h2>
-              <b>Eiffel Tower</b>
-            </h2>
-            <div className="price-carousel">
-              <b className="carousel-price-text">Rp. {Rupiah("20000000")} </b>
-            </div>
-          </Carousel.Caption>
-        </Carousel.Item>
-      </Carousel>
+      <Carousell
+        LabuanBajo={LabuanBajo}
+        Paris={Paris}
+        HagiaSophia={HagiaSophia}
+      />
 
       <div className="input-group mb-3" onSubmit={handleSubmit}>
         <input
@@ -98,14 +50,7 @@ function Header(props) {
                 className="col-lg-3 col-sm-6 wow fadeInUp"
                 data-wow-delay="0.1s"
               >
-                <div
-                  className="service-item text-center pt-5"
-                  style={{
-                    backgroundColor: "#FFF",
-                    borderRadius: "10px",
-                    paddingBottom: "20px",
-                  }}
-                >
+                <div className="service-item text-center pt-5">
                   <div className="p-4">
                     <i className="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
                     <img
@@ -125,14 +70,7 @@ function Header(props) {
                 className="col-lg-3 col-sm-6 wow fadeInUp"
                 data-wow-delay="0.3s"
               >
-                <div
-                  className="service-item text-center pt-5"
-                  style={{
-                    backgroundColor: "#FFF",
-                    borderRadius: "10px",
-                    paddingBottom: "20px",
-                  }}
-                >
+                <div className="service-item text-center pt-5">
                   <div className="p-4">
                     <i className="fa fa-3x fa-globe text-primary mb-4"></i>
                     <img
@@ -152,14 +90,7 @@ function Header(props) {
                 className="col-lg-3 col-sm-6 wow fadeInUp"
                 data-wow-delay="0.5s"
               >
-                <div
-                  className="service-item text-center pt-5"
-                  style={{
-                    backgroundColor: "#FFF",
-                    borderRadius: "10px",
-                    paddingBottom: "20px",
-                  }}
-                >
+                <div className="service-item text-center pt-5">
                   <div className="p-4">
                     <i className="fa fa-3x fa-home text-primary mb-4"></i>
                     <img
@@ -179,14 +110,7 @@ function Header(props) {
                 className="col-lg-3 col-sm-6 wow fadeInUp"
                 data-wow-delay="0.7s"
               >
-                <div
-                  className="service-item text-center pt-5"
-                  style={{
-                    backgroundColor: "#FFF",
-                    borderRadius: "10px",
-                    paddingBottom: "20px",
-                  }}
-                >
+                <div className="service-item text-center pt-5">
                   <div className="p-4">
                     <i className="fa fa-3x fa-book-open text-primary mb-4"></i>
                     <img

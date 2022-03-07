@@ -135,15 +135,14 @@ exports.getTrip = async (req, res) => {
     });
 
     data = JSON.parse(JSON.stringify(data));
+    let image = JSON.parse(data.image);
 
     const newData = {
       ...data,
-      image: JSON.parse(data.image).map((image, index) => ({
-        id: index + 1,
-        url: "http://localhost:5000/uploads/" + image,
-      })),
+      image: image.map((item) => {
+        return "http://localhost:5000/uploads/" + item;
+      }),
     };
-
     res.send({
       status: "success",
       data: newData,
