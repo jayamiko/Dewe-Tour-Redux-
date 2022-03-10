@@ -1,7 +1,6 @@
 // Import React
 import React, {useState, useEffect} from "react";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {useSelector} from "react-redux";
 // Import Pages
 import {
   Home,
@@ -33,7 +32,6 @@ if (localStorage.token) {
 
 function App() {
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
-  const nameProfile = useSelector((state) => state.auth.user.name);
 
   useEffect(() => {
     checkUser();
@@ -42,21 +40,16 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoadingSkeleton(false);
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
-
-  const titleLoading =
-    document.URL === "http://localhost:3000/profile"
-      ? `${nameProfile ? `Welcome ${nameProfile}` : "...Loading"}`
-      : "Welcome To Dewe Tour";
 
   return (
     <>
       {loadingSkeleton ? (
         <div>
-          <LoadingAnimation text={titleLoading} />
+          <LoadingAnimation text="Welcome To Dewe Tour" />
         </div>
       ) : (
         <>

@@ -28,15 +28,10 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
   const [isFilter, setIsFilter] = useState(false);
 
   const [preview, setPreview] = useState(photo);
-  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
+  const [loadingAfterEdit, setLoadingAfterEdit] = useState(false);
 
   useEffect(() => {
     document.title = `Profile ${name}`;
-    const timer = setTimeout(() => {
-      setLoadingSkeleton(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
   }, []);
 
   const [form, setForm] = useState({
@@ -50,7 +45,7 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
 
   const handler = {
     handleSaveProfile: () =>
-      saveProfile(form, isEditable, setIsEditable, setLoadingSkeleton),
+      saveProfile(form, isEditable, setIsEditable, setLoadingAfterEdit),
   };
 
   const getDataTransactions = async () => {
@@ -92,9 +87,9 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
     },
   };
 
-  return loadingSkeleton ? (
+  return loadingAfterEdit ? (
     <div>
-      <LoadingAnimation text="Loading.." />
+      <LoadingAnimation text="Profile Updated" />
     </div>
   ) : (
     <div>

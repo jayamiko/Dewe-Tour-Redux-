@@ -116,9 +116,10 @@ export const handleLogin =
   };
 
 export const saveProfile =
-  (form, isEditable, setIsEditable, setLoadingSkeleton) => async (dispatch) => {
+  (form, isEditable, setIsEditable, setLoadingAfterEdit) =>
+  async (dispatch) => {
     setIsEditable(true);
-    setLoadingSkeleton(true);
+    setLoadingAfterEdit(true);
 
     const notification = (res) => {
       toast.success(res?.data.message, {
@@ -179,9 +180,9 @@ export const saveProfile =
       }
       // Set Loading
       const timer = setTimeout(() => {
-        setLoadingSkeleton(false);
+        setLoadingAfterEdit(false);
         setIsEditable(false);
-      }, 1000);
+      }, 2000);
 
       checkUser();
       return () => clearTimeout(timer);

@@ -8,6 +8,7 @@ import PaymentCard from "../../components/Items/card/PaymentCard";
 import Footer from "../../components/Footer/Footer";
 import ModalPopUp from "../../components/Items/modal/popUp";
 import NotData from "../../components/atoms/NotData/NotData";
+import LoadingAnimation from "../../components/atoms/Loading/Loading";
 
 // Import Style
 import "./Payment.scss";
@@ -22,6 +23,15 @@ export default function Payment() {
 
   const [isShow, setIsShow] = useState(false);
   const [transaction, setTransaction] = useState(null);
+
+  const [loadingSkeleton, setLoadingSkeleton] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingSkeleton(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     document.title = "Payment";
@@ -85,9 +95,13 @@ export default function Payment() {
     setIsShow(true);
   };
 
-  return (
+  return loadingSkeleton ? (
     <>
-      <div style={{height: "120vh"}}>
+      <LoadingAnimation text="Welcome Dewe Tour" />
+    </>
+  ) : (
+    <>
+      <div>
         <div className="background-nav">
           <Navbar />
         </div>
