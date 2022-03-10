@@ -14,6 +14,7 @@ import Progress from "../Items/Progress/ProgressQuota";
 
 // Import Syle
 import "./Main.scss";
+import "./TripCard.scss";
 
 function TripCard({getTrips, trips: {tripsAll}}) {
   useEffect(() => {
@@ -22,7 +23,7 @@ function TripCard({getTrips, trips: {tripsAll}}) {
 
   let navigate = useNavigate();
 
-  const [dataTrip, setDataTrip] = useState(tripsAll.slice(0, 50));
+  const dataTrip = tripsAll.slice(0, 50);
   const [pageNumber, setPageNumber] = useState(0);
 
   const currentState = useSelector((state) => state);
@@ -40,7 +41,7 @@ function TripCard({getTrips, trips: {tripsAll}}) {
           className={`${item.quota > 0 ? "area-card-trip" : "d-none"}`}
         >
           <Link to={`/detail/${item.id}`} className="text-decoration-none">
-            <div className="card-trip">
+            <div className="card-trip-admin">
               <img
                 src={item.image[0].url}
                 alt={item.title}
@@ -52,23 +53,19 @@ function TripCard({getTrips, trips: {tripsAll}}) {
                 {item.quota}/{item.maxQuota}
               </div>
               <Progress value={item.quota} maxQuota={item.maxQuota} />
-              <div className="card-body">
-                <h5 className="card-title mb-3 text-dark fw-bold text-truncate">
-                  {item.title}
-                </h5>
-                <div className="card-text d-flex justify-content-between">
+              <div className="label-card-admin">
+                <h5 className="label-card-title-admin">{item.title}</h5>
+                <div className="label-country-price-admin">
+                  <span className="label-country-admin">{item.country}</span>
                   {isAdmin ? (
-                    <span style={{color: "orange"}}>
+                    <span className="label-price-admin">
                       Rp. {(item.maxQuota - item.quota) * item.price}
                     </span>
                   ) : (
-                    <span style={{color: "orange"}}>
+                    <span className="label-price-admin">
                       Rp. {Rupiah(item.price)}
                     </span>
                   )}
-                  <span style={{color: "rgb(55, 184, 235)"}}>
-                    {item.country}
-                  </span>
                 </div>
               </div>
             </div>
@@ -86,14 +83,16 @@ function TripCard({getTrips, trips: {tripsAll}}) {
   return (
     <>
       <div className="main-admin">
-        <button
-          className="btn-add-trip"
-          onClick={() => {
-            navigate("/add-trip");
-          }}
-        >
-          + Add Trip
-        </button>
+        <div className="area-btn-add-trip">
+          <button
+            className="btn-add-trip"
+            onClick={() => {
+              navigate("/add-trip");
+            }}
+          >
+            + Add Trip
+          </button>
+        </div>
         <div className="content-trip-admin">{displayTrips}</div>
         <div className="paginate-content">
           <ReactPaginate

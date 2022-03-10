@@ -1,13 +1,12 @@
 // Import React
 import React, {useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 import {Navbar, Nav, Container} from "react-bootstrap";
 import store from "../../../store";
 
 // Import Style
 import "./NavAdmin.scss";
 import {toast} from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Icon from "../../../img/Icon1.png";
 import IconChat from "../../../img/chat-icon.png";
 import TransactionIcon from "../../../img/icontrans.png";
@@ -19,8 +18,6 @@ import Logout from "../../../img/logout.png";
 import {checkUser} from "../../../config/auth";
 import {setAuthToken} from "../../../config/api";
 
-toast.configure();
-
 function NavbarAdmin() {
   let navigate = useNavigate();
   const logoutSession = () => {
@@ -29,7 +26,6 @@ function NavbarAdmin() {
     });
 
     navigate("/");
-    window.location.reload();
     toast.success("Logout success, welcome back anytime", {
       position: toast.POSITION.BOTTOM_RIGHT,
       autoClose: 2000,
@@ -50,17 +46,19 @@ function NavbarAdmin() {
     <>
       <Navbar collapseOnSelect expand="lg" className="navbar-admin">
         <Container>
-          <Navbar.Brand href="/">
-            <img src={Icon} alt="" />
-          </Navbar.Brand>
+          <Link to={`/`}>
+            <Navbar.Brand href="/">
+              <img src={Icon} alt="icon-brand" />
+            </Navbar.Brand>
+          </Link>
           <>
             <Navbar.Toggle
               aria-controls="responsive-navbar-nav"
-              style={{border: "solid 1px whitesmoke"}}
+              className="toggle-nav"
             />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="nav-admin">
-                {/* <Nav.Link eventKey={1} href="/message">
+                <Link to={`/admin-message`} className="nav-link">
                   <span className="text-nav-admin">
                     <img
                       src={IconChat}
@@ -70,8 +68,8 @@ function NavbarAdmin() {
                     />
                     Chat
                   </span>
-                </Nav.Link> */}
-                <Nav.Link eventKey={2} href="/add-trip">
+                </Link>
+                <Link to={`/add-trip`} className="nav-link">
                   <span className="text-nav-admin">
                     <img
                       src={AddData}
@@ -81,8 +79,8 @@ function NavbarAdmin() {
                     />
                     Add Trip
                   </span>
-                </Nav.Link>
-                <Nav.Link eventKey={3} href="/list-transaction">
+                </Link>
+                <Link to={`/list-transaction`} className="nav-link">
                   <span className="text-nav-admin">
                     <img
                       src={TransactionIcon}
@@ -92,9 +90,9 @@ function NavbarAdmin() {
                     />
                     Transaction
                   </span>
-                </Nav.Link>
-                <Nav.Link href="/stats">
-                  <span eventKey={4} className="text-nav-admin">
+                </Link>
+                <Link to={`/stats`} className="nav-link">
+                  <span className="text-nav-admin">
                     <img
                       src={Stats}
                       alt="icon-statistik"
@@ -103,9 +101,9 @@ function NavbarAdmin() {
                     />
                     Statistik
                   </span>
-                </Nav.Link>
-                <Nav.Link eventKey={5} href="/" onClick={logoutSession}>
-                  <span className="text-nav-admin">
+                </Link>
+                <Link to={`/`} className="nav-link">
+                  <span className="text-nav-admin" onClick={logoutSession}>
                     <img
                       src={Logout}
                       alt="icon-chat"
@@ -114,7 +112,7 @@ function NavbarAdmin() {
                     />
                     Logout
                   </span>
-                </Nav.Link>
+                </Link>
               </Nav>
             </Navbar.Collapse>
           </>

@@ -15,7 +15,7 @@ export default function Carousell({LabuanBajo, Paris, HagiaSophia}) {
           />
           <Carousel.Caption className="carousel-caption">
             <h2>
-              <b>Labuan Bajo</b>
+              <b>{LabuanBajo?.title}</b>
             </h2>
             <div className="price-carousel">
               <b className="carousel-price-text">
@@ -33,7 +33,7 @@ export default function Carousell({LabuanBajo, Paris, HagiaSophia}) {
           />
           <Carousel.Caption>
             <h2>
-              <b>Maladewa Beach</b>
+              <b>{Paris?.title}</b>
             </h2>
             <div className="price-carousel">
               <b className="carousel-price-text">Rp. {Rupiah(Paris?.price)} </b>
@@ -49,7 +49,7 @@ export default function Carousell({LabuanBajo, Paris, HagiaSophia}) {
           />
           <Carousel.Caption>
             <h2>
-              <b>Eiffel Tower</b>
+              <b>{HagiaSophia?.title}</b>
             </h2>
             <div className="price-carousel">
               <b className="carousel-price-text">

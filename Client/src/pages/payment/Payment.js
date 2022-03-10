@@ -12,12 +12,9 @@ import NotData from "../../components/atoms/NotData/NotData";
 // Import Style
 import "./Payment.scss";
 import {toast} from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 // Import API
 import {API} from "../../config/api";
-
-toast.configure();
 
 export default function Payment() {
   const currentState = useSelector((state) => state.auth);

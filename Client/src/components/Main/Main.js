@@ -126,7 +126,7 @@ export default function GroupTour({data, isAdmin, searchData}) {
                       >
                         <Link
                           to={`/detail/${item.id}`}
-                          style={{textDecoration: "none"}}
+                          className="link-card-trip"
                         >
                           <div className="card-trip">
                             <img
@@ -141,24 +141,22 @@ export default function GroupTour({data, isAdmin, searchData}) {
                               value={item.quota}
                               maxQuota={item.maxQuota}
                             />
-                            <div className="card-body">
-                              <h5 className="card-title mb-3 text-dark fw-bold text-truncate">
-                                {item.title}
-                              </h5>
-                              <div className="card-text d-flex justify-content-between">
+                            <div className="label-card">
+                              <h5 className="label-card-title">{item.title}</h5>
+                              <div className="label-country-price">
+                                <span className="label-country">
+                                  {item.country}
+                                </span>
                                 {isAdmin ? (
-                                  <span style={{color: "orange"}}>
+                                  <span className="label-price">
                                     Rp.{" "}
                                     {(item.maxQuota - item.quota) * item.price}
                                   </span>
                                 ) : (
-                                  <span style={{color: "orange"}}>
+                                  <span className="label-price">
                                     Rp. {Rupiah(item.price)}
                                   </span>
                                 )}
-                                <span style={{color: "rgb(55, 184, 235)"}}>
-                                  {item.country}
-                                </span>
                               </div>
                             </div>
                           </div>

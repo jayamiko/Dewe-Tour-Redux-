@@ -1,0 +1,150 @@
+:root {
+  --font: Avenir;
+  --orange: #ffaf00;
+  --blue: #3490dc;
+}
+
+.area-card-trip {
+  .card-trip-admin {
+    border-radius: 10px;
+    box-shadow: 2;
+    padding: 15px;
+    box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.1);
+    transition: 1s;
+    background-color: #ffffff;
+  }
+  .card-trip-admin:hover {
+    transform: scale(1.2);
+    z-index: 2;
+    box-shadow: 2px 2px 2px #000;
+  }
+}
+.label-card-admin {
+  margin-top: 10px;
+  padding: 0px 5px;
+  .label-card-title-admin {
+    margin-bottom: 0px;
+    font-weight: 800;
+    color: var(--blue);
+    font-family: var(--font);
+    font-size: 18px;
+  }
+  .label-country-price-admin {
+    display: flex;
+    justify-content: space-between;
+    .label-country-admin {
+      font-family: var(--font);
+      color: var(--orange);
+      font-style: italic;
+    }
+    .label-price-admin {
+      color: var(--blue);
+      font-weight: 600;
+      font-size: 18px;
+    }
+  }
+}
+
+// TripCard Style
+.container-incometrip {
+  margin-bottom: 100px !important;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 50px;
+  .head-incometrip {
+    .title-incometrip {
+      font-family: var(--font);
+      font-weight: Bold;
+    }
+  }
+
+  .main-admin {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 20px;
+    margin-left: 50px;
+    width: 100%;
+    justify-content: center !important;
+    .area-btn-add-trip {
+      display: flex;
+      justify-content: center;
+      .btn-add-trip {
+        width: 35%;
+        background: var(--orange);
+        border-radius: 5px;
+        font-family: var(--font);
+        font-style: normal;
+        padding: 5px;
+        font-weight: 900;
+        font-size: 18px;
+        line-height: 25px;
+        color: #ffffff;
+      }
+    }
+    .content-trip-admin {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      .area-card-trip {
+        border-radius: 10px;
+        box-shadow: 2;
+        padding: 15px;
+        transition: 1s;
+      }
+      .area-card-trip:hover {
+        transform: scale(0.9);
+        z-index: 2;
+        box-shadow: 2px 2px 2px #000;
+      }
+    }
+
+    .paginate-content {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+/* Paginate Style */
+// Container Pagination
+.paginationBttns {
+  height: 60px;
+  align-items: center;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  color: white;
+  padding: 5px 50px;
+}
+
+//Container Pagination (Link)
+.paginationBttns a {
+  background-color: var(--orange);
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+//Container Pagination (Link Saat Disorot)
+.paginationBttns a:hover {
+  font-weight: bold;
+  background-color: var(--blue);
+}
+// Page Active
+.paginationActive a {
+  background-color: var(--blue);
+}
+
+// Button Previous Style
+// .paginationDisabled a {
+// }
+
+.paginationDisabled a:hover {
+  font-weight: bold;
+  background-color: maroon;
+}

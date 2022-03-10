@@ -21,7 +21,6 @@ export const checkUser = () => async (dispatch) => {
 
   try {
     const res = await API.get("/check-auth");
-    console.log(res);
     dispatch({
       type: USER_LOADED,
       payload: res.data.data.user,
@@ -98,8 +97,6 @@ export const handleLogin =
           position: toast.POSITION.BOTTOM_RIGHT,
           autoClose: 2000,
         });
-        //ambil data user
-        // dispatch(checkUser());
       }
       closeModalLogin();
       dispatch({
@@ -122,6 +119,13 @@ export const saveProfile =
   (form, isEditable, setIsEditable, setLoadingSkeleton) => async (dispatch) => {
     setIsEditable(true);
     setLoadingSkeleton(true);
+
+    const notification = (res) => {
+      toast.success(res?.data.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 2000,
+      });
+    };
     try {
       if (typeof form.photo === "object") {
         const formData = new FormData();
@@ -142,17 +146,13 @@ export const saveProfile =
 
         const response = await API.patch("/user", body, config);
 
-        // Set Loading
-        const timer = setTimeout(() => {
-          setIsEditable(false);
-          setLoadingSkeleton(false);
-        }, 1000);
+        // // Set Loading
+        // const timer = setTimeout(() => {
+        //   setIsEditable(false);
+        //   setLoadingSkeleton(false);
+        // }, 1000);
 
-        // Set Notif
-        toast.success(response?.data.message, {
-          position: toast.POSITION.BOTTOM_RIGHT,
-          autoClose: 2000,
-        });
+        notification(response);
         dispatch({
           type: UPDATE_USER_SUCCESS,
           payload: response.data,
@@ -169,10 +169,8 @@ export const saveProfile =
         const body = form;
 
         const response = await API.patch("/user/specific", body, config);
-        toast.success(response?.data.message, {
-          position: toast.POSITION.BOTTOM_RIGHT,
-          autoClose: 2000,
-        });
+
+        notification(response);
 
         dispatch({
           type: UPDATE_USER_SUCCESS,

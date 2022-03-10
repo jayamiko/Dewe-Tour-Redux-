@@ -37,6 +37,7 @@ function Home({
         <>
           <Navbar />
           <Main data={tripsAll} isAdmin={isAdmin} />
+          <Footer />
         </>
       ) : (
         <>

@@ -1,13 +1,19 @@
-.navbar-admin {
-  background-color: rgb(55, 184, 235);
-  margin-bottom: 100px;
+.navbar {
+  background-color: #3490dc;
 }
 
 .nav-admin {
-  width: 55%;
-  margin-left: 31vw;
-  margin-top: 17px;
+  width: fit-content;
+  margin-left: 35vw;
+  .nav-link {
+    text-decoration: none;
+  }
 }
+
+.toggle-nav {
+  border: solid whitesmoke 1px !important;
+}
+
 .text-nav-admin {
   font-size: 18px;
   font-family: Avenir;

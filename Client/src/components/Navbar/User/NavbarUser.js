@@ -3,11 +3,11 @@ import React from "react";
 import {useEffect} from "react";
 import store from "../../../store";
 import {Navbar, Nav, Container} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 // Import Style
 import "./NavUser.scss";
 import {toast} from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Icon from "../../../img/Icon1.png";
 import IconChat from "../../../img/chat-icon.png";
 import User from "../../../img/user.png";
@@ -17,8 +17,6 @@ import Logout from "../../../img/logout.png";
 // Import API
 import {setAuthToken} from "../../../config/api";
 import {checkUser} from "../../../config/auth";
-
-toast.configure();
 
 function UserDropdown() {
   const logoutSession = () => {
@@ -34,8 +32,6 @@ function UserDropdown() {
       position: toast.POSITION.BOTTOM_RIGHT,
       autoClose: 2000,
     });
-
-    window.location.reload();
   };
 
   useEffect(() => {
@@ -52,17 +48,19 @@ function UserDropdown() {
     <>
       <Navbar collapseOnSelect expand="lg" className="navbar">
         <Container>
-          <Navbar.Brand href="/">
-            <img src={Icon} alt="" />
-          </Navbar.Brand>
+          <Link to={"/"}>
+            <Navbar.Brand href="/">
+              <img src={Icon} alt="" />
+            </Navbar.Brand>
+          </Link>
           <>
             <Navbar.Toggle
               aria-controls="responsive-navbar-nav"
-              style={{border: "solid 1px whitesmoke"}}
+              className="toggle-nav"
             />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="nav-user">
-                {/* <Nav.Link eventKey={1} href="/message">
+                <Link to={`/message`} className="nav-link">
                   <span className="text-nav-user">
                     <img
                       src={IconChat}
@@ -72,8 +70,8 @@ function UserDropdown() {
                     />
                     Chat
                   </span>
-                </Nav.Link> */}
-                <Nav.Link eventKey={2} href="/payment">
+                </Link>
+                <Link to={`/payment`} className="nav-link">
                   <span className="text-nav-user">
                     <img
                       src={Payment}
@@ -83,9 +81,9 @@ function UserDropdown() {
                     />
                     Payment
                   </span>
-                </Nav.Link>
-                <Nav.Link href="/profile">
-                  <span eventKey={3} className="text-nav-user">
+                </Link>
+                <Link to={"/profile"} className="nav-link">
+                  <span className="text-nav-user">
                     <img
                       src={User}
                       alt="icon-profile"
@@ -94,9 +92,9 @@ function UserDropdown() {
                     />
                     Profile
                   </span>
-                </Nav.Link>
-                <Nav.Link eventKey={4} href="/" onClick={logoutSession}>
-                  <span className="text-nav-user">
+                </Link>
+                <Link to={`/`} className="nav-link">
+                  <span className="text-nav-user" onClick={logoutSession}>
                     <img
                       src={Logout}
                       alt="icon-chat"
@@ -105,7 +103,7 @@ function UserDropdown() {
                     />
                     Logout
                   </span>
-                </Nav.Link>
+                </Link>
               </Nav>
             </Navbar.Collapse>
           </>

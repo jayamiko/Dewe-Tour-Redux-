@@ -4,6 +4,7 @@ import {Container} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
 // Import Components
 import ModalLogin from "../Items/modal/ModalLogin";
@@ -12,7 +13,7 @@ import NavbarAdmin from "./Admin/NavbarAdmin";
 import NavbarUser from "./User/NavbarUser";
 
 // Import Style
-import "./Navbar.css";
+import "./Navbar.scss";
 import Icon from "../../img/Icon1.png";
 import {Navbar, Nav} from "react-bootstrap";
 
@@ -51,9 +52,11 @@ const NavbarComp = ({auth: {isAuthenticated, user, isLoading}}) => {
           <>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
               <Container>
-                <Navbar.Brand href="/">
-                  <img src={Icon} alt="" />
-                </Navbar.Brand>
+                <Link to={`/`}>
+                  <Navbar.Brand href="/">
+                    <img src={Icon} alt="" />
+                  </Navbar.Brand>
+                </Link>
                 <Navbar.Toggle
                   aria-controls="responsive-navbar-nav"
                   style={{border: "solid 1px whitesmoke"}}

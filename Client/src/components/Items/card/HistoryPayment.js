@@ -4,6 +4,7 @@ import formatNumber from "../Format/formatNumber";
 import formatWeek from "../Format/formatWeek";
 import Logo from "../../../img/Icon.png";
 import Nodata from "../../../img/no-data.jpg";
+import "./HistoryPayment.scss";
 
 export default function PaymentCard({data, setData}) {
   const [preview, setPreview] = useState(null);
@@ -16,9 +17,7 @@ export default function PaymentCard({data, setData}) {
   }
 
   return (
-    // <section className="payment-card">
     <>
-      {/* <div className="container"> */}
       <div className="card border border-secondary w-100 mb-3">
         <div className="card-body">
           <div className="row mb-3">
@@ -39,12 +38,6 @@ export default function PaymentCard({data, setData}) {
               <div className="fw-bold fs-5">{data?.trip.title}</div>
               <div className="text-muted mb-4">{data?.trip.country.name}</div>
               <div
-                style={{
-                  position: "absolute",
-                  marginTop: "120px",
-                  marginLeft: "20px",
-                  borderRadius: "2px",
-                }}
                 className={`notif p-1 d-flex justify-content-center align-items-center 
                   ${data?.status === "Waiting Payment" && "notifWarning"}
                   ${data?.status === "Waiting Approve" && "notifWarning"}
@@ -159,9 +152,7 @@ export default function PaymentCard({data, setData}) {
           </div>
         </div>
       </div>
-      {/* </div> */}
       <hr></hr>
     </>
-    // </section>
   );
 }
