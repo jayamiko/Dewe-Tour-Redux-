@@ -1,0 +1,35 @@
+.btn-filters {
+  width: fit-content;
+  margin-top: 10px;
+  cursor: pointer;
+  .waiting-approve-filter {
+    background-color: orange;
+    height: 40px;
+    color: #fff;
+    padding: 0px 20px;
+    cursor: pointer;
+  }
+  .waiting-approve-filter:hover {
+    background-color: rgb(226, 148, 1);
+  }
+  .approve-filter {
+    background-color: green;
+    height: 40px;
+    color: #fff;
+    padding: 0px 40px;
+    cursor: pointer;
+  }
+  .approve-filter:hover {
+    background-color: rgb(2, 109, 2);
+  }
+  .cancel-filter {
+    background-color: maroon;
+    height: 40px;
+    color: #fff;
+    padding: 0px 40px;
+    cursor: pointer;
+  }
+  .cancel-filter:hover {
+    background-color: rgb(177, 2, 2);
+  }
+}

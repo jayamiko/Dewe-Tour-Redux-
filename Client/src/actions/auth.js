@@ -147,18 +147,19 @@ export const saveProfile =
 
         const response = await API.patch("/user", body, config);
 
-        // // Set Loading
-        // const timer = setTimeout(() => {
-        //   setIsEditable(false);
-        //   setLoadingSkeleton(false);
-        // }, 1000);
-
         notification(response);
         dispatch({
           type: UPDATE_USER_SUCCESS,
           payload: response.data,
         });
 
+        // Set Loading
+        const timer = setTimeout(() => {
+          setLoadingAfterEdit(false);
+          setIsEditable(false);
+        }, 2000);
+
+        checkUser();
         return () => clearTimeout(timer);
       } else {
         const config = {

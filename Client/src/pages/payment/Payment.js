@@ -115,15 +115,17 @@ export default function Payment() {
             </div>
           ) : (
             <>
-              <PaymentCard data={transaction} setData={setTransaction} />
-              <>
+              <div className="container-payment">
+                <PaymentCard data={transaction} setData={setTransaction} />
                 {transaction?.attachment &&
                   transaction?.status === "Waiting Approve" && (
-                    <button className="btn-pay" onClick={handlePay}>
-                      PAY
-                    </button>
+                    <div>
+                      <button className="btn-pay" onClick={handlePay}>
+                        PAY
+                      </button>
+                    </div>
                   )}
-              </>
+              </div>
               <ModalPopUp isShow={isShow} handleClose={handleClose} />
             </>
           )}

@@ -16,6 +16,7 @@ import "./Profile.scss";
 
 // Import API
 import {API} from "../../config";
+import {ButtonFilter} from "../../components/utils/Button";
 
 const ProfilePage = ({auth: {user}, saveProfile}) => {
   const {name, email, gender, phone, address, photo} = user;
@@ -111,31 +112,8 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
         <div>
           <h1 className="title-history-trip">History Trip</h1>
           <div>
-            <section className="container mx-auto">
-              <div className="bg-blue-100 flex my-10">
-                <button
-                  onClick={handlerFilterData.byStatus}
-                  id="Waiting Approve"
-                  className="bg-gray-50 py-2 px-4 w-full hover:bg-yellow-500 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
-                >
-                  Waiting Approve
-                </button>
-                <button
-                  onClick={handlerFilterData.byStatus}
-                  id="Approve"
-                  className="bg-gray-50 py-2 px-4 w-full hover:bg-green-500 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
-                >
-                  Approve
-                </button>
-                <button
-                  onClick={handlerFilterData.byStatus}
-                  id="Cancel"
-                  className="bg-gray-50 py-2 px-4 w-full hover:bg-red-600 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
-                >
-                  Canceled
-                </button>
-              </div>
-
+            <section className="container-history-trip">
+              <ButtonFilter props={handlerFilterData} />
               {handlerFilterData.byUser && !isFilter ? (
                 <>
                   {handlerFilterData.byUser.map((item, index) => {
@@ -145,7 +123,7 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
                           data={item}
                           key={`paymentCard-${index}`}
                         />
-                        {/* <hr></hr> */}
+                        <hr></hr>
                       </div>
                     );
                   })}
@@ -168,13 +146,19 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
                   </>
                 )
               )}
-
-              {handlerFilterData.byUser.length === 0 ||
-                (filterData.length === 0 && (
-                  <div>
+              {/* TAMPILAN SAAT TIDAK ADA DATA */}
+              {handlerFilterData.byUser.length === 0 ? (
+                <>
+                  <NotData name={name} />
+                </>
+              ) : (
+                filterData.length === 0 &&
+                isFilter && (
+                  <>
                     <NotData name={name} />
-                  </div>
-                ))}
+                  </>
+                )
+              )}
             </section>
           </div>
         </div>

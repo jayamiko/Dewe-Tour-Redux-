@@ -1,10 +1,26 @@
-.card-body {
-  display: flex;
-  justify-content: space-between;
+.history-payment {
+  border: solid black 1px;
+  background-color: #fff;
+  padding: 15px;
+  margin: 20px 0px;
 }
 
-@media only screen and (max-width: 991px) {
-  .card-body {
-    margin-right: 0;
-  }
+.notifStatus {
+  align-items: center !important;
+  justify-content: center !important;
+  color: orange !important;
+  border-radius: 2px;
+  background: cornsilk;
+  border: solid black 1px;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 10vw;
+  font-size: 0.75em;
+  margin-top: -50px;
 }

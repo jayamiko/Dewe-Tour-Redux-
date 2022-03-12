@@ -6,15 +6,15 @@ import {Link} from "react-router-dom";
 import TripAdmin from "./Admin/TripAdmin";
 import {formatRupiah} from "../Items/Format";
 import Progress from "../Items/Progress/ProgressQuota";
+import {TableIncome} from "../Items/Table";
+import {Container} from "react-bootstrap";
+import {toast} from "react-toastify";
 
 // Import Syle
 import "./TripCard.scss";
-import {toast} from "react-toastify";
-import {Container} from "react-bootstrap";
 
 // Import API
 import {API} from "../../config";
-import {TableIncome} from "../Items/Table";
 
 export default function GroupTour({data, isAdmin, searchData}) {
   const [trip, setTrip] = useState([]);

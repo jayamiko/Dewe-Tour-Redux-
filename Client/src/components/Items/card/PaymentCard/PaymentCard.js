@@ -13,7 +13,7 @@ export default function PaymentCard({data, setData}) {
   const [preview, setPreview] = useState(null);
 
   return (
-    <div className="cardPayment">
+    <div>
       <div className="row mb-3">
         <div className="d-flex justify-content-between">
           <img src={Icon} alt="Dewe Tour Logo" width="190" height="68" />

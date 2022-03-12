@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-.cardPayment {
+.card-payment {
   padding: 15px;
   background-color: #ffffff;
   margin: 100px 180px;
@@ -10,9 +10,8 @@
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-evenly;
-  .cardBodyPayment {
-    border: solid red;
-  }
+  border: solid pink !important;
+  margin: 100px;
 }
 
 .btnChange {
