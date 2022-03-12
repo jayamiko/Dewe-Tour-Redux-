@@ -14,16 +14,14 @@ import {
   Chart,
   NotFoundPage,
 } from "./pages";
-import AuthRoute from "./components/PrivateRoutes/AuthRoute";
-import AdminRoute from "./components/PrivateRoutes/AdminRoute";
+import {AuthRoute, AdminRoute} from "./components/PrivateRoutes";
 
 // Import Style
 import "./App.css";
-import LoadingAnimation from "./components/atoms/Loading/Loading";
+import {LoadingAnimation} from "./components/atoms";
 
 // Import API
-import {checkUser} from "./config/auth";
-import {setAuthToken} from "./config/api";
+import {checkUser, setAuthToken} from "./config";
 
 // init token on axios every time the app is refreshed
 if (localStorage.token) {

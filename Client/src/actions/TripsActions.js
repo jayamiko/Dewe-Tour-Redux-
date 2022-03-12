@@ -1,4 +1,4 @@
-import {API} from "../config/api";
+import {API} from "../config/API/api";
 
 export const GET_TRIPS = "GET_TRIPS";
 export const GET_TRIPS_FAIL = "GET_TRIPS_FAIL";

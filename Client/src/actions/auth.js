@@ -1,4 +1,4 @@
-import {API, setAuthToken} from "../config/api";
+import {API, setAuthToken} from "../config";
 import {toast} from "react-toastify";
 
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";

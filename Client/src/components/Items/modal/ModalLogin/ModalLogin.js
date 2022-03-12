@@ -1,20 +1,18 @@
 // Import React
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 
 // Import Libraries
 import {connect} from "react-redux";
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 
 // Import Components
-import {handleLogin} from "../../../actions/auth";
+import {handleLogin} from "../../../../actions/auth";
 import {Button, Modal, Form} from "react-bootstrap";
-import {auth} from "../../../firebase";
 
 // Import API
-import {setAuthToken} from "../../../config/api";
+import {setAuthToken} from "../../../../config";
 
 const Login = ({
   handleLogin,
@@ -25,50 +23,6 @@ const Login = ({
   modal,
   setModal,
 }) => {
-  // const [authGoogle, setAuthGoogle] = useState({
-  //   name: "",
-  //   email: "",
-  //   phone: null,
-  //   photo: null,
-  // });
-
-  // const signInWithGoogle = () => {
-  //   const provider = new GoogleAuthProvider();
-  //   signInWithPopup(auth, provider)
-  //     .then((res) => {
-  //       const authGoogle = res.user;
-  //       const name = authGoogle.displayName;
-  //       const email = authGoogle.email;
-  //       const phone = authGoogle.phoneNumber;
-  //       const photo = authGoogle.photoURL;
-
-  //       handleRegister(
-  //         name,
-  //         email,
-  //         "Password123",
-  //         "Male",
-  //         phone,
-  //         null,
-  //         setModal
-  //       );
-
-  //       console.log(
-  //         handleRegister(
-  //           name,
-  //           email,
-  //           "Password123",
-  //           null,
-  //           phone,
-  //           null,
-  //           setModal
-  //         )
-  //       );
-  //     })
-  //     .catch((err) => {
-  //       console.log("Register Google Err: ", err);
-  //     });
-  // };
-
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -148,7 +102,6 @@ const Login = ({
               >
                 Submit
               </Button>
-              {/* <GoogleLoginBtn /> */}
               <small className="text-center">
                 Don't have an account ? click{" "}
                 <a onClick={openModalRegister} href="#register">

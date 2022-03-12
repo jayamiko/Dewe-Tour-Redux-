@@ -7,8 +7,7 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
 // Import Components
-import ModalLogin from "../Items/modal/ModalLogin";
-import ModalRegister from "../Items/modal/ModalRegister";
+import {ModalLogin, ModalRegister} from "../Items/modal";
 import NavbarAdmin from "./Admin/NavbarAdmin";
 import NavbarUser from "./User/NavbarUser";
 

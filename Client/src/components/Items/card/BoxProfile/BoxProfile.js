@@ -6,13 +6,13 @@ import {FloatingLabel, Form} from "react-bootstrap";
 import "./BoxProfile.scss";
 
 // Import Icon
-import AvatarDefault from "../../../img/ProfileDefault.png";
-import Avatar from "../../../img/avatar.png";
-import Envelope from "../../../img/envelope.png";
-import GenderIcon from "../../../img/gender-icon.png";
-import Call from "../../../img/phone.png";
-import Map from "../../../img/map.png";
-import EditIcon from "../../../img/symbol-edit.png";
+import AvatarDefault from "../../../../img/ProfileDefault.png";
+import Avatar from "../../../../img/avatar.png";
+import Envelope from "../../../../img/envelope.png";
+import GenderIcon from "../../../../img/gender-icon.png";
+import Call from "../../../../img/phone.png";
+import Map from "../../../../img/map.png";
+import EditIcon from "../../../../img/symbol-edit.png";
 
 const BoxProfile = ({
   isEditable,

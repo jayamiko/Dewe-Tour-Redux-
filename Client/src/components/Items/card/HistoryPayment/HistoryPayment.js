@@ -1,10 +1,9 @@
 import {useState} from "react";
-import InputFileProofPayment from "../../Button/Input/InputFileProofPayment";
-import formatNumber from "../Format/formatNumber";
-import formatWeek from "../Format/formatWeek";
-import Logo from "../../../img/Icon.png";
-import Nodata from "../../../img/no-data.jpg";
+import {InputProof} from "../../../utils/Input";
+import {formatNumber, formatWeek} from "../../Format";
 import "./HistoryPayment.scss";
+import Logo from "../../../../img/Icon.png";
+import Nodata from "../../../../img/no-data.jpg";
 
 export default function PaymentCard({data, setData}) {
   const [preview, setPreview] = useState(null);
@@ -82,7 +81,7 @@ export default function PaymentCard({data, setData}) {
             </div>
             <div className="col">
               {!data?.attachment && data?.status === "Waiting Payment" && (
-                <InputFileProofPayment
+                <InputProof
                   setData={setData}
                   preview={preview}
                   setPreview={setPreview}

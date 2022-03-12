@@ -1,5 +1,5 @@
 // Import Components
-import Carousell from "../utils/Carousell";
+import Carousell from "../utils/Carousell/Carousell";
 
 // Import Style
 import "./Header.scss";

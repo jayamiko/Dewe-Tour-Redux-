@@ -3,18 +3,18 @@ import React, {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 
 // Import Components
-import TripCard from "./TripCard";
-import Rupiah from "../../components/Items/Format/formatRupiah";
+import TripAdmin from "./Admin/TripAdmin";
+import {formatRupiah} from "../Items/Format";
 import Progress from "../Items/Progress/ProgressQuota";
 
 // Import Syle
-import "./Main.scss";
+import "./TripCard.scss";
 import {toast} from "react-toastify";
 import {Container} from "react-bootstrap";
 
 // Import API
-import {API} from "../../config/api";
-import TableIncome from "../Items/Table/IncomeTrip/TableIncome";
+import {API} from "../../config";
+import {TableIncome} from "../Items/Table";
 
 export default function GroupTour({data, isAdmin, searchData}) {
   const [trip, setTrip] = useState([]);
@@ -82,10 +82,9 @@ export default function GroupTour({data, isAdmin, searchData}) {
                 rowPage={rowsPerPage}
                 page={page}
               />
-              ;
             </div>
             {/* CONTENT TRIP */}
-            <TripCard />
+            <TripAdmin />
           </Container>
         ) : (
           <>
@@ -154,7 +153,7 @@ export default function GroupTour({data, isAdmin, searchData}) {
                                   </span>
                                 ) : (
                                   <span className="label-price">
-                                    Rp. {Rupiah(item.price)}
+                                    Rp. {formatRupiah(item.price)}
                                   </span>
                                 )}
                               </div>

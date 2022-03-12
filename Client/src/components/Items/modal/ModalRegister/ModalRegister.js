@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 
 // Import Libraries
-import {auth} from "../../../firebase";
+import {auth} from "../../../../firebase";
 import {connect} from "react-redux";
 import {useFormik} from "formik";
 import * as Yup from "yup";
@@ -11,9 +11,9 @@ import {signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 
 // Import Components
 import {Button, Modal, Form} from "react-bootstrap";
-import {handleRegister} from "../../../actions/auth";
-import ButtonGoogleLogin from "../../Button/GoogleLogin/GoogleLogin";
-import InputPhone from "../../Button/Input/InputPhone";
+import {handleRegister} from "../../../../actions/auth";
+import {ButtonGoogleLogin} from "../../../utils/Button";
+import {InputPhone} from "../../../utils/Input";
 
 // Import Style
 import {toast} from "react-toastify";
@@ -225,11 +225,10 @@ const Register = ({
               </Button>
               <small className="text-center">
                 Have an account ? click{" "}
-                <a onClick={openModalLogin} href="">
+                <a onClick={openModalLogin} href="#services">
                   Here
                 </a>
               </small>
-              {/* <GoogleLoginBtn /> */}
             </div>
           </Form>
         </Modal.Body>

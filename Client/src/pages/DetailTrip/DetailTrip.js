@@ -11,8 +11,8 @@ import moment from "moment";
 import {Container} from "react-bootstrap";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import ModalLogin from "../../components/Items/modal/ModalLogin2";
-import Rupiah from "../../components/Items/Format/formatRupiah";
+import {ModalLogin} from "../../components/Items/modal";
+import {formatRupiah} from "../../components/Items/Format";
 
 // Import Style & Images
 import "./DetailTrip.css";
@@ -25,7 +25,7 @@ import Time from "../../img/time.png";
 import Meal from "../../img/meal.png";
 
 // Import API
-import {API} from "../../config/api";
+import {API} from "../../config";
 
 toast.configure();
 
@@ -282,7 +282,7 @@ const DetailTrip = ({
 
               <div className="total">
                 <div className="title-total">Total :</div>
-                <p>Rp. {Rupiah(totalPrice)}</p>
+                <p>Rp. {formatRupiah(totalPrice)}</p>
               </div>
               <hr />
               <button

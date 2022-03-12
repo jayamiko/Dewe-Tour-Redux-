@@ -15,8 +15,7 @@ import Payment from "../../../img/Vector.png";
 import Logout from "../../../img/logout.png";
 
 // Import API
-import {setAuthToken} from "../../../config/api";
-import {checkUser} from "../../../config/auth";
+import {setAuthToken, checkUser} from "../../../config";
 
 function UserDropdown() {
   const logoutSession = () => {

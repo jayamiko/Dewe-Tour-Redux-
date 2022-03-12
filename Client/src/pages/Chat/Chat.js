@@ -1,16 +1,13 @@
 // Import React
-import * as React from "react";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 
 // Import Components
-import Contact from "../../components/atoms/Contact/Contact";
-import Gap from "../../components/atoms/Gap";
-import Message from "../../components/atoms/Message/Message";
+import {Gap, Message, Contact} from "../../components/atoms";
 
 // Import Style
 import {toast} from "react-toastify";
-import playNotif from "../../components/utils/playNotif";
+import playNotif from "../../components/utils/Notification/playNotif";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";

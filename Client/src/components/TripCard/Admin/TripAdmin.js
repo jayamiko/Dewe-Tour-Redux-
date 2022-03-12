@@ -7,14 +7,14 @@ import {Link, useNavigate} from "react-router-dom";
 import {useSelector, connect} from "react-redux";
 
 // Import Components
-import {getTrips} from "../../actions/TripsActions";
+import {getTrips} from "../../../actions/TripsActions";
 import ReactPaginate from "react-paginate";
-import Rupiah from "../../components/Items/Format/formatRupiah";
-import Progress from "../Items/Progress/ProgressQuota";
+import {formatRupiah} from "../../Items/Format";
+import Progress from "../../Items/Progress/ProgressQuota";
 
 // Import Syle
-import "./Main.scss";
-import "./TripCard.scss";
+import "../TripCard.scss";
+import "./TripAdmin.scss";
 
 function TripCard({getTrips, trips: {tripsAll}}) {
   useEffect(() => {
@@ -63,7 +63,7 @@ function TripCard({getTrips, trips: {tripsAll}}) {
                     </span>
                   ) : (
                     <span className="label-price-admin">
-                      Rp. {Rupiah(item.price)}
+                      Rp. {formatRupiah(item.price)}
                     </span>
                   )}
                 </div>

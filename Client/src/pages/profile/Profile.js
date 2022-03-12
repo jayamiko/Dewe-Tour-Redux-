@@ -8,16 +8,14 @@ import {saveProfile} from "../../actions/auth";
 // Import Components
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import HistoryPayment from "../../components/Items/card/HistoryPayment";
-import BoxProfile from "../../components/Items/card/BoxProfile";
-import LoadingAnimation from "../../components/atoms/Loading/Loading";
+import {HistoryPayment, BoxProfile} from "../../components/Items/card";
+import {LoadingAnimation, NotData} from "../../components/atoms";
 
 // Import Style
 import "./Profile.scss";
-import Nodata from "../../components/atoms/NotData/NotData";
 
 // Import API
-import {API} from "../../config/api";
+import {API} from "../../config";
 
 const ProfilePage = ({auth: {user}, saveProfile}) => {
   const {name, email, gender, phone, address, photo} = user;
@@ -174,7 +172,7 @@ const ProfilePage = ({auth: {user}, saveProfile}) => {
               {handlerFilterData.byUser.length === 0 ||
                 (filterData.length === 0 && (
                   <div>
-                    <Nodata name={name} />
+                    <NotData name={name} />
                   </div>
                 ))}
             </section>

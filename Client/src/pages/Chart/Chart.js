@@ -11,7 +11,7 @@ import {
   LineChart,
   PieChart,
 } from "../../components/Items/chart";
-import TableChart from "../../components/Items/Table/Chart/TableChart";
+import {TableChart} from "../../components/Items/Table";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 

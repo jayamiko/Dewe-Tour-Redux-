@@ -1,5 +1,5 @@
-import {API} from "./api";
-import store from "../store";
+import {API} from "../API/api";
+import store from "../../store";
 
 const checkUser = async () => {
   try {
@@ -25,4 +25,4 @@ const checkUser = async () => {
   }
 };
 
-export {checkUser};
+export default checkUser;

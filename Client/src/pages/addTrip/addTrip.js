@@ -15,7 +15,7 @@ import {Form, Button} from "react-bootstrap";
 import Attach from "../../img/attach.png";
 
 // Import API
-import {API_Country} from "../../config/api";
+import {API_Country} from "../../config";
 import {addTrip} from "../../actions/TripsActions";
 
 const AddTripPage = ({addTrip}) => {

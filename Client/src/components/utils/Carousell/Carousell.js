@@ -1,6 +1,7 @@
 import React from "react";
 import {Carousel} from "react-bootstrap";
-import Rupiah from "../Items/Format/formatRupiah";
+import {formatRupiah} from "../../Items/Format";
+import "./Carousell.scss";
 
 export default function Carousell({LabuanBajo, Paris, HagiaSophia}) {
   return (
@@ -19,7 +20,7 @@ export default function Carousell({LabuanBajo, Paris, HagiaSophia}) {
             </h2>
             <div className="price-carousel">
               <b className="carousel-price-text">
-                Rp. {Rupiah(LabuanBajo?.price)}{" "}
+                Rp. {formatRupiah(LabuanBajo?.price)}{" "}
               </b>
             </div>
           </Carousel.Caption>
@@ -36,7 +37,9 @@ export default function Carousell({LabuanBajo, Paris, HagiaSophia}) {
               <b>{Paris?.title}</b>
             </h2>
             <div className="price-carousel">
-              <b className="carousel-price-text">Rp. {Rupiah(Paris?.price)} </b>
+              <b className="carousel-price-text">
+                Rp. {formatRupiah(Paris?.price)}{" "}
+              </b>
             </div>
           </Carousel.Caption>
         </Carousel.Item>
@@ -53,7 +56,7 @@ export default function Carousell({LabuanBajo, Paris, HagiaSophia}) {
             </h2>
             <div className="price-carousel">
               <b className="carousel-price-text">
-                Rp. {Rupiah(HagiaSophia?.price)}{" "}
+                Rp. {formatRupiah(HagiaSophia?.price)}{" "}
               </b>
             </div>
           </Carousel.Caption>

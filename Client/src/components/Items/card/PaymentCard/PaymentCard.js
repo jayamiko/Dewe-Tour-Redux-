@@ -6,10 +6,8 @@ import "./PaymentCard.scss";
 import Icon from "../../../img/Icon.png";
 
 // Import Components
-import formatNumber from "../Format/formatNumber";
-import formatWeek from "../Format/formatWeek";
-import formatDate from "../Format/formatDate";
-import InputFileProofPayment from "../../Button/Input/InputFileProofPayment";
+import {formatNumber, formatWeek, formatDate} from "../../Format";
+import {InputProof} from "../../../utils/Input";
 
 export default function PaymentCard({data, setData}) {
   const [preview, setPreview] = useState(null);
@@ -77,7 +75,7 @@ export default function PaymentCard({data, setData}) {
         </div>
         <div className="col">
           {!data?.attachment && data?.status === "Waiting Approve" && (
-            <InputFileProofPayment
+            <InputProof
               setData={setData}
               preview={preview}
               setPreview={setPreview}

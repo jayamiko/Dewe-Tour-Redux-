@@ -4,18 +4,17 @@ import {useSelector} from "react-redux";
 
 // Import Components
 import Navbar from "../../components/Navbar/Navbar";
-import PaymentCard from "../../components/Items/card/PaymentCard";
+import {PaymentCard} from "../../components/Items/card";
 import Footer from "../../components/Footer/Footer";
-import ModalPopUp from "../../components/Items/modal/popUp";
-import NotData from "../../components/atoms/NotData/NotData";
-import LoadingAnimation from "../../components/atoms/Loading/Loading";
+import {ModalPopUp} from "../../components/Items/modal";
+import {LoadingAnimation, NotData} from "../../components/atoms";
 
 // Import Style
 import "./Payment.scss";
 import {toast} from "react-toastify";
 
 // Import API
-import {API} from "../../config/api";
+import {API} from "../../config";
 
 export default function Payment() {
   const currentState = useSelector((state) => state.auth);

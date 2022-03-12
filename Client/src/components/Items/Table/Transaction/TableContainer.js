@@ -3,7 +3,7 @@ import "../../../../pages/Transaction/Transaction.scss";
 import Nodata from "../../../../img/no-data.jpg";
 
 // Import Component
-import TableHead from "../../../Items/Table/Transaction/TableHead";
+import {TableHead} from "../../../Items/Table";
 import {TablePagination} from "@mui/material";
 
 const TableContainer = ({handler, getter}) => {

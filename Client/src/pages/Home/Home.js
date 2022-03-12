@@ -12,7 +12,7 @@ import "../../App.css";
 // Import Components
 import Header from "../../components/Header/Header";
 import Navbar from "../../components/Navbar/Navbar";
-import Main from "../../components/Main/Main";
+import TripCard from "../../components/TripCard/TripCard";
 import Footer from "../../components/Footer/Footer";
 
 function Home({
@@ -36,7 +36,7 @@ function Home({
       {isAuthenticated && isAdmin ? (
         <>
           <Navbar />
-          <Main data={tripsAll} isAdmin={isAdmin} />
+          <TripCard data={tripsAll} isAdmin={isAdmin} />
           <Footer />
         </>
       ) : (
@@ -49,7 +49,7 @@ function Home({
             setSearchData={setSearchData}
           />
           {isSearching ? (
-            <Main data={tripsAll} searchData={searchData} />
+            <TripCard data={tripsAll} searchData={searchData} />
           ) : (
             <>
               {tripsAll === null ? (
@@ -63,7 +63,7 @@ function Home({
                 </div>
               ) : (
                 <Container fluid className="main">
-                  <Main data={tripsAll} />
+                  <TripCard data={tripsAll} />
                 </Container>
               )}
             </>

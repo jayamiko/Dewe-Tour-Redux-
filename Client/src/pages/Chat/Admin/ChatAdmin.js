@@ -4,9 +4,7 @@ import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 
 // Import Components
-import Contact from "../../../components/atoms/Contact/Contact";
-import Gap from "../../../components/atoms/Gap";
-import Message from "../../../components/atoms/Message/Message";
+import {Message, Gap, Contact} from "../../../components/atoms";
 
 // import Style
 import {toast} from "react-toastify";

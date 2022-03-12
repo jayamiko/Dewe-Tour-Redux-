@@ -1,8 +1,7 @@
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {Modal} from "react-bootstrap";
 
 export default function PopUp({isShow, handleClose}) {
-  let Navigate = useNavigate();
   return (
     <Modal show={isShow} onHide={handleClose} centered>
       <Modal.Body className="p-4 text-center">

@@ -3,16 +3,16 @@ import {useState, useEffect} from "react";
 import {toast} from "react-toastify";
 
 // Import Components
-import TableContainer from "../../components/Items/Table/Transaction/TableContainer";
+import {TableContainer} from "../../components/Items/Table";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import Gap from "../../components/atoms/Gap";
+import {Gap} from "../../components/atoms";
 
 // Import Style
 import "./Transaction.scss";
 
 // import API
-import {API} from "../../config/api";
+import {API} from "../../config";
 
 const Transaction = () => {
   const [transaction, setTransaction] = useState([]);

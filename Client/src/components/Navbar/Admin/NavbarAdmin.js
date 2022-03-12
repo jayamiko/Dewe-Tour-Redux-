@@ -15,8 +15,7 @@ import AddData from "../../../img/add-data.png";
 import Logout from "../../../img/logout.png";
 
 // Import API
-import {checkUser} from "../../../config/auth";
-import {setAuthToken} from "../../../config/api";
+import {checkUser, setAuthToken} from "../../../config";
 
 function NavbarAdmin() {
   let navigate = useNavigate();

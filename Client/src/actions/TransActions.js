@@ -1,4 +1,4 @@
-import {API} from "../config/api";
+import {API} from "../config";
 
 export const GET_TRANSACTIONS_SUCCESS = "GET_TRANSACTIONS_SUCCESS";
 export const PAYMENT_SUCCESS = "PAYMENT_SUCCESS";
